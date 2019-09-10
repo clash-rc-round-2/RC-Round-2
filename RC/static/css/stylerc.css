@@ -1,0 +1,62 @@
+body{
+    /*background-color: black;
+    color: aliceblue;*/
+    background-image: url(alt1.jpg);
+    /*background-image: url(blue1\(111111\).jpeg);
+    background-image: url(alt1.jpg);
+    background: radial-gradient(circle at 55% 55%, rgba(15, 202, 93, 0.699)2%, rgba(0, 10, 10, 0.712)150%);*/
+    background-repeat: no-repeat;
+    background-size: 100%;
+    /*color: #d7e9f8;
+    font-family: 'Amiri', serif;
+    font-family: ‘Montserrat’, sans-serif;
+color: #daffef;
+font-family: ‘Jura’, sans-serif;
+color: rgb(189, 245, 211);*/
+font-family: 'Gothic A1', sans-serif;
+    color:#BBC7CE;
+
+}
+.img-rc{
+    height: 7vh;
+    width:100%;
+    position: relative;
+    bottom:0.5vh;
+}
+.col-lg-1{
+    height: 7vh;
+   
+    text-align: center;
+    width: 100%;
+}
+.p
+{
+    text-align: center;
+}
+.grad{
+    height: 100vh;
+    width: 100%;
+    background-color: black;
+    background-image: linear-gradient(to left,black,rgb(193, 193, 247) ); 
+}
+.uls{
+    text-align: left;
+}
+.btn{
+   
+    font-size: 15px;
+    background-color: rgba(52, 162, 196, 0.65);
+    border-radius: 5px;
+    height: 5vh;
+    width: 8vw;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    color:white;
+
+}
+.title{
+    /*text-shadow: 2px 2px 3px #000000;*/
+    font-family: 'Gothic A1', sans-serif;
+    color:#BBC7CE;
+}

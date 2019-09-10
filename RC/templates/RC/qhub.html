@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Question Hub</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bootstrap.css">
+  <link href="https://fonts.googleapis.com/css?family=Gothic+A1&display=swap" rel="stylesheet">
+
+  <style>
+      body{
+        background: url("alt1.jpg");
+        font-family: 'Gothic A1', sans-serif;
+        color:#BBC7CE;
+      }
+      td{
+            text-align: center;
+           font-size:16px;
+        }
+       /* tr{
+            border-style:solid none;
+            border-color:
+            black;
+            border-width:1px;
+        }*/
+        thead {
+            background-color: #070707BD;
+           font-size:18px;
+            text-align: center;
+            
+        }
+        .qt {
+            margin: auto;
+        }
+
+        
+
+        .sub {
+            margin: auto;
+        }
+        #l{
+        background-image: url("bg3.jpeg");
+        font-family: 'Montserrat', sans-serif;
+        color:rgb(225,225,255);}
+    tr:hover td{
+        color:rgb(225,225,255);
+    }
+     .progress{
+         position:relative;
+         width:18vw;
+         margin:auto;
+     }
+     .progress-value{
+         position:absolute;
+         left: 0;
+         right: 0;
+         color: black;font-size:16px;
+     }
+     div.progress-bar{
+         font-weight: bold;
+         background-color:rgb(14, 127, 161);
+     }
+     a.navbt,button.navbt
+     {
+        background-color: rgba(52, 162, 196, 0.65); color:#BBC7CE;font-size: 15px;width:120px;border-radius:3px;
+     }
+     
+  </style>
+</head>
+    <body>
+        <form>
+        <div class="container-fluid">
+            <div class="row" style="background-color: #000">
+                <div class="col-lg-5" style="height: 7vh;display: flex; justify-content: center;align-items: center;">
+                    <div class="col-lg-3" style=" height: 7vh;">
+                        <img src="RC.jpg" style="width: 6vw; height:7vh; display:flex;align-items: center;justify-content: center;color:#ffffff;">
+                    </div>
+                    <div class="col-lg-9" style="padding-top: 1vh;height: 6vh; display: flex; align-items: center; justify-content: center; color:#ffffff;"><h5>QUESTION HUB</h5></div>
+                </div>
+                <div class="col-lg-2" style=" height: 7vh; display: flex; justify-content: center;align-items: center;color:#ffffff;">
+                    Timer
+                </div>
+                <div class="col-lg-5" style=" height: 7vh;">
+                    <div class="row">
+                        <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
+                            <button class="btn btn-block navbt" style=" padding-left: 0; padding-right: 0;color:#ffffff;">Submissions</button>
+                        </div>
+                        <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
+                            <button class="btn btn-block navbt" style=" padding-left: 1; padding-right: 1;color:#ffffff;">Leaderboard</button>
+                        </div>
+                        <!-- The Modal -->
+                        <div class="modal fade" id="logout">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                        <h4 class="modal-title" style="color: black;">Are you sure you want to logout?</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                
+                                        <!-- Modal body -->
+                                        <div class="modal-body">
+                                        <p style="color: black;">Logging out will cause termination of your game and your score till this moment will be counted as your Final Score.
+                                        </div>
+                                
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Log Out</button>
+                                        </div>
+                                
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="col-lg-3 mt-1" style="display: flex; justify-content: center;align-items: center;">
+                            <button class="btn btn-danger btn-block" data-toggle="modal" data-target="#logout" style="font-size: 15px; padding-left: 1; padding-right: 1;">Log Out</button>
+                        </div>
+                        <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
+                            <img src="IEEE_logo.png" style="height: 5vh;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12" style="height: 86vh; display: flex; align-content: center; justify-content: center;">
+                    <!--Your Code Here-->
+                    <table class="table" rules="none" style="width : 80%; height: 80%; color:#BBC7CE; background-color:#070707A6;border-radius:5px;margin-top:8vh">
+                        <thead>
+                            <tr height="80">
+                                <th class="align-middle">
+                                    SR. NO.
+                                </th>
+                                <th class="align-middle">
+                                    QUESTION TITLE
+                                </th>
+                                <th class="align-middle">
+                                    ACCURACY
+                                </th>
+                                <th class="align-middle">
+                                    SUBMISSIONS
+                                </th>
+                                <th></th>
+    
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td class="align-middle">
+                                QUESTION 1
+                            </td>
+                            <td class="align-middle">
+                                <div class="qt">Title1
+                                </div>
+                            </td>
+                            <td class="align-middle">
+                                <div class="progress" style="height: 4vh " class="pb">
+                                    <div class="progress-bar  " style="width:50%;text-align:center">
+                                        <span class="progress-value">50%</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="align-middle">
+                                <div class="sub">4</div>
+                            </td>
+                            <td class="align-middle">
+                                <a href="#" class="btn navbt" role="button">ATTEMPT</a>
+                            </td>
+                        </tr>
+                        <tr >
+                            <td class="align-middle">
+                                QUESTION 2
+                            </td>
+    
+                            <td class="align-middle">
+                                <div class="qt">Title2
+                                </div>
+                            </td>
+                            <td class="align-middle">
+                                <div class="progress" style="height: 4vh" class="pb">
+                                    <div class="progress-bar" style="width:20%" ;>
+                                            <span class="progress-value">20%</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="align-middle">
+                                <div class="sub">5</div>
+                            </td>
+                            <td class="align-middle">
+                                <a href="#" class="btn navbt" role="button">ATTEMPT</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="align-middle">
+                                QUESTION 3
+                            </td>
+                            <td class="align-middle">
+                                <div class="qt">Title3
+                                </div>
+                            </td>
+                            <td class="align-middle">
+                                <div class="progress" style="height: 4vh" class="pb">
+                                    <div class="progress-bar " style="width:100%" ;>
+                                            <span class="progress-value">100%</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="align-middle">
+                                <div class="sub">6</div>
+                            </td>
+                            <td class="align-middle">
+                                <a href="#" class="btn navbt" role="button">ATTEMPT</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="align-middle">
+                                QUESTION 4
+                            </td>
+                            <td class="align-middle">
+                                <div class="qt">Title4
+                                </div>
+                            </td>
+                            <td class="align-middle">
+                                <div class="progress" style="height: 4vh" class="pb">
+                                    <div class="progress-bar " style="width:20%" ;>
+                                            <span class="progress-value">20%</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="align-middle">
+                                <div class="sub">7</div>
+                            </td>
+                            <td class="align-middle">
+                                <a href="#" class="btn navbt" role="button">ATTEMPT</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="align-middle">
+                                QUESTION 5
+                            </td>
+                            <td class="align-middle">
+                                <div class="qt">Title5
+                                </div>
+                            </td>
+                            <td class="align-middle">
+                                <div class="progress" style="height: 4vh" class="pb">
+                                    <div class="progress-bar " style="width:20%" ;>
+                                            <span class="progress-value">20%</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="align-middle">
+                                    <div class="sub">8</div>
+                            </td>
+                            <td class="align-middle">
+                                <a href="#" class="btn navbt" role="button">ATTEMPT</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="align-middle">
+                                QUESTION 6
+                            </td>
+                            <td class="align-middle">
+                                <div class="qt">Title6
+                                </div>
+                            </td>
+                            <td class="align-middle">
+                                <div class="progress" style="height: 4vh" class="pb">
+                                    <div class="progress-bar" style="width:20%" ;>
+                                            <span class="progress-value">20%</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="align-middle">
+                                <div class="sub">9</div>
+                            </td>
+                            <td class="align-middle">
+                                <a href="#" class="btn navbt" role="button">ATTEMPT</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row" style="background-color: #000">
+                <div class="col-lg-12" style="font-size: 18px; border: 2px solid black;height:7vh;display: flex;justify-content: center;align-items: center;color: white">
+                    &copy PICT IEEE STUDENT BRANCH
+                </div>
+            </div>
+        </div>
+    </form>
+    </body>
+</html>

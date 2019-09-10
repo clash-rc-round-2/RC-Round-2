@@ -1,0 +1,87 @@
+body {
+    background-repeat: no-repeat;
+    background-image: url(alt1.jpg);
+    font-family: 'Gothic A1', sans-serif;
+    color:#BBC7CE;
+    background-size: 100%;
+}
+
+h3 {
+   
+    text-shadow: 1px 1px 2px #000000;
+    font-family: 'Gothic A1', sans-serif;
+    text-emphasis: center;
+    text-align: center;
+    color:#BBC7CE;
+}
+
+input[type=text],
+input[type=password],
+input[type=tel],
+input[type=email] {
+    border: none;
+    border-bottom: 1px solid #BBC7CE;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color:rgb(200, 223, 231);
+    font-family: 'Gothic A1', sans-serif;
+    text-align: center;
+    width: 15vw;
+}
+
+::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color:rgb(200, 223, 231);
+    opacity: 1;
+    /* Firefox */
+}
+
+.Rad {
+    margin-left: 4px;
+}
+
+.radio {
+    margin-left: 1vw;
+}
+.block 
+{
+    justify-content: center;
+    text-align: center;
+}
+.block .inputBox input
+{
+width:100%;
+padding: 10px 0;
+color:#BBC7CE;
+
+border: none;
+margin-bottom: 30px;
+
+border-width: 15vw;
+outline: none;
+border-bottom: 1px solid rgba(255, 255, 255, 0.678);
+background: transparent;
+}
+.block .inputBox  label 
+{  
+    top:-65px;
+position:relative;
+justify-content:center;
+text-align: center;
+padding:10px 0;
+font-size: 16px;
+color:rgba(187, 199, 206, 0.685);
+pointer-events: none;
+transition: .5s;
+} 
+.block .inputBox  input:valid ~ label,
+.block .inputBox  input:focus ~ label{
+    top:-100px;
+    left:0px;
+    color:rgb(200, 223, 231);
+    font-size: 18px;
+   
+   
+}
+

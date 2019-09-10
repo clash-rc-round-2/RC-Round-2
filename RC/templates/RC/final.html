@@ -1,0 +1,228 @@
+
+<!doctype html>
+<html lang="en">
+
+<head></head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Biryani&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Hind+Vadodara&display=swap" rel="stylesheet">
+<title>Testcases</title>
+<style>
+    body {
+        background: url(alt1.jpg);
+        background-repeat: no-repeat;
+        background-size: 100%;
+        color: #BBC7CE;
+        font-family: 'Hind Vadodara', sans-serif;
+    }
+    .br{
+        border: 1px solid white;
+    }
+
+    .test {
+        background-color: black;
+        opacity: 0.6;
+        box-shadow: 4px 5px 4px black;
+        border-radius: 15px;
+        border: rgb(162, 173, 184) solid 3px;
+        height: 17vh;
+        width: 22vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-feature-settings: abvs;
+        text-align: center;
+    }
+
+    .circle {
+        background-color: black;
+        opacity: 0.8;
+        border: rgb(162, 173, 184) solid 2px;
+
+        box-shadow: 0px 4px 6px 4px rgba(26, 24, 27, 0.877);
+        height: 150px;
+        width: 150px;
+        border-radius: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-feature-settings: abvs;
+}
+    .retry {
+        background-color: rgba(52, 162, 196,0.9);
+        width: 8vw;
+        height: 5vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-feature-settings: abvs;
+    }
+
+    .cons {
+        background-color: black;
+        opacity: 0.6;
+        border: rgb(162, 173, 184) solid 2px;
+        width: 70vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-feature-settings: abvs;
+
+    }
+
+    .foot {
+        background-color: black;
+        height: 7vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+</head>
+
+<body style="overflow: hidden;">
+    <form>
+        <div class="container-fluid b" style="overflow-x: hidden; overflow-y: hidden;">
+            <div class="row" style="background-color: #000">
+                <div class="col-lg-5" style="height: 7vh;display: flex; justify-content: center;align-items: center;">
+                    <div class="col-lg-3" style=" height: 7vh;">
+                        <img src="RC.jpg"
+                            style="width: 6vw; height:7vh; display:flex;align-items: center;justify-content: center;color:#ffffff;">
+                    </div>
+                    <div class="col-lg-9"
+                        style="padding-top: 1vh;height: 6vh; display: flex; align-items: center; justify-content: center; color:#ffffff;">
+                        <h5>TESTCASES</h5>
+                    </div>
+                </div>
+                <div class="col-lg-2"
+                    style=" height: 7vh; display: flex; justify-content: center;align-items: center;color:#ffffff;">
+                    Timer
+                </div>
+                <div class="col-lg-5" style=" height: 7vh;">
+                    <div class="row">
+                        <div class="col-lg-3 mt-1"
+                            style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
+                            <button class="btn btn-block"
+                                style="background-color: rgba(52, 162, 196, 0.65);color:#ffffff;font-size: 15px; padding-left: 0; padding-right: 0;">Question
+                                Hub</button>
+                        </div>
+                        <div class="col-lg-3 mt-1"
+                            style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
+                            <button class="btn btn-block"
+                                style="background-color: rgba(52, 162, 196, 0.65); color:#ffffff;font-size: 15px; padding-left: 1; padding-right: 1;">Leaderboard</button>
+                        </div>
+                        <!-- The Modal -->
+                        <div class="modal fade" id="logout">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" style="color: black;">Are you sure you want to logout?
+                                        </h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <p style="color: black;">Logging out will cause termination of your game and
+                                            your score till this moment will be counted as your Final Score.
+                                    </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Log
+                                            Out</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 mt-1" style="display: flex; justify-content: center;align-items: center;">
+                            <button class="btn btn-danger btn-block" data-toggle="modal" data-target="#logout"
+                                style="font-size: 15px; padding-left: 1; padding-right: 1;">Log Out</button>
+                        </div>
+                        <div class="col-lg-3 mt-1"
+                            style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
+                            <img src="IEEE_logo.png" style="height: 5vh;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="height:86vh;width: 100vw">
+                <div class="row" style="height: 20vh;">
+                    <div class="col test" style="margin-left: 4vw;margin-top: 5vh;">
+                        <h4><strong>TESTCASE 1<br><br>PASS</strong></h4>
+                    </div>
+                    <div class="col test" style="margin-left: 2vw;margin-top: 5vh;">
+                        <h4><strong>TESTCASE 2<br><br>PASS</strong></h4>
+                    </div>
+                    <div class="col test" style="margin-left: 2vw;margin-top: 5vh;">
+                        <h4> <strong>TESTCASE 3<br><br>PASS</strong></h4>
+                    </div>
+                    <div class="col-l">
+                        <div class="row">
+                            <div class="col circle"
+                                style="margin-left: 9vw;margin-top: 13vh;margin-right: 2vw;">
+                                <h4>STATUS</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col test" style="margin-left: 4vw;margin-top: 5vh;">
+                        <h4><strong>TESTCASE 4<br><br>PASS</strong></h4>
+                    </div>
+                    <div class="col test" style="margin-left: 2vw;margin-top: 5vh;">
+                        <h4><strong>TESTCASE 5<br><br>PASS</strong></h4>
+                    </div>
+                    <div class="col test" style="margin-left: 2vw;margin-top: 5vh;">
+                        <h4><strong>TESTCASE 6<br><br>PASS</strong></h4>
+                    </div>
+                    <div class="col-l">
+                        <div class="row">
+                            <div class="col circle"
+                                style="margin-left: 9vw;margin-top: 14vh;margin-right: 2vw;">
+                                <h4>RESULT</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="cons" style=" height: 5vh;margin-left: 4vw;margin-top:-8vh;">
+                        <h4 style="text-align: center;"><strong>CONSOLE</strong></h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col cons" style="height: 28vh;margin-left: 4vw;margin-top: -6vh; "></div>
+                </div>
+                <div class="col-l" style="margin-left: 10vw;margin-top: 3vh;">
+                    <button class="btn btn-block" type="submit" style="background-color: rgba(52, 162, 196, 0.35);color:#BBC7CE; border:none; width:120px; height: 5.5vh; font-size: 17px; border-radius: 5px;">RETRY</button>
+                </div>
+            </div>
+            <div class="row" style="background-color: #000;">
+                <div class="col-lg-12"
+                    style="border: 2px solid black; height: 7vh; display: flex; justify-content: center; align-items: center; color:#ffffff;">
+                    &copy PICT IEEE STUDENT BRANCH
+                </div>
+            </div>
+        </div>
+
+    </form>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
