@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,37 +6,47 @@
     <title>Login</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="bootstrap.css">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <link href="https://fonts.googleapis.com/css?family=Gothic+A1&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="Login.css">
+    <link rel="stylesheet" href="{% static 'css/Login.css' %}">
 </head>
+ <style>
+        body{
+            background-image: url("{% static 'img/alt1.jpg' %}");
+            background-repeat: no-repeat;
+            background-size: 100%;
+            font-family: 'Biryani', sans-serif;
+            color: #d7e9f8;
+            overflow: hidden;
+        }
+    </style>
 <form>
     <body>
         <div class="container-fluid">
             <div class="row" style="background-color: #000">
                 <div class="col-lg-5" style="height: 7vh;display: flex; justify-content: center;align-items: center;">
                     <div class="col-lg-3" style=" height: 7vh;">
-                        <img src="RC.jpg" style="width: 6vw; height:7vh; display:flex;align-items: center;justify-content: center;color:#ffffff;">
+                        <img src="{% static 'img/RC.jpg' %}" style="width: 6vw; height:7vh; display:flex;align-items: center;justify-content: center;color:#ffffff;">
                     </div>
                     <div class="col-lg-9" style="padding-top: 1vh;height: 6vh; display: flex; align-items: center; justify-content: center;color:#ffffff;"><h5>LOGIN PAGE</h5></div>
                 </div>
                 <div class="col-lg-2" style=" height: 7vh; display: flex; justify-content: center;align-items: center;color:#ffffff;">
-                   
+
                 </div>
                 <div class="col-lg-5" style=" height: 7vh;">
                     <div class="row">
                         <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
-                            
+
                         </div>
                         <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
-                           
+
                         </div>
-                        
+
                         <div class="col-lg-3 mt-1" style="display: flex; justify-content: center;align-items: center;">
-                           
+
                         </div>
                         <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
-                            <img src="IEEE_logo.png" style="height: 5vh;">
+                            <img src="{% static 'img/IEEE_logo.png' %}" style="height: 5vh;">
                         </div>
                     </div>
                 </div>
@@ -49,25 +60,25 @@
                 <div class="row" style="text-align:center;margin-top:5vh;justify-content: center;font-size:4vh;color:#BBC7CE;">PLAYER 1</div>
                 <br>
                 <br>
-                
+
                 <div class="block" style="justify-content:center">
 
                         <div class="inputBox"style="justify-content:center;text-align:center;margin-left:4vw;margin-right:4vw;height:95px">
                                 <input type="text" name="Name" required autocomplete="off" >
-                                <label class="active">Enter Name</label> 
+                                <label class="active">Enter Name</label>
                             </div>
-                    
-                
-               
+
+
+
                 <div class="inputBox"style="justify-content:center;text-align:center;margin-left:4vw;margin-right:4vw;height:95px">
                         <input type="tel" name="Contact No."  pattern="[7-9]{1}[0-9]{9}"maxlength="10" required autocomplete="off" >
-                        <label class="active">Contact No.</label> 
+                        <label class="active">Contact No.</label>
                     </div>
-                
-                
+
+
                     <div class="inputBox"style="justify-content:center;text-align:center;margin-left:4vw;margin-right:4vw;height:95px">
                             <input type="email" name="E-mail ID" required autocomplete="off" >
-                            <label class="active">Email ID.</label> 
+                            <label class="active">Email ID.</label>
                         </div>
             </div>
             </div>
@@ -81,11 +92,11 @@
 
                         <div class="inputBox"style="justify-content:center;text-align:center;margin-left:4vw;margin-right:4vw;height:95px">
                                 <input type="text" name="Team Name" required autocomplete="off" >
-                                <label>Team Name</label> 
+                                <label>Team Name</label>
                             </div>
                             <div class="inputBox"style="justify-content:center;text-align:center;margin-left:4vw;margin-right:4vw;height:95px">
                                     <input type="password" name="psw" required autocomplete="off" >
-                                    <label>Password</label> 
+                                    <label>Password</label>
                                 </div>
                     <div class="row" style="justify-content:center;text-align:center;height:40px;">
                         <div class="radio">
@@ -94,14 +105,14 @@
                         <div class="Rad"style="margin-right:1vw">
                             <label>Junior</label>
                         </div>
-                    
+
                         <div class="radio">
                             <input type="radio" name="optradio">
                         </div>
                         <div class="Rad">
                             <label>Senior</label>
                         </div>
-                   
+
                     </div>
                     <div style="text-align: center; padding-top: 2vh;margin-top:20px ">
                         <button type="submit"  style="background-color:rgba(52, 162, 196,0.9);color:rgb(0, 0, 24);border:none;width:8vw;height: 5vh;font-size: 17px;border-radius: 5px; ">LOGIN</button>
@@ -119,30 +130,30 @@
                             <div class="row" style="text-align:center;margin-top:5vh;justify-content: center;font-size:4vh;color:#BBC7CE">PLAYER 2</div>
                             <br>
                             <br>
-                            
+
                             <div class="block"style="justify-content:center">
-            
+
                                     <div class="inputBox"style="justify-content:center;text-align:center;margin-left:4vw;margin-right:4vw;height:95px">
                                             <input type="text" name="Name" required autocomplete="off" >
-                                            <label>Enter Name</label> 
+                                            <label>Enter Name</label>
                                         </div>
-                                
-                            
-                                    
+
+
+
                                     <div class="inputBox"style="justify-content:center;text-align:center;margin-left:4vw;margin-right:4vw;height:95px">
                                     <input type="tel" name="Contact No."  pattern="[7-9]{1}[0-9]{9}"maxlength="10" required autocomplete="off" >
-                                    <label>Contact No.</label> 
+                                    <label>Contact No.</label>
                                     </div>
-                                    
-                            
+
+
                                 <div class="inputBox"style="justify-content:center;text-align:center;margin-left:4vw;margin-right:4vw;height:95px">
                                         <input type="email" name="E-mail ID" required autocomplete="off" >
-                                        <label>Email ID.</label> 
+                                        <label>Email ID.</label>
                                     </div>
                         </div>
                         </div>
 
-            
+
 
         </div>
         <div class="row" style="background-color: #000">
@@ -152,7 +163,7 @@
         </div>
         </div>
     </div>
-    
+
 </body>
 </form>
 </html>

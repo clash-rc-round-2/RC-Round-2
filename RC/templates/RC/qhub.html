@@ -1,18 +1,22 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <title>Question Hub</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="bootstrap.css">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
   <link href="https://fonts.googleapis.com/css?family=Gothic+A1&display=swap" rel="stylesheet">
 
   <style>
       body{
-        background: url("alt1.jpg");
-        font-family: 'Gothic A1', sans-serif;
-        color:#BBC7CE;
-      }
+            background-image: url("{% static 'img/alt1.jpg' %}");
+            background-repeat: no-repeat;
+            background-size: 100%;
+            font-family: 'Biryani', sans-serif;
+            color: #d7e9f8;
+            overflow: hidden;
+        }
       td{
             text-align: center;
            font-size:16px;
@@ -27,19 +31,17 @@
             background-color: #070707BD;
            font-size:18px;
             text-align: center;
-            
+
         }
         .qt {
             margin: auto;
         }
 
-        
-
         .sub {
             margin: auto;
         }
         #l{
-        background-image: url("bg3.jpeg");
+        background-image: url("{% static 'bg3.jpeg");
         font-family: 'Montserrat', sans-serif;
         color:rgb(225,225,255);}
     tr:hover td{
@@ -64,7 +66,7 @@
      {
         background-color: rgba(52, 162, 196, 0.65); color:#BBC7CE;font-size: 15px;width:120px;border-radius:3px;
      }
-     
+
   </style>
 </head>
     <body>
@@ -73,7 +75,7 @@
             <div class="row" style="background-color: #000">
                 <div class="col-lg-5" style="height: 7vh;display: flex; justify-content: center;align-items: center;">
                     <div class="col-lg-3" style=" height: 7vh;">
-                        <img src="RC.jpg" style="width: 6vw; height:7vh; display:flex;align-items: center;justify-content: center;color:#ffffff;">
+                        <img src="{% static 'img/RC.jpg' %}" style="width: 6vw; height:7vh; display:flex;align-items: center;justify-content: center;color:#ffffff;">
                     </div>
                     <div class="col-lg-9" style="padding-top: 1vh;height: 6vh; display: flex; align-items: center; justify-content: center; color:#ffffff;"><h5>QUESTION HUB</h5></div>
                 </div>
@@ -92,23 +94,23 @@
                         <div class="modal fade" id="logout">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
-                                
+
                                         <!-- Modal Header -->
                                         <div class="modal-header">
                                         <h4 class="modal-title" style="color: black;">Are you sure you want to logout?</h4>
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         </div>
-                                
+
                                         <!-- Modal body -->
                                         <div class="modal-body">
                                         <p style="color: black;">Logging out will cause termination of your game and your score till this moment will be counted as your Final Score.
                                         </div>
-                                
+
                                         <!-- Modal footer -->
                                         <div class="modal-footer">
                                         <button type="button" class="btn btn-danger" data-dismiss="modal">Log Out</button>
                                         </div>
-                                
+
                                     </div>
                                 </div>
                             </div>
@@ -116,7 +118,7 @@
                             <button class="btn btn-danger btn-block" data-toggle="modal" data-target="#logout" style="font-size: 15px; padding-left: 1; padding-right: 1;">Log Out</button>
                         </div>
                         <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
-                            <img src="IEEE_logo.png" style="height: 5vh;">
+                            <img src="{% static 'img/IEEE_logo.png' %}" style="height: 5vh;">
                         </div>
                     </div>
                 </div>

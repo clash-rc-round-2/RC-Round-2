@@ -1,19 +1,29 @@
+{% load static %}
 <html>
 
 <head>
     <title>Instruction Page RC</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="stylerc.css">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/stylerc.css' %}">
     <link href="https://fonts.googleapis.com/css?family=Gothic+A1&display=swap" rel="stylesheet">
 </head>
-
+ <style>
+        body{
+            background-image: url("{% static 'img/alt1.jpg' %}");
+            background-repeat: no-repeat;
+            background-size: 100%;
+            font-family: 'Biryani', sans-serif;
+            color: #d7e9f8;
+            overflow: hidden;
+        }
+    </style>
 <body style="overflow-y:hidden">
     <div class="container-fluid">
         <div class="row" style="height: 7vh;background-color: black">
             <div class="col-lg-1 " style="height: 7vh">
-                <img class="img-fluid float-right" src="RC.jpg" alt="RC LOGO"
+                <img class="img-fluid float-right" src="{% static 'img/RC.jpg' %}" alt="RC LOGO"
                     style="height: 7vh;width:100vh ;position: relative;bottom:0.5vh">
             </div>
             <div class="col-lg-1" style="text-align: center; height: 7vh">
@@ -26,7 +36,7 @@
 
             </div>
             <div class="col-lg-1 mt-1" style="height: 7vh">
-                <img class="img-fluid float-right" src="IEEE_logo.png" alt="PISB LOGO"
+                <img class="img-fluid float-right" src="{% static 'img/IEEE_logo.png' %}" alt="PISB LOGO"
                     style="height: 7vh;width:100vh;position: relative;bottom:0.5vh">
             </div>
         </div>
@@ -54,7 +64,7 @@
                             </div>
                             <div class="col-lg-12"
                                 style="height: 10vh;justify-content: center;display: flex;align-items: center; border: none">
-                                <button type="button" class="btn">PROCEED</button>
+                                <button type="button" onclick= "location.href='/user/allque';" class="btn">PROCEED</button>
                             </div>
                         </div>
                     </div>
