@@ -11,8 +11,8 @@ global starttime
 global end_time
 global duration
 
-# path = os.getcwd()
-# path_usercode = path + '/data/usersCode'
+path = os.getcwd()
+path_usercode = path + '/data/usersCode'
 
 NO_OF_QUESTIONS = 6
 NO_OF_TEST_CASES = 5
