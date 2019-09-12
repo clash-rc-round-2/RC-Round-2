@@ -7,7 +7,6 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, HttpRe
 import datetime
 import os, subprocess
 
-
 global starttime
 global end_time
 global duration
@@ -66,15 +65,15 @@ def signup(request):
             userprofile = UserProfile(user=user, name1=name1, name2=name2, phone1=phone1, phone2=phone2, email1=email1,
                                       email2=email2)
             userprofile.save()
-            os.system('mkdir {}/{}'.format(path_usercode, username))
+        #    os.system('mkdir {}/{}'.format(path_usercode, username))
             login(request, user)
             return redirect(reverse("instructions"))
 
         except IntegrityError:
             return HttpResponse("you have already been registered.")
 
-        # except HttpResponseForbidden:
-        #   return render(request, 'RC/Login.html')
+#  except HttpResponseForbidden:
+#      return render(request, 'RC/Login.html')
 
     elif request.method == 'GET':
         return render(request, "RC/Login.html")
@@ -125,7 +124,7 @@ def leader(request):
     sorted(dict.items(), key=lambda items: (items[1][6], user.latestSubTime))
     var = calculate()
     if var != 0:
-        return render(request, 'RC/leaderb.html',context={'dict': dict, 'range': range(1, 7, 1), 'time': var})
+        return render(request, 'RC/leaderb.html', context={'dict': dict, 'range': range(1, 7, 1), 'time': var})
     else:
         return render(request, 'RC/RESULTRC.html')
 
@@ -291,4 +290,3 @@ def runCode(request, username, qn, att):
         error_text}
 
     return render(request, 'RC/testcases.html', dict)
-

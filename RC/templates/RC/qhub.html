@@ -82,38 +82,38 @@
                 <div class="col-lg-5" style=" height: 7vh;">
                     <div class="row">
                         <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
-                            <button class="btn btn-block navbt" type="button" onclick="window.location.href = '{{ user.username }}/submission';" style=" padding-left: 0; padding-right: 0;color:#ffffff;">Submissions</button>
+                            <button class="btn btn-block navbt" type="button" onclick="location.href = '{{ user.username }}/submission';" style=" padding-left: 0; padding-right: 0;color:#ffffff;">Submissions</button>
                         </div>
                         <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
                             <button class="btn btn-block navbt" type="button" onclick="location.href='{% url 'leader' %}'" style=" padding-left: 1; padding-right: 1;color:#ffffff;">Leaderboard</button>
                         </div>
-                        <!-- The Modal -->
-                        <div class="modal fade" id="logout">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
+       <!-- The Modal -->
+                            <div class="modal fade" id="logout">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
 
-                                        <!-- Modal Header -->
-                                        <div class="modal-header">
-                                        <h4 class="modal-title" style="color: black;">Are you sure you want to logout?</h4>
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                            <h4 class="modal-title" style="color: black;">Are you sure you want to logout?</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+
+                                            <!-- Modal body -->
+                                            <div class="modal-body">
+                                            <p style="color: black;">Logging out will cause termination of your game and your score till this moment will be counted as your Final Score.
+                                            </div>
+
+                                            <!-- Modal footer -->
+                                            <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" onclick="location.href='{% url 'logout' %}'" data-dismiss="modal">Log Out</button>
+                                            </div>
+
                                         </div>
-
-                                        <!-- Modal body -->
-                                        <div class="modal-body">
-                                        <p style="color: black;">Logging out will cause termination of your game and your score till this moment will be counted as your Final Score.
-                                        </div>
-
-                                        <!-- Modal footer -->
-                                        <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" onclick="location.href='{% url 'logout' %}'" data-dismiss="modal">Log Out</button>
-                                        </div>
-
                                     </div>
                                 </div>
+                     <div class="col-lg-3 mt-1" style="display: flex; justify-content: center; align-items: center;">
+                                <button class="btn btn-danger btn-block" type="button" data-toggle="modal" data-target="#logout"  style="font-size: 14px; padding-left: 0; padding-right: 0;">Log Out</button>
                             </div>
-                        <div class="col-lg-3 mt-1" style="display: flex; justify-content: center;align-items: center;">
-                            <button class="btn btn-danger btn-block" type="button" data-toggle="modal" data-target="#logout" style="font-size: 15px; padding-left: 1; padding-right: 1;">Log Out</button>
-                        </div>
                         <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
                             <img src="{% static 'img/IEEE_logo.png' %}" style="height: 5vh;">
                         </div>

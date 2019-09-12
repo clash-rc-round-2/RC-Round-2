@@ -20,7 +20,8 @@
             overflow: hidden;
         }
     </style>
-<form>
+<form method="post">
+    {% csrf_token %}
     <body>
         <div class="container-fluid">
             <div class="row" style="background-color: #000">
@@ -64,20 +65,20 @@
                 <div class="block" style="justify-content:center">
 
                         <div class="inputBox"style="justify-content:center;text-align:center;margin-left:4vw;margin-right:4vw;height:95px">
-                                <input type="text" name="Name" required autocomplete="off" >
+                                <input type="text" name="name1" required autocomplete="off" >
                                 <label class="active">Enter Name</label>
                             </div>
 
 
 
                 <div class="inputBox"style="justify-content:center;text-align:center;margin-left:4vw;margin-right:4vw;height:95px">
-                        <input type="tel" name="Contact No."  pattern="[7-9]{1}[0-9]{9}"maxlength="10" required autocomplete="off" >
+                        <input type="tel" name="phone1"  pattern="[7-9]{1}[0-9]{9}"maxlength="10" required autocomplete="off" >
                         <label class="active">Contact No.</label>
                     </div>
 
 
                     <div class="inputBox"style="justify-content:center;text-align:center;margin-left:4vw;margin-right:4vw;height:95px">
-                            <input type="email" name="E-mail ID" required autocomplete="off" >
+                            <input type="email" name="email1" required autocomplete="off" >
                             <label class="active">Email ID.</label>
                         </div>
             </div>
@@ -91,11 +92,11 @@
                 <div class="block"style="justify-content:center;">
 
                         <div class="inputBox"style="justify-content:center;text-align:center;margin-left:4vw;margin-right:4vw;height:95px">
-                                <input type="text" name="Team Name" required autocomplete="off" >
+                                <input type="text" name="username" required autocomplete="off" >
                                 <label>Team Name</label>
                             </div>
                             <div class="inputBox"style="justify-content:center;text-align:center;margin-left:4vw;margin-right:4vw;height:95px">
-                                    <input type="password" name="psw" required autocomplete="off" >
+                                    <input type="password" name="password" required autocomplete="off" >
                                     <label>Password</label>
                                 </div>
                     <div class="row" style="justify-content:center;text-align:center;height:40px;">
@@ -115,7 +116,7 @@
 
                     </div>
                     <div style="text-align: center; padding-top: 2vh;margin-top:20px ">
-                        <button type="submit" onclick="location.href = '{% url 'instructions' %}';" style="background-color:rgba(52, 162, 196,0.9);color:rgb(0, 0, 24);border:none;width:8vw;height: 5vh;font-size: 17px;border-radius: 5px; ">LOGIN</button>
+                        <button type="submit"  style="background-color:rgba(52, 162, 196,0.9);color:rgb(0, 0, 24);border:none;width:8vw;height: 5vh;font-size: 17px;border-radius: 5px; ">LOGIN</button>
                     </div>
 
                 </div>
@@ -134,20 +135,20 @@
                             <div class="block"style="justify-content:center">
 
                                     <div class="inputBox"style="justify-content:center;text-align:center;margin-left:4vw;margin-right:4vw;height:95px">
-                                            <input type="text" name="Name" required autocomplete="off" >
+                                            <input type="text" name="name2" required autocomplete="off" >
                                             <label>Enter Name</label>
                                         </div>
 
 
 
                                     <div class="inputBox"style="justify-content:center;text-align:center;margin-left:4vw;margin-right:4vw;height:95px">
-                                    <input type="tel" name="Contact No."  pattern="[7-9]{1}[0-9]{9}"maxlength="10" required autocomplete="off" >
+                                    <input type="tel" name="phone2"  pattern="[7-9]{1}[0-9]{9}"maxlength="10" required autocomplete="off" >
                                     <label>Contact No.</label>
                                     </div>
 
 
                                 <div class="inputBox"style="justify-content:center;text-align:center;margin-left:4vw;margin-right:4vw;height:95px">
-                                        <input type="email" name="E-mail ID" required autocomplete="off" >
+                                        <input type="email" name="email2" required autocomplete="off" >
                                         <label>Email ID.</label>
                                     </div>
                         </div>
