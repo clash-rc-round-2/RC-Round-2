@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -5,39 +6,48 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Result Page</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">   
-        <link rel="stylesheet" href="RESULTRC.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'css/RESULTRC.css' %}">
         <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Hind+Vadodara&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css?family=Hind+Vadodara&display=swap" rel="stylesheet">
 </head>
-
+<style>
+        body{
+            background-image: url("{% static 'img/alt1.jpg' %");
+            background-repeat: no-repeat;
+            background-size: 100%;
+            font-family: 'Biryani', sans-serif;
+            color: #d7e9f8;
+            overflow: hidden;
+        }
+</style>
 <form>
   <body>
       <div class="container-fluid">
           <div class="row" style="background-color: #000">
               <div class="col-lg-5" style="height: 7vh;display: flex; justify-content: center;align-items: center;">
                   <div class="col-lg-3" style=" height: 7vh;">
-                      <img src="RC.jpg" style="width: 6vw; height:7vh; display:flex;align-items: center;justify-content: center;color: white">
+                      <img src="{% static 'img/RC.jpg' %}" style="width: 6vw; height:7vh; display:flex;align-items: center;justify-content: center;color: white">
                   </div>
                   <div class="col-lg-9" style="padding-top: 1vh;height: 6vh; display: flex; align-items: center; justify-content: center; color: white"><h5>RESULT PAGE</h5></div>
               </div>
               <div class="col-lg-2" style=" height: 7vh; display: flex; justify-content: center;align-items: center;color: white">
-                 
+
               </div>
               <div class="col-lg-5" style=" height: 7vh;">
                   <div class="row">
                       <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
-                          
+
                       </div>
                       <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
-                         
+
                       </div>
-                      
+
                       <div class="col-lg-3 mt-1" style="display: flex; justify-content: center;align-items: center;">
-                         
+
                       </div>
                       <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
-                          <img src="IEEE_logo.png" style="height: 5vh;">
+                          <img src="{% static 'img/IEEE_logo.png' %}" style="height: 5vh;">
                       </div>
                   </div>
               </div>

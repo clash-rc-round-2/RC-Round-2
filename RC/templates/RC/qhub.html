@@ -27,16 +27,14 @@
             black;
             border-width:1px;
         }*/
-        thead {
+         thead {
             background-color: #070707BD;
            font-size:18px;
             text-align: center;
-
         }
         .qt {
             margin: auto;
         }
-
         .sub {
             margin: auto;
         }
@@ -66,7 +64,6 @@
      {
         background-color: rgba(52, 162, 196, 0.65); color:#BBC7CE;font-size: 15px;width:120px;border-radius:3px;
      }
-
   </style>
 </head>
     <body>
@@ -80,15 +77,15 @@
                     <div class="col-lg-9" style="padding-top: 1vh;height: 6vh; display: flex; align-items: center; justify-content: center; color:#ffffff;"><h5>QUESTION HUB</h5></div>
                 </div>
                 <div class="col-lg-2" style=" height: 7vh; display: flex; justify-content: center;align-items: center;color:#ffffff;">
-                    Timer
+                    {{time}}
                 </div>
                 <div class="col-lg-5" style=" height: 7vh;">
                     <div class="row">
                         <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
-                            <button class="btn btn-block navbt" style=" padding-left: 0; padding-right: 0;color:#ffffff;">Submissions</button>
+                            <button class="btn btn-block navbt" type="button" onclick="window.location.href = '{{ user.username }}/submission';" style=" padding-left: 0; padding-right: 0;color:#ffffff;">Submissions</button>
                         </div>
                         <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
-                            <button class="btn btn-block navbt" style=" padding-left: 1; padding-right: 1;color:#ffffff;">Leaderboard</button>
+                            <button class="btn btn-block navbt" type="button" onclick="location.href='{% url 'leader' %}'" style=" padding-left: 1; padding-right: 1;color:#ffffff;">Leaderboard</button>
                         </div>
                         <!-- The Modal -->
                         <div class="modal fade" id="logout">
@@ -108,14 +105,14 @@
 
                                         <!-- Modal footer -->
                                         <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Log Out</button>
+                                        <button type="button" class="btn btn-danger" onclick="location.href='{% url 'logout' %}'" data-dismiss="modal">Log Out</button>
                                         </div>
 
                                     </div>
                                 </div>
                             </div>
                         <div class="col-lg-3 mt-1" style="display: flex; justify-content: center;align-items: center;">
-                            <button class="btn btn-danger btn-block" data-toggle="modal" data-target="#logout" style="font-size: 15px; padding-left: 1; padding-right: 1;">Log Out</button>
+                            <button class="btn btn-danger btn-block" type="button" data-toggle="modal" data-target="#logout" style="font-size: 15px; padding-left: 1; padding-right: 1;">Log Out</button>
                         </div>
                         <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
                             <img src="{% static 'img/IEEE_logo.png' %}" style="height: 5vh;">
@@ -129,49 +126,42 @@
                     <table class="table" rules="none" style="width : 80%; height: 80%; color:#BBC7CE; background-color:#070707A6;border-radius:5px;margin-top:8vh">
                         <thead>
                             <tr height="80">
-                                <th class="align-middle">
-                                    SR. NO.
-                                </th>
-                                <th class="align-middle">
-                                    QUESTION TITLE
-                                </th>
-                                <th class="align-middle">
-                                    ACCURACY
-                                </th>
-                                <th class="align-middle">
-                                    SUBMISSIONS
-                                </th>
+                                <th class="align-middle">SR. NO.</th>
+                                <th class="align-middle">QUESTION TITLE</th>
+                                <th class="align-middle">ACCURACY</th>
+                                <th class="align-middle">SUBMISSIONS</th>
                                 <th></th>
-    
+
                             </tr>
                         </thead>
+                        {% for question in all_questions %}
                         <tr>
+                            <td class="align-middle"> {{ question.IDNumber }} </td>
                             <td class="align-middle">
-                                QUESTION 1
-                            </td>
-                            <td class="align-middle">
-                                <div class="qt">Title1
+                                <div class="qt">{{ question.titleQue }}
                                 </div>
                             </td>
                             <td class="align-middle">
                                 <div class="progress" style="height: 4vh " class="pb">
                                     <div class="progress-bar  " style="width:50%;text-align:center">
-                                        <span class="progress-value">50%</span>
+                                        <span class="progress-value">{{ question.accuracy }}%</span>
                                     </div>
                                 </div>
                             </td>
                             <td class="align-middle">
-                                <div class="sub">4</div>
+                                <div class="sub">{{ question.totalSuccessfulSub }}</div>
                             </td>
                             <td class="align-middle">
-                                <a href="#" class="btn navbt" role="button">ATTEMPT</a>
+                                <a href="{{user.username}}/{{ question.IDNumber }}" class="btn navbt" role="button">ATTEMPT</a>
                             </td>
                         </tr>
+                        {%endfor    %}
+                        <!--
                         <tr >
                             <td class="align-middle">
                                 QUESTION 2
                             </td>
-    
+
                             <td class="align-middle">
                                 <div class="qt">Title2
                                 </div>
@@ -277,7 +267,7 @@
                             <td class="align-middle">
                                 <a href="#" class="btn navbt" role="button">ATTEMPT</a>
                             </td>
-                        </tr>
+                        </tr>-->
                     </table>
                 </div>
             </div>

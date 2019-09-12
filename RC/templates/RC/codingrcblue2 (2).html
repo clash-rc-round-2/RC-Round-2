@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 
@@ -21,7 +22,7 @@
 
     <style>
         #l {
-            background-image: url("alt1.jpg");
+            background-image: url("{% static 'img/alt1.jpg' %}");
             font-family: 'Gothic A1', sans-serif;
             color: #BBC7CE;
 
@@ -238,9 +239,9 @@
             border-bottom-left-radius: 4px;
             border-bottom-right-radius: 4px;
         }
-        div.scroller{ 
+        div.scroller{
      scrollbar-color: rgba(6, 44, 54, 0.9) rgb(13, 20, 20);
-       scrollbar-width: thin;  
+       scrollbar-width: thin;
      }
 
     </style>
@@ -248,13 +249,14 @@
 </head>
 
 <body>
-
+<form method="post">
+    {% csrf_token %}
     <div class="container-fluid">
         <div class="row" id="l">
             <div class="col-lg-5 navcol"
                 style="height: 7vh;display: flex; justify-content: center;align-items: center;">
                 <div class="col-lg-3" style=" height: 7vh;">
-                    <img src="RC.jpg"
+                    <img src="{% static 'img/RC.jpg' %}"
                         style="width: 6vw; height:7vh; display:flex;align-items: center;justify-content: center;color: white">
                 </div>
                 <div class="col-lg-9"
@@ -264,19 +266,18 @@
             </div>
             <div class="col-lg-2 navcol"
                 style=" height: 7vh; display: flex; justify-content: center;align-items: center;color: white">
-                Timer
+                {{time}}
             </div>
             <div class="col-lg-5 navcol" style=" height: 7vh;">
                 <div class="row">
                     <div class="col-lg-3 mt-1"
                         style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
-                        <button class="btn btn-block "
-                            style="background-color: rgba(52, 162, 196, 0.65); color: white; font-size: 15px; padding-left: 0; padding-right: 0;">Question
-                            Hub</button>
+                        <button class="btn btn-block " type="button" onclick="location.href='{% url 'questionHub' %}'"
+                            style="background-color: rgba(52, 162, 196, 0.65); color: white; font-size: 15px; padding-left: 0; padding-right: 0;">Question Hub</button>
                     </div>
                     <div class="col-lg-3 mt-1"
                         style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
-                        <button class="btn btn-block "
+                        <button class="btn btn-block " type="button" onclick="location.href='{% url 'leader' %}'"
                             style="background-color: rgba(52, 162, 196, 0.65); color: white; font-size: 15px; padding-left: 1; padding-right: 1;">Leaderboard</button>
                     </div>
                     <!-- The Modal -->
@@ -298,7 +299,7 @@
 
                                 <!-- Modal footer -->
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger " data-dismiss="modal">Log Out</button>
+                                    <button type="button" class="btn btn-danger " onclick="location.href='{% url 'logout' %}' data-dismiss="modal">Log Out</button>
                                 </div>
 
                             </div>
@@ -310,7 +311,7 @@
                     </div>
                     <div class="col-lg-3 mt-1"
                         style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
-                        <img src="ieeelogo.jpeg" style="height: 5vh;">
+                        <img src="{% static 'img/IEEE_logo.png' %}" style="height: 5vh;">
                     </div>
                 </div>
             </div>
@@ -337,13 +338,13 @@
                                         <div class="row ccpp">
                                             <div class="col-lg-12" style="height:5.5vh;display:flex">
                                                 <label class="container">
-                                                    <input type="radio" checked="checked" name="radio">
+                                                    <input type="radio" name="ext" checked value="c">
                                                     <span class="checkmark"></span>
                                                     <span style="padding-left:20px;text-shadow: 1px 1px black">C</span>
                                                 </label>
                                                 <label class="container ml-2"
                                                     style="border-left:1px solid rgba(1, 2, 7, 0.65);">
-                                                    <input type="radio" name="radio">
+                                                    <input type="radio" name="ext" checked value="cpp">
                                                     <span class="checkmark"></span><span
                                                         style="padding-left:15px;text-shadow: 1px 1px black">C++</span>
                                                 </label>
@@ -367,7 +368,7 @@
                         <div class="row mt-2" style="justify-content: space-around">
                             <div class="col-lg-4" style="box-shadow:2px 2px 2px black;border-radius:4px">
                                 <div class="row workarea pl-2" style="justify-content: space-between"><span
-                                        class="header">QUESTION</span>
+                                        class="header">{{ question.titleQue }}</span>
                                 </div>
 
 
@@ -375,7 +376,8 @@
                                     <div class="col-lg-12 scroller"
                                         style=" border:none;height:60vh;background-color: black;padding:15px;overflow-y:scroll; overflow-x:hidden;border-bottom-right-radius:4px;border-bottom-left-radius:4px;">
                                         <div class="p-2" style="color:rgb(216, 216, 216);font-size: 15px;">
-                                            Let d(i,b) be the digit sum of the
+                                            {{ question.question }}
+                                            <!--Let d(i,b) be the digit sum of the
                                             number i in base b. For example d(9,2)=2, since 9=10012. When using
                                             different bases, the respective digit sums most of the time deviate from
                                             each other, for example d(9,4)=3≠d(9,2).
@@ -395,7 +397,7 @@
                                             different bases, the respective digit sums most of the time deviate from
                                             each other, for example d(9,4)=3≠d(9,2).
                                             However, for some numbers i there will be a match, like d(17,4)=d(17,2)=2.
-                                            Let M(n,b1,b2) be the sum of
+                                            Let M(n,b1,b2) be the sum of-->
 
                                         </div>
                                     </div>
@@ -404,7 +406,7 @@
                             <div class="col-lg-7" style="box-shadow:2px 2px 2px black;border-radius:4px">
                                 <div class="row workarea"><span class="header">CODE EDITOR</span></div>
                                 <div class="row">
-                                    <textarea id="editor"></textarea>
+                                    <textarea name="content" class="col-lg-12" id="editor" style="box-shadow:2px 2px 2px black;border-radius:4px"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -430,8 +432,7 @@
                                             Buffer</button>
                                     </div>
                                     <div class="col-lg-8">
-                                        <button type="submit" class="btmbtn"
-                                            style="padding:0;margin:0;margin-left:270px;background-color:rgba(52, 162, 196, 0.95); color:white; border:none; width:9vw; height: 5.5vh; font-size: 17px; border-radius: 5px;">Submit</button>
+                                        <button type="submit" class="btmbtn" formmethod="post" onclick="location.href='/user/{{user.username}}/{{question.IDNumber}}/{{question.}}' ; "style="padding:0;margin:0;margin-left:270px;background-color:rgba(52, 162, 196, 0.95); color:white; border:none; width:9vw; height: 5.5vh; font-size: 17px; border-radius: 5px;">Submit</button>
                                     </div>
                                 </div>
                             </div>
@@ -444,6 +445,7 @@
                 &copy PICT IEEE STUDENT BRANCH </div>
         </div>
     </div>
+    </form>
 
     <script>
         var editor = CodeMirror.fromTextArea(document.getElementById('editor'), {

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
     <html lang="en">
 
@@ -10,52 +11,61 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Biryani&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="cl.css">
-        
-    </head>
+        <link rel="stylesheet" href="{% static 'css/cl.css' %}">
 
+    </head>
+<style>
+        body{
+            background-image: url("{% static 'img/alt1.jpg' %}");
+            background-repeat: no-repeat;
+            background-size: 100%;
+            font-family: 'Biryani', sans-serif;
+            color: #d7e9f8;
+            overflow: hidden;
+        }
+</style>
     <body class="body">
         <form>
         <div class="container-fluid">
             <div class="row" style="background-color: #000">
                 <div class="col-lg-5" style="height: 7vh;display: flex; justify-content: center;align-items: center;">
                     <div class="col-lg-3" style=" height: 7vh;">
-                        <img src="RC.jpg" style="width: 6vw; height:7vh; display:flex;align-items: center;justify-content: center;color: white">
+                        <img src="{% static 'img/RC.jpg' %}" style="width: 6vw; height:7vh; display:flex;align-items: center;justify-content: center;color: white">
                     </div>
                     <div class="col-lg-9" style="padding-top: 1vh;height: 6vh; display: flex; align-items: center; justify-content: center; color: white"><h5>LEADERBOARD</h5></div>
                 </div>
                 <div class="col-lg-2" style=" height: 7vh; display: flex; justify-content: center;align-items: center;color: white">
-                    Timer
+                    {{time}}
                 </div>
                 <div class="col-lg-5" style=" height: 7vh;">
                     <div class="row">
                         <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
-                            <button class="btn btn-block" style="background-color: rgba(52, 162, 196, 0.65); color: white; font-size: 13px; padding-left: 0; padding-right: 0;">Question Hub</button>
+                            <button class="btn btn-block" type="button" onclick="location.href = '/user/allque';" style="background-color: rgba(52, 162, 196, 0.65); color: white; font-size: 13px; padding-left: 0; padding-right: 0;">Question Hub</button>
                         </div>
                         <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
-                            <button class="btn btn-block" style="background-color: rgba(52, 162, 196, 0.65); color: white; font-size: 13px; padding-left: 1; padding-right: 1;">Submissions</button>
+                            <button class="btn btn-block" type="button" onclick="window.location.href = 'user/{{ user.username }}/submission';" style="background-color: rgba(52, 162, 196, 0.65); color: white; font-size: 13px; padding-left: 1; padding-right: 1;">Submissions</button>
                         </div>
                         <!-- The Modal -->
                         <div class="modal fade" id="logout">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
-                                
+
                                         <!-- Modal Header -->
                                         <div class="modal-header">
                                         <h4 class="modal-title" style="color: black;">Are you sure you want to logout?</h4>
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         </div>
-                                
+
                                         <!-- Modal body -->
                                         <div class="modal-body">
                                         <p style="color: black;">Logging out will cause termination of your game and your score till this moment will be counted as your Final Score.
                                         </div>
-                                
+
                                         <!-- Modal footer -->
                                         <div class="modal-footer">
                                         <button type="button" class="btn btn-danger" data-dismiss="modal" >Log Out</button>
                                         </div>
-                                
+
                                     </div>
                                 </div>
                             </div>
@@ -63,7 +73,7 @@
                             <button class="btn btn-danger btn-block" data-toggle="modal" data-target="#logout" style="font-size: 13px; padding-left: 1; padding-right: 1;">Log Out</button>
                         </div>
                         <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
-                            <img src="IEEE_logo.png" style="height: 5vh;">
+                            <img src="{% static 'img/IEEE_logo.png' %}" style="height: 5vh;">
                         </div>
                     </div>
                 </div>
@@ -90,106 +100,22 @@
             <div class="table-wrapper-scroll-y my-custom-scrollbar">
                 <table class="table table-hover" rules=none>
                     <tbody >
+                    {% for key,value in dict.items %}
                         <tr >
-                            <td class="c2-rank ">1.</td>
-                            <td class="c2-name">XYZ </td>
+                            <td class="c2-rank ">{{forloop.counter}}</td>
+                            <td class="c2-name">{{key}} </td>
+                            {% for var in value %}
+                            <td class="c2 ">{{var}}</td>
+                            {% endfor %}
+                            <!--<td class="c2 ">40</td>
                             <td class="c2 ">40</td>
                             <td class="c2 ">40</td>
                             <td class="c2 ">40</td>
-                            <td class="c2 ">40</td>
-                            <td class="c2 ">40</td>
                             <td class="c2">40</td>
-                            <td class="c2-result">400</td>
+                            <td class="c2-result">400</td>  --->
                         </tr>
-                        <tr >
-                            <td class="c2-rank">1.</td>
-                            <td class="c2-name">XYZ</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2-result">400</td>
-                        </tr>
-                        <tr>
-                            <td class="c2-rank">1.</td>
-                            <td class="c2-name">XYZ </td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2-result">400</td>
-                        </tr>
-                        <tr>
-                            <td class="c2-rank">1.</td>
-                            <td class="c2-name">XYZ </td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2-result">400</td>
-                        </tr>
-                        <tr>
-                            <td class="c2-rank">1.</td>
-                            <td class="c2-name">XYZ </td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2-result">400</td>
-                        </tr>
-                        <tr>
-                            <td class="c2-rank">1.</td>
-                            <td class="c2-name">XYZ </td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2-result">400</td>
-                        </tr>
-                        <tr>
-                            <td class="c2-rank">1.</td>
-                            <td class="c2-name">XYZ</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2-result">400</td>
-                        </tr>
-                        <tr>
-                            <td class="c2-rank">1.</td>
-                            <td class="c2-name">XYZ</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2-result">400</td>
-                        </tr>
-                        <tr>
-                            <td class="c2-rank">1.</td>
-                            <td class="c2-name">XYZ</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2-result">400</td>
-                        </tr>
-                        <tr>
+                    {% endfor %}
+                        <!--<tr >
                             <td class="c2-rank">1.</td>
                             <td class="c2-name">XYZ</td>
                             <td class="c2">40</td>
@@ -210,84 +136,7 @@
                             <td class="c2">40</td>
                             <td class="c2">40</td>
                             <td class="c2-result">400</td>
-                        </tr>
-                        <tr>
-                            <td class="c2-rank">1.</td>
-                            <td class="c2-name">XYZl </td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2-result">400</td>
-                        </tr>
-                        <tr>
-                            <td class="c2-rank">1.</td>
-                            <td class="c2-name">XYZl </td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2-result">400</td>
-                        </tr>
-                        <tr>
-                            <td class="c2-rank">1.</td>
-                            <td class="c2-name">XYZl </td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2-result">400</td>
-                        </tr>
-                        <tr>
-                            <td class="c2-rank">1.</td>
-                            <td class="c2-name">XYZl </td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2-result">400</td>
-                        </tr>
-                        <tr>
-                            <td class="c2-rank">1.</td>
-                            <td class="c2-name">XYZl </td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2-result">400</td>
-                        </tr>
-                        <tr>
-                            <td class="c2-rank">1.</td>
-                            <td class="c2-name">XYZl </td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2-result">400</td>
-                        </tr>
-                        <tr>
-                            <td class="c2-rank">1.</td>
-                            <td class="c2-name">XYZl </td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2-result">400</td>
-                        </tr>
+                        </tr>-->
                     </tbody>
                 </table>
             </div>
