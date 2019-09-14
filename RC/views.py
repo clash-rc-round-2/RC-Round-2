@@ -65,15 +65,15 @@ def signup(request):
             userprofile = UserProfile(user=user, name1=name1, name2=name2, phone1=phone1, phone2=phone2, email1=email1,
                                       email2=email2)
             userprofile.save()
-        #    os.system('mkdir {}/{}'.format(path_usercode, username))
+            os.system('mkdir {}/{}'.format(path_usercode, username))
             login(request, user)
             return redirect(reverse("instructions"))
 
         except IntegrityError:
             return HttpResponse("you have already been registered.")
 
-#  except HttpResponseForbidden:
-#      return render(request, 'RC/Login.html')
+    #  except HttpResponseForbidden:
+    #      return render(request, 'RC/Login.html')
 
     elif request.method == 'GET':
         return render(request, "RC/Login.html")
@@ -196,10 +196,14 @@ def codeSave(request, username, qn):
 
     elif request.method == 'GET':
         que = Question.objects.get(pk=qn)
+        user_profile = UserProfile.objects.get(user=request.user)
         user = User.objects.get(username=username)
+
         var = calculate()
         if var != 0:
-            return render(request, 'RC/codingrcblue2 (2).html', context={'question': que, 'user': user, 'time': var})
+            return render(request, 'RC/codingrcblue2 (2).html',
+                          context={'question': que, 'user': user, 'question_id': user_profile.qid,
+                                   'total_score': user_profile.totalScore, 'time': var})
         else:
             return render(request, 'RC/RESULTRC.html')
 

@@ -8,19 +8,25 @@
     </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css?family=Gothic+A1&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Gothic+A1&display=swap" rel="stylesheet"> -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="codemirror/lib/codemirror.js"></script>
-    <link href="codemirror/lib/codemirror.css" rel="stylesheet">
-    <link href="codemirror/theme/base16-dark.css" rel="stylesheet">
-    <script src="codemirror/mode/clike/clike.js"></script>
-    <script src="codemirror/mode/python/python.js"></script>
-    <script src="codemirror/addon/edit/closebrackets.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
+    <script src="{% static 'coding_page/codemirror/lib/codemirror.js' %}"></script>
+    <link href="{% static 'coding_page/codemirror/lib/codemirror.css' %}" rel="stylesheet">
+    <link href="{% static 'coding_page/codemirror/theme/base16-dark.css' %}" rel="stylesheet">
+    <script src="{% static 'coding_page/codemirror/mode/clike/clike.js' %}"></script>
+    <script src="{% static 'coding_page/codemirror/mode/python/python.js' %}"></script>
+    <script src="{% static 'coding_page/codemirror/addon/edit/closebrackets.js' %}"></script>
 
     <style>
+           @font-face {
+    font-family: 'Gothic A1';
+    src: url('./GothicA1-Regular.ttf') format('truetype');
+
+}
         #l {
             background-image: url("{% static 'img/alt1.jpg' %}");
             font-family: 'Gothic A1', sans-serif;
@@ -239,9 +245,9 @@
             border-bottom-left-radius: 4px;
             border-bottom-right-radius: 4px;
         }
-        div.scroller{
+        div.scroller{ 
      scrollbar-color: rgba(6, 44, 54, 0.9) rgb(13, 20, 20);
-       scrollbar-width: thin;
+       scrollbar-width: thin;  
      }
 
     </style>
@@ -249,8 +255,7 @@
 </head>
 
 <body>
-<form method="post">
-    {% csrf_token %}
+
     <div class="container-fluid">
         <div class="row" id="l">
             <div class="col-lg-5 navcol"
@@ -266,47 +271,50 @@
             </div>
             <div class="col-lg-2 navcol"
                 style=" height: 7vh; display: flex; justify-content: center;align-items: center;color: white">
-                {{time}}
+                Timer
             </div>
             <div class="col-lg-5 navcol" style=" height: 7vh;">
                 <div class="row">
                     <div class="col-lg-3 mt-1"
                         style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
-                        <button class="btn btn-block " type="button" onclick="location.href='{% url 'questionHub' %}'"
-                            style="background-color: rgba(52, 162, 196, 0.65); color: white; font-size: 15px; padding-left: 0; padding-right: 0;">Question Hub</button>
+                        <button class="btn btn-block "
+                            style="background-color: rgba(52, 162, 196, 0.65); color: white; font-size: 15px; padding-left: 0; padding-right: 0;">Question
+                            Hub</button>
                     </div>
                     <div class="col-lg-3 mt-1"
                         style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
-                        <button class="btn btn-block " type="button" onclick="location.href='{% url 'leader' %}'"
+                        <button class="btn btn-block "
                             style="background-color: rgba(52, 162, 196, 0.65); color: white; font-size: 15px; padding-left: 1; padding-right: 1;">Leaderboard</button>
                     </div>
-                     <!-- The Modal -->
-                            <div class="modal fade" id="logout">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
+                    <!-- The Modal -->
+                    <div class="modal fade" id="logout">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
 
-                                            <!-- Modal Header -->
-                                            <div class="modal-header">
-                                            <h4 class="modal-title" style="color: black;">Are you sure you want to logout?</h4>
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            </div>
-
-                                            <!-- Modal body -->
-                                            <div class="modal-body">
-                                            <p style="color: black;">Logging out will cause termination of your game and your score till this moment will be counted as your Final Score.
-                                            </div>
-
-                                            <!-- Modal footer -->
-                                            <div class="modal-footer">
-                                            <button type="button" class="btn btn-danger" onclick="location.href='{% url 'logout' %}'" data-dismiss="modal">Log Out</button>
-                                            </div>
-
-                                        </div>
-                                    </div>
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title" style="color: black;">Are you sure you want to logout?</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
-                    <div class="col-lg-3 mt-1" style="display: flex; justify-content: center; align-items: center;">
-                                <button class="btn btn-danger btn-block" type="button" data-toggle="modal" data-target="#logout"  style="font-size: 14px; padding-left: 0; padding-right: 0;">Log Out</button>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <p style="color: black;">Logging out will cause termination of your game and your
+                                        score till this moment will be counted as your Final Score.
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger " data-dismiss="modal">Log Out</button>
+                                </div>
+
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 mt-1" style="display: flex; justify-content: center;align-items: center;">
+                        <button class="btn btn-danger btn-block" data-toggle="modal" data-target="#logout"
+                            style="font-size: 15px; padding-left: 1; padding-right: 1;">Log Out</button>
+                    </div>
                     <div class="col-lg-3 mt-1"
                         style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
                         <img src="{% static 'img/IEEE_logo.png' %}" style="height: 5vh;">
@@ -325,7 +333,7 @@
                                             <h5>SCORE</h5>
                                         </div>
                                         <div class="col-lg-6 score">
-                                            <h5>100</h5>
+                                            <h5>{{total_score}}</h5>
                                         </div>
                                     </div>
                                 </div>
@@ -336,13 +344,13 @@
                                         <div class="row ccpp">
                                             <div class="col-lg-12" style="height:5.5vh;display:flex">
                                                 <label class="container">
-                                                    <input type="radio" name="ext" checked value="c">
+                                                    <input type="radio" checked="checked" name="radio">
                                                     <span class="checkmark"></span>
                                                     <span style="padding-left:20px;text-shadow: 1px 1px black">C</span>
                                                 </label>
                                                 <label class="container ml-2"
                                                     style="border-left:1px solid rgba(1, 2, 7, 0.65);">
-                                                    <input type="radio" name="ext" checked value="cpp">
+                                                    <input type="radio" name="radio">
                                                     <span class="checkmark"></span><span
                                                         style="padding-left:15px;text-shadow: 1px 1px black">C++</span>
                                                 </label>
@@ -354,7 +362,7 @@
                                         <input type="file" id="file" />
                                         <label for="file">
                                             <span>
-                                                <img src="choosefile.png" class="ml-3" width="30px" height="25px">
+                                                <img src="{% static 'img/choosefile.png' %}" class="ml-3" width="30px" height="25px">
                                             </span>
                                             Choose file</label>
                                     </div>
@@ -375,28 +383,6 @@
                                         style=" border:none;height:60vh;background-color: black;padding:15px;overflow-y:scroll; overflow-x:hidden;border-bottom-right-radius:4px;border-bottom-left-radius:4px;">
                                         <div class="p-2" style="color:rgb(216, 216, 216);font-size: 15px;">
                                             {{ question.question }}
-                                            <!--Let d(i,b) be the digit sum of the
-                                            number i in base b. For example d(9,2)=2, since 9=10012. When using
-                                            different bases, the respective digit sums most of the time deviate from
-                                            each other, for example d(9,4)=3≠d(9,2).
-                                            However, for some numbers i there will be a match, like d(17,4)=d(17,2)=2.
-                                            Let M(n,b1,b2) be the sum of all natural numbers i≤n for which
-                                            d(i,b1)=d(i,b2). For example, M(10,8,2)=18, M(100,8,2)=292 and
-                                            M(106,8,2)=19173952.
-                                            Find ∑k=36∑l=1k−2M(1016,2k,2l), giving the last 16 digits as the answer.
-                                            et d(i,b) be the digit sum of the
-                                            number i in base b. For example d(9,2)=2, since 9=10012. When using
-                                            different bases, the respective digit sums most of the time deviate from
-                                            each other, for example d(9,4)=3≠d(9,2).
-                                            However, for some numbers i there will be a match, like d(17,4)=d(17,2)=2.
-                                            Let M(n,b1,b2) be the sum of
-                                            et d(i,b) be the digit sum of the
-                                            number i in base b. For example d(9,2)=2, since 9=10012. When using
-                                            different bases, the respective digit sums most of the time deviate from
-                                            each other, for example d(9,4)=3≠d(9,2).
-                                            However, for some numbers i there will be a match, like d(17,4)=d(17,2)=2.
-                                            Let M(n,b1,b2) be the sum of-->
-
                                         </div>
                                     </div>
                                 </div>
@@ -404,7 +390,7 @@
                             <div class="col-lg-7" style="box-shadow:2px 2px 2px black;border-radius:4px">
                                 <div class="row workarea"><span class="header">CODE EDITOR</span></div>
                                 <div class="row">
-                                    <textarea name="content" class="col-lg-12" id="editor" style="box-shadow:2px 2px 2px black;border-radius:4px"></textarea>
+                                    <textarea id="editor"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -430,7 +416,8 @@
                                             Buffer</button>
                                     </div>
                                     <div class="col-lg-8">
-                                        <button type="submit" class="btmbtn" formmethod="post" onclick="location.href='/user/{{user.username}}/{{question.IDNumber}}/{{question.}}' ; "style="padding:0;margin:0;margin-left:270px;background-color:rgba(52, 162, 196, 0.95); color:white; border:none; width:9vw; height: 5.5vh; font-size: 17px; border-radius: 5px;">Submit</button>
+                                        <button type="submit" class="btmbtn"
+                                            style="padding:0;margin:0;margin-left:270px;background-color:rgba(52, 162, 196, 0.95); color:white; border:none; width:9vw; height: 5.5vh; font-size: 17px; border-radius: 5px;">Submit</button>
                                     </div>
                                 </div>
                             </div>
@@ -443,7 +430,6 @@
                 &copy PICT IEEE STUDENT BRANCH </div>
         </div>
     </div>
-    </form>
 
     <script>
         var editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
@@ -459,7 +445,8 @@
         });
         editor.setSize("80vw", "60vh")
     </script>
-
+<script src="jquery.js"></script>
+<script src="bootstrap.js"></script>
 </body>
 
 </html>
