@@ -14,12 +14,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
-    <script src="{% static 'coding_page/codemirror/lib/codemirror.js' %}"></script>
-    <link href="{% static 'coding_page/codemirror/lib/codemirror.css' %}" rel="stylesheet">
-    <link href="{% static 'coding_page/codemirror/theme/base16-dark.css' %}" rel="stylesheet">
-    <script src="{% static 'coding_page/codemirror/mode/clike/clike.js' %}"></script>
-    <script src="{% static 'coding_page/codemirror/mode/python/python.js' %}"></script>
-    <script src="{% static 'coding_page/codemirror/addon/edit/closebrackets.js' %}"></script>
+    <script src="{% static 'javascript/coding_page/codemirror/lib/codemirror.js' %}"></script>
+    <link href="{% static 'javascript/coding_page/codemirror/lib/codemirror.css' %}" rel="stylesheet">
+    <link href="{% static 'javascript/coding_page/codemirror/theme/base16-dark.css' %}" rel="stylesheet">
+    <script src="{% static 'javascript/coding_page/codemirror/mode/clike/clike.js' %}"></script>
+    <script src="{% static 'javascript/coding_page/codemirror/mode/python/python.js' %}"></script>
+    <script src="{% static 'javascript/coding_page/codemirror/addon/edit/closebrackets.js' %}"></script>
 
     <style>
            @font-face {
@@ -271,19 +271,19 @@
             </div>
             <div class="col-lg-2 navcol"
                 style=" height: 7vh; display: flex; justify-content: center;align-items: center;color: white">
-                Timer
+                {{time}}
             </div>
             <div class="col-lg-5 navcol" style=" height: 7vh;">
                 <div class="row">
                     <div class="col-lg-3 mt-1"
                         style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
-                        <button class="btn btn-block "
+                        <button class="btn btn-block " onclick= "location.href='{% url 'questionHub' %}';"
                             style="background-color: rgba(52, 162, 196, 0.65); color: white; font-size: 15px; padding-left: 0; padding-right: 0;">Question
                             Hub</button>
                     </div>
                     <div class="col-lg-3 mt-1"
                         style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
-                        <button class="btn btn-block "
+                        <button class="btn btn-block " onclick="location.href='{% url 'leader' %}'"
                             style="background-color: rgba(52, 162, 196, 0.65); color: white; font-size: 15px; padding-left: 1; padding-right: 1;">Leaderboard</button>
                     </div>
                     <!-- The Modal -->
@@ -324,6 +324,7 @@
 
             <div class="col-lg-12" style="height: 86vh;">
                 <form>
+                    {% csrf_token %}
                     <div class="col-lg-12">
                         <div class="row mt-4" style="display: flex;justify-content:space-around;">
                             <div class="col-lg-4">
@@ -344,15 +345,15 @@
                                         <div class="row ccpp">
                                             <div class="col-lg-12" style="height:5.5vh;display:flex">
                                                 <label class="container">
-                                                    <input type="radio" checked="checked" name="radio">
+                                                    <input type="radio" name="ext" checked="checked" name="radio">
                                                     <span class="checkmark"></span>
                                                     <span style="padding-left:20px;text-shadow: 1px 1px black">C</span>
                                                 </label>
                                                 <label class="container ml-2"
                                                     style="border-left:1px solid rgba(1, 2, 7, 0.65);">
-                                                    <input type="radio" name="radio">
+                                                    <input type="radio" name="ext" name="radio">
                                                     <span class="checkmark"></span><span
-                                                        style="padding-left:15px;text-shadow: 1px 1px black">C++</span>
+                                                         style="padding-left:15px;text-shadow: 1px 1px black">C++</span>
                                                 </label>
                                             </div>
                                         </div>
@@ -390,7 +391,7 @@
                             <div class="col-lg-7" style="box-shadow:2px 2px 2px black;border-radius:4px">
                                 <div class="row workarea"><span class="header">CODE EDITOR</span></div>
                                 <div class="row">
-                                    <textarea id="editor"></textarea>
+                                    <textarea name="content" id="editor"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -416,7 +417,7 @@
                                             Buffer</button>
                                     </div>
                                     <div class="col-lg-8">
-                                        <button type="submit" class="btmbtn"
+                                        <button type="submit" class="btmbtn" formmethod="post" onclick="location.href='/user/{{user.username}}/{{question.IDNumber}}';"
                                             style="padding:0;margin:0;margin-left:270px;background-color:rgba(52, 162, 196, 0.95); color:white; border:none; width:9vw; height: 5.5vh; font-size: 17px; border-radius: 5px;">Submit</button>
                                     </div>
                                 </div>
@@ -445,8 +446,8 @@
         });
         editor.setSize("80vw", "60vh")
     </script>
-<script src="jquery.js"></script>
-<script src="bootstrap.js"></script>
+<script src="{% static 'javascript/jquery.js' %}"></script>
+<script src="{% static 'javascript/bootstrap.js' %}"></script>
 </body>
 
 </html>

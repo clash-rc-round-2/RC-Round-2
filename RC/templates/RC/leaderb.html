@@ -40,7 +40,7 @@
                 <div class="col-lg-5" style=" height: 7vh;">
                     <div class="row">
                         <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
-                            <button class="btn btn-block" type="button" onclick="location.href = '/user/allque';" style="background-color: rgba(52, 162, 196, 0.65); color: white; font-size: 13px; padding-left: 0; padding-right: 0;">Question Hub</button>
+                            <button class="btn btn-block" type="button" onclick="location.href = '{% url 'questionHub' %}';" style="background-color: rgba(52, 162, 196, 0.65); color: white; font-size: 13px; padding-left: 0; padding-right: 0;">Question Hub</button>
                         </div>
                         <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
                             <button class="btn btn-block" type="button" onclick="window.location.href = 'user/{{ user.username }}/submission';" style="background-color: rgba(52, 162, 196, 0.65); color: white; font-size: 13px; padding-left: 1; padding-right: 1;">Submissions</button>
@@ -100,20 +100,17 @@
             <div class="table-wrapper-scroll-y my-custom-scrollbar">
                 <table class="table table-hover" rules=none>
                     <tbody >
+
                     {% for key,value in dict.items %}
+
                         <tr >
                             <td class="c2-rank ">{{forloop.counter}}</td>
                             <td class="c2-name">{{key}} </td>
                             {% for var in value %}
                             <td class="c2 ">{{var}}</td>
                             {% endfor %}
-                            <!--<td class="c2 ">40</td>
-                            <td class="c2 ">40</td>
-                            <td class="c2 ">40</td>
-                            <td class="c2 ">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2-result">400</td>  --->
                         </tr>
+
                     {% endfor %}
                         <!--<tr >
                             <td class="c2-rank">1.</td>
@@ -126,17 +123,7 @@
                             <td class="c2">40</td>
                             <td class="c2-result">400</td>
                         </tr>
-                        <tr>
-                            <td class="c2-rank">1.</td>
-                            <td class="c2-name">XYZl </td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2">40</td>
-                            <td class="c2-result">400</td>
-                        </tr>-->
+
                     </tbody>
                 </table>
             </div>
