@@ -1,0 +1,521 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Submissions Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Gothic+A1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/sub2.css' %}">
+</head>
+<style>
+        body{
+            background-image: url("{% static 'img/alt1.jpg' %}");
+            background-repeat: no-repeat;
+            background-size: 100%;
+            font-family: 'Biryani', sans-serif;
+            color: #d7e9f8;
+            overflow: hidden;
+        }
+</style>
+    <body>
+        <form>
+        <div class="container-fluid">
+            <div class="row" style="background-color: #000">
+                <div class="col-lg-5" style="height: 7vh;display: flex; justify-content: center;align-items: center;">
+                    <div class="col-lg-3" style=" height: 7vh;">
+                        <img src="{% static 'img/RC.jpg' %}" style="width: 6vw; height:7vh; display:flex;align-items: center;justify-content: center;color:#ffffff;">
+                    </div>
+                    <div class="col-lg-9" style="padding-top: 1vh;height: 6vh; display: flex; align-items: center; justify-content: center; color:#ffffff;"><h5>SUBMISSIONS PAGE</h5></div>
+                </div>
+                <div class="col-lg-2" style=" height: 7vh; display: flex; justify-content: center;align-items: center;color:#ffffff;">
+                    {{time}}
+                </div>
+                <div class="col-lg-5" style=" height: 7vh;">
+                    <div class="row">
+                        <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
+                            <button class="btn btn-block" type="button" onclick="location.href='{% url 'questionHub' %}'" style="background-color: rgba(52, 162, 196, 0.65); color:#ffffff;font-size: 15px; padding-left: 0; padding-right: 0;">Question Hub</button>
+                        </div>
+                        <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
+                            <button class="btn btn-block" type="button" onclick="location.href='{% url 'leader' %}'" style="background-color: rgba(52, 162, 196, 0.65); color:#ffffff; font-size: 15px; padding-left: 1; padding-right: 1;">Leaderboard</button>
+                        </div>
+               <!-- The Modal -->
+                            <div class="modal fade" id="logout">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                            <h4 class="modal-title" style="color: black;">Are you sure you want to logout?</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+
+                                            <!-- Modal body -->
+                                            <div class="modal-body">
+                                            <p style="color: black;">Logging out will cause termination of your game and your score till this moment will be counted as your Final Score.
+                                            </div>
+
+                                            <!-- Modal footer -->
+                                            <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" onclick="location.href='{% url 'logout' %}'" data-dismiss="modal">Log Out</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                     <div class="col-lg-3 mt-1" style="display: flex; justify-content: center; align-items: center;">
+                                <button class="btn btn-danger btn-block" type="button" data-toggle="modal" data-target="#logout"  style="font-size: 14px; padding-left: 0; padding-right: 0;">Log Out</button>
+                            </div>
+                        <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
+                            <img src="{% static 'img/IEEE_logo.png' %}" style="height: 5vh;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row middle">
+                        <div class="tableHeadDiv">
+                            <table rules=none class="table table-fixed tableHead">
+                                <thead>
+                                    <tr class="table-active" style="height: 7vh;">
+                                        <th class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg 3" style="text-align: center; padding-left: 2vw;">SR. NO.</div>
+                                                <div class="col-lg 9" style="text-align: center; padding-right: 3.5vw;">TIME</div>
+                                            </div>
+                                        </th>
+                                        <th class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg 9" style="text-align: center; padding-left: 1vw;">STATUS</div>
+                                                <div class="col-lg 3" style="text-align: center;"></div>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="tableBodyDiv">
+                            <table rules=none class="table table-fixed tableBody">
+                                <tbody>
+                                {% for submission in allSubmission %}
+                                <tr scope="row">
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-6" style="text-align: center;"><h5 style="padding-top: 0.6vh;">1</h5></div>
+                                                <div class="col-lg-6" style="text-align: center;">
+                                                    <div id="textareaStyle">
+                                                        <textarea disabled class="form-control" style="width: 15vw; height: 4.5vh; resize: none;"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-9" style="text-align: center;">
+                                                    <div class="progress position-relative" id="progressStyle">
+                                                        <div class="progress-bar" role="progressbar" style="width: 30%; background-color:rgba(14, 127, 161);" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <p class="justify-content-center d-flex position-absolute w-100" style="margin-top: 0.6vh; color: #000"><b>{{ submission.TestCasesPercentage }}%</b></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div style="margin-left: -5vw;">
+                                                        <button type="submit" style="background-color:rgba(52, 162, 196, 0.65); color:#BBC7CE; border:none; width:8vw; height: 5vh; font-size: 17px; border-radius: 5px;">VIEW</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                   <!-- <tr scope="row" style="margin-top: -1vh;">
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-6" style="text-align: center;"><h5 style="padding-top: 0.6vh;">2</h5></div>
+                                                <div class="col-lg-6" style="text-align: center;">
+                                                    <div id="textareaStyle">
+                                                        <textarea disabled class="form-control" style="width: 15vw; height: 4.5vh; resize: none;"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-9" style="text-align: center;">
+                                                    <div class="progress position-relative" id="progressStyle">
+                                                        <div class="progress-bar" role="progressbar" style="width: 40%; background-color:rgba(14, 127, 161);" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <p class="justify-content-center d-flex position-absolute w-100" style="margin-top: 0.6vh; color: #000"><b>40%</b></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div style="margin-left: -5vw;">
+                                                        <button type="submit" style="background-color:rgba(52, 162, 196, 0.65); color:#BBC7CE; border:none; width:8vw; height: 5vh; font-size: 17px; border-radius: 5px;">VIEW</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr scope="row">
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-6" style="text-align: center;"><h5 style="padding-top: 0.6vh;">3</h5></div>
+                                                <div class="col-lg-6" style="text-align: center;">
+                                                    <div id="textareaStyle">
+                                                        <textarea disabled class="form-control" style="width: 15vw; height: 4.5vh; resize: none;"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-9" style="text-align: center;">
+                                                    <div class="progress position-relative" id="progressStyle">
+                                                        <div class="progress-bar" role="progressbar" style="width: 60%; background-color:rgba(14, 127, 161);" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <p class="justify-content-center d-flex position-absolute w-100" style="margin-top: 0.6vh; color: #000"><b>60%</b></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div style="margin-left: -5vw;">
+                                                        <button type="submit" style="background-color:rgba(52, 162, 196, 0.65); color:#BBC7CE; border:none; width:8vw; height: 5vh; font-size: 17px; border-radius: 5px;">VIEW</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr scope="row">
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-6" style="text-align: center;"><h5 style="padding-top: 0.6vh;">4</h5></div>
+                                                <div class="col-lg-6" style="text-align: center;">
+                                                    <div id="textareaStyle">
+                                                        <textarea disabled class="form-control" style="width: 15vw; height: 4.5vh; resize: none;"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-9" style="text-align: center;">
+                                                    <div class="progress position-relative" id="progressStyle">
+                                                        <div class="progress-bar" role="progressbar" style="width: 10%; background-color:rgba(14, 127, 161);" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <p class="justify-content-center d-flex position-absolute w-100" style="margin-top: 0.6vh; color: #000"><b>10%</b></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div style="margin-left: -5vw;">
+                                                        <button type="submit" style="background-color:rgba(52, 162, 196,0.65); color:#BBC7CE; border:none; width:8vw; height: 5vh; font-size: 17px; border-radius: 5px;">VIEW</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr scope="row">
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-6" style="text-align: center;"><h5 style="padding-top: 0.6vh;">5</h5></div>
+                                                <div class="col-lg-6" style="text-align: center;">
+                                                    <div id="textareaStyle">
+                                                        <textarea disabled class="form-control" style="width: 15vw; height: 4.5vh; resize: none;"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-9" style="text-align: center;">
+                                                    <div class="progress position-relative" id="progressStyle">
+                                                        <div class="progress-bar" role="progressbar" style="width: 30%; background-color:rgba(14, 127, 161);" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <p class="justify-content-center d-flex position-absolute w-100" style="margin-top: 0.6vh; color: #000"><b>30%</b></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div style="margin-left: -5vw;">
+                                                        <button type="submit" style="background-color:rgba(52, 162, 196,0.65); color:#BBC7CE; border:none; width:8vw; height: 5vh; font-size: 17px; border-radius: 5px;">VIEW</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr scope="row">
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-6" style="text-align: center;"><h5 style="padding-top: 0.6vh;">6</h5></div>
+                                                <div class="col-lg-6" style="text-align: center;">
+                                                    <div id="textareaStyle">
+                                                        <textarea disabled class="form-control" style="width: 15vw; height: 4.5vh; resize: none;"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-9" style="text-align: center;">
+                                                    <div class="progress position-relative" id="progressStyle">
+                                                        <div class="progress-bar" role="progressbar" style="width: 80%; background-color:rgba(14, 127, 161);" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <p class="justify-content-center d-flex position-absolute w-100" style="margin-top: 0.6vh; color: #000"><b>80%</b></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div style="margin-left: -5vw;">
+                                                        <button type="submit" style="background-color:rgba(52, 162, 196,0.65); color:#BBC7CE; border:none; width:8vw; height: 5vh; font-size: 17px; border-radius: 5px;">VIEW</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr scope="row">
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-6" style="text-align: center;"><h5 style="padding-top: 0.6vh;">7</h5></div>
+                                                <div class="col-lg-6" style="text-align: center;">
+                                                    <div id="textareaStyle">
+                                                        <textarea disabled class="form-control" style="width: 15vw; height: 4.5vh; resize: none;"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-9" style="text-align: center;">
+                                                    <div class="progress position-relative" id="progressStyle">
+                                                        <div class="progress-bar" role="progressbar" style="width: 70%; background-color:rgba(14, 127, 161);" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <p class="justify-content-center d-flex position-absolute w-100" style="margin-top: 0.6vh; color: #000"><b>70%</b></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div style="margin-left: -5vw;">
+                                                        <button type="submit" style="background-color:rgba(52, 162, 196,0.65); color:#BBC7CE; border:none; width:8vw; height: 5vh; font-size: 17px; border-radius: 5px;">VIEW</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr><tr scope="row">
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-6" style="text-align: center;"><h5 style="padding-top: 0.6vh;">8</h5></div>
+                                                <div class="col-lg-6" style="text-align: center;">
+                                                    <div id="textareaStyle">
+                                                        <textarea disabled class="form-control" style="width: 15vw; height: 4.5vh; resize: none;"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-9" style="text-align: center;">
+                                                    <div class="progress position-relative" id="progressStyle">
+                                                        <div class="progress-bar" role="progressbar" style="width: 90%; background-color:rgba(14, 127, 161);" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <p class="justify-content-center d-flex position-absolute w-100" style="margin-top: 0.6vh; color: #000"><b>90%</b></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div style="margin-left: -5vw;">
+                                                        <button type="submit" style="background-color:rgba(52, 162, 196,0.65); color:#BBC7CE; border:none; width:8vw; height: 5vh; font-size: 17px; border-radius: 5px;">VIEW</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr scope="row">
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-6" style="text-align: center;"><h5 style="padding-top: 0.6vh;">9</h5></div>
+                                                <div class="col-lg-6" style="text-align: center;">
+                                                    <div id="textareaStyle">
+                                                        <textarea disabled class="form-control" style="width: 15vw; height: 4.5vh; resize: none;"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-9" style="text-align: center;">
+                                                    <div class="progress position-relative" id="progressStyle">
+                                                        <div class="progress-bar" role="progressbar" style="width: 80%; background-color:rgba(14, 127, 161);" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <p class="justify-content-center d-flex position-absolute w-100" style="margin-top: 0.6vh; color: #000"><b>80%</b></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div style="margin-left: -5vw;">
+                                                        <button type="submit" style="background-color:rgba(52, 162, 196,0.65); color:#BBC7CE; border:none; width:8vw; height: 5vh; font-size: 17px; border-radius: 5px;">VIEW</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr scope="row">
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-6" style="text-align: center;"><h5 style="padding-top: 0.6vh;">10</h5></div>
+                                                <div class="col-lg-6" style="text-align: center;">
+                                                    <div id="textareaStyle">
+                                                        <textarea disabled class="form-control" style="width: 15vw; height: 4.5vh; resize: none;"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-9" style="text-align: center;">
+                                                    <div class="progress position-relative" id="progressStyle">
+                                                        <div class="progress-bar" role="progressbar" style="width: 50%; background-color:rgba(14, 127, 161);" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <p class="justify-content-center d-flex position-absolute w-100" style="margin-top: 0.6vh; color: #000"><b>50%</b></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div style="margin-left: -5vw;">
+                                                        <button type="submit" style="background-color:rgba(52, 162, 196,0.65); color:#BBC7CE; border:none; width:8vw; height: 5vh; font-size: 17px; border-radius: 5px;">VIEW</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr scope="row">
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-6" style="text-align: center;"><h5 style="padding-top: 0.6vh;">11</h5></div>
+                                                <div class="col-lg-6" style="text-align: center;">
+                                                    <div id="textareaStyle">
+                                                        <textarea disabled class="form-control" style="width: 15vw; height: 4.5vh; resize: none;"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-9" style="text-align: center;">
+                                                    <div class="progress position-relative" id="progressStyle">
+                                                        <div class="progress-bar" role="progressbar" style="width: 50%; background-color:rgba(14, 127, 161);" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <p class="justify-content-center d-flex position-absolute w-100" style="margin-top: 0.6vh; color: #000"><b>50%</b></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div style="margin-left: -5vw;">
+                                                        <button type="submit" style="background-color:rgba(52, 162, 196,0.65);color:#BBC7CE; border:none; width:8vw; height: 5vh; font-size: 17px; border-radius: 5px;">VIEW</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr scope="row">
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-6" style="text-align: center;"><h5 style="padding-top: 0.6vh;">12</h5></div>
+                                                <div class="col-lg-6" style="text-align: center;">
+                                                    <div id="textareaStyle">
+                                                        <textarea disabled class="form-control" style="width: 15vw; height: 4.5vh; resize: none;"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-9" style="text-align: center;">
+                                                    <div class="progress position-relative" id="progressStyle">
+                                                        <div class="progress-bar" role="progressbar" style="width: 30%; background-color:rgba(14, 127, 161);" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <p class="justify-content-center d-flex position-absolute w-100" style="margin-top: 0.6vh; color: #000"><b>30%</b></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div style="margin-left: -5vw;">
+                                                        <button type="submit" style="background-color:rgba(52, 162, 196,0.65); color:#BBC7CE; border:none; width:8vw; height: 5vh; font-size: 17px; border-radius: 5px;">VIEW</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr scope="row">
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-6" style="text-align: center;"><h5 style="padding-top: 0.6vh;">13</h5></div>
+                                                <div class="col-lg-6" style="text-align: center;">
+                                                    <div id="textareaStyle">
+                                                        <textarea disabled class="form-control" style="width: 15vw; height: 4.5vh; resize: none;"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-9" style="text-align: center;">
+                                                    <div class="progress position-relative" id="progressStyle">
+                                                        <div class="progress-bar" role="progressbar" style="width: 50%; background-color:rgba(14, 127, 161);" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <p class="justify-content-center d-flex position-absolute w-100" style="margin-top: 0.6vh; color: #000"><b>50%</b></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div style="margin-left: -5vw;">
+                                                        <button type="submit" style="background-color:rgba(52, 162, 196,0.65); color:#BBC7CE; border:none; width:8vw; height: 5vh; font-size: 17px; border-radius: 5px;">VIEW</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr scope="row">
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-6" style="text-align: center;"><h5 style="padding-top: 0.6vh;">14</h5></div>
+                                                <div class="col-lg-6" style="text-align: center;">
+                                                    <div id="textareaStyle">
+                                                        <textarea disabled class="form-control" style="width: 15vw; height: 4.5vh; resize: none;"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-9" style="text-align: center;">
+                                                    <div class="progress position-relative" id="progressStyle">
+                                                        <div class="progress-bar" role="progressbar" style="width: 90%; background-color:rgba(14, 127, 161);" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <p class="justify-content-center d-flex position-absolute w-100" style="margin-top: 0.6vh; color: #000"><b>90%</b></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div style="margin-left: -5vw;">
+                                                        <button type="submit" style="background-color:rgba(52, 162, 196,0.65); color:#BBC7CE; border:none; width:8vw; height: 5vh; font-size: 17px; border-radius: 5px;">VIEW</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr scope="row">
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-6" style="text-align: center;"><h5 style="padding-top: 0.6vh;">15</h5></div>
+                                                <div class="col-lg-6" style="text-align: center;">
+                                                    <div id="textareaStyle">
+                                                        <textarea disabled class="form-control" style="width: 15vw; height: 4.5vh; resize: none;"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-9" style="text-align: center;">
+                                                    <div class="progress position-relative" id="progressStyle">
+                                                        <div class="progress-bar" role="progressbar" style="width: 100%; background-color:rgba(14, 127, 161);" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <p class="justify-content-center d-flex position-absolute w-100" style="margin-top: 0.6vh; color: #000"><b>100%</b></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div style="margin-left: -5vw;">
+                                                        <button type="submit" style="background-color:rgba(52, 162, 196,0.65); color:#BBC7CE; border:none; width:8vw; height: 5vh; font-size: 17px; border-radius: 5px;">VIEW</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr> -->
+                                </tbody>
+                            </table>
+                        </div>
+                </div>
+            <div class="row" style="background-color: #000">
+                <div class="col-lg-12" style="font-size: 18px; border: 2px solid black;height:7vh;display: flex;justify-content: center;align-items: center;color:#ffffff;">
+                    &copy PICT IEEE STUDENT BRANCH
+                </div>
+            </div>
+        </div>
+        </form>
+    </body>
+</html>
