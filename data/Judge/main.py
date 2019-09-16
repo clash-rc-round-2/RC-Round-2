@@ -7,7 +7,7 @@ att = int(sys.argv[4])
 lang = sys.argv[5]
 file = sys.argv[6]
 
-try :
+try:
     # check platform type
     system, machine = os.uname()[0], os.uname()[4]
     if system not in ('Linux',) or machine not in ('i686', 'x86_64',) :
@@ -21,7 +21,7 @@ try :
 except ImportError :
     sys.stderr.write("Required package(s) missing.\n")
     sys.exit(os.EX_UNAVAILABLE)
-except AssertionError as e :
+except AssertionError as e:
     sys.stderr.write(str(e))
     sys.exit(os.EX_UNAVAILABLE)
 
@@ -103,7 +103,7 @@ def compare(user_out, e_out):
         for i in range(len(l1)):  # check if files of equal length
             if l1[i] == l2[i]:
                 flag = 1
-            else :
+            else:
                 flag = 0
                 break
         if flag == 1:
@@ -135,11 +135,11 @@ def main():
 
     if return_value == 0:
         os.remove(error_file)
-        for i in range(0, 5):
+        for i in range(0, 6):
             run_code = run_test_cases(i + 1, filename, user, que, att)  # calling runTestCases()
             result.append(run_code)
     else :
-        result = [40, 40, 40, 40, 40]
+        result = [40, 40, 40, 40, 40, 40]
 
     return result
 
@@ -150,10 +150,10 @@ ans = 0
 ans = p[0]
 
 if ans != 40:
-    for i in range(0, 5):
+    for i in range(0, 6):
         ans = ans*100+p[i]
 else:
-    ans = 4040404040
+    ans = 404040404040
 
 print(str(ans))
 sys.exit(0)
