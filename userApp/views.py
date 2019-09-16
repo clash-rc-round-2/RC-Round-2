@@ -146,9 +146,18 @@ def codeSave(request, username, qn):
                                 extension, "{}/{}/question{}/code{}-{}.{}".format(path_usercode, username, qn, qn, att,
                                                                                   extension)], stdout=subprocess.PIPE)
         (out, err) = ans.communicate()
-        submission = Submission(code=content, user=user, que=que, attempt=att, out=out)
-        submission.save()
+        now_time = datetime.datetime.now()
+        now_time_sec = now_time.second + now_time.minute * 60 + now_time.hour * 60 * 60
+        global starttime
+        submit_Time = now_time_sec - starttime
+        hour = submit_Time // (60 * 60)
+        val = submit_Time % (60 * 60)
+        min = val // 60
+        sec = val % 60
+        subTime = '{}:{}:{}'.format(hour, min, sec)
 
+        submission = Submission(code=content, user=user, que=que, attempt=att, out=out, subTime=subTime)
+        submission.save()
         mul_que.attempts += 1
         mul_que.save()
 
