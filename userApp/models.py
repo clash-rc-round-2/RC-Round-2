@@ -51,7 +51,7 @@ class Submission(models.Model):
     attempt = models.IntegerField(default=0)                       # Current Attempt
     out = models.IntegerField(default=0)
     subStatus = models.CharField(default='NA', max_length=5)     # four type of submission status(WA, PASS, TLE, CTE)
-    subTime = models.TimeField(default='00:00')
+    subTime = models.CharField(default="", max_length=15)
     subScore = models.IntegerField(default=0)
     correctTestCases = models.IntegerField(default=0)
     TestCasesPercentage = models.IntegerField(default=0)

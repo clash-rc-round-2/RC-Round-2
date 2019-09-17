@@ -52,7 +52,7 @@ def timer(request):
         flag = True
         duration = 7200  # request.POST.get('duration')
         start = datetime.datetime.now()
-        start = start + datetime.timedelta(0, 15)
+        start = start + datetime.timedelta(0, 5)
         time = start.second + start.minute * 60 + start.hour * 60 * 60
         starttime = time
         end_time = time + int(duration)
@@ -169,6 +169,7 @@ def codeSave(request, username, qn):
             except FileExistsError:
                 pass
 
+            print(extension)
             codefile = open("{}/{}/question{}/code{}-{}.{}".format(path_usercode, username, qn, qn, att, extension),
                             "w+")
             codefile.write(content)
@@ -179,7 +180,20 @@ def codeSave(request, username, qn):
                                     "{}/{}/question{}/code{}-{}.{}".format(path_usercode, username, qn, qn, att,
                                                                            extension)], stdout=subprocess.PIPE)
             (out, err) = ans.communicate()
-            submission = Submission(code=content, user=user, que=que, attempt=att, out=out)
+            now_time = datetime.datetime.now()
+            now_time_sec = now_time.second + now_time.minute * 60 + now_time.hour * 60 * 60
+            global starttime
+            submit_Time = now_time_sec - starttime
+            hour = submit_Time // (60 * 60)
+            val = submit_Time % (60 * 60)
+            min = val // 60
+            sec = val % 60
+            print(hour)
+            print(min)
+            print(sec)
+            subTime = '{}:{}:{}'.format(hour, min, sec)
+
+            submission = Submission(code=content, user=user, que=que, attempt=att, out=out, subTime=subTime)
             submission.save()
 
             mul_que.attempts += 1
@@ -244,7 +258,7 @@ def submission(request, username, qn):
     userQueSub = list()
 
     for submissions in all_submission:
-        if submissions.user == user and submission.que == que:
+        if submissions.user == user and submissions.que == que:
             userQueSub.append(submissions)
     var = calculate()
     print(userQueSub)

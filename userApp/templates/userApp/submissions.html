@@ -110,7 +110,7 @@
                                                 <div class="col-lg-6" style="text-align: center;"><h5 style="padding-top: 0.6vh;">{{forloop.counter}}</h5></div>
                                                 <div class="col-lg-6" style="text-align: center;">
                                                     <div id="textareaStyle">
-                                                        <textarea disabled class="form-control" style="width: 15vw; height: 4.5vh; resize: none;"></textarea>
+                                                        <textarea disabled class="form-control" style="width: 15vw; height: 4.5vh; resize: none;">{{submission.subTime}}</textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -119,13 +119,13 @@
                                             <div class="row">
                                                 <div class="col-lg-9" style="text-align: center;">
                                                     <div class="progress position-relative" id="progressStyle">
-                                                        <div class="progress-bar" role="progressbar" style="width: 30%; background-color:rgba(14, 127, 161);" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <div class="progress-bar" role="progressbar" style="width: {{ submission.TestCasesPercentage }}%; background-color:rgba(14, 127, 161);" aria-valuenow="{{ submission.TestCasesPercentage }}" aria-valuemin="0" aria-valuemax="100"></div>
                                                         <p class="justify-content-center d-flex position-absolute w-100" style="margin-top: 0.6vh; color: #000"><b>{{ submission.TestCasesPercentage }}%</b></p>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <div style="margin-left: -5vw;">
-                                                        <button type="submit" style="background-color:rgba(52, 162, 196, 0.65); color:#BBC7CE; border:none; width:8vw; height: 5vh; font-size: 17px; border-radius: 5px;">VIEW</button>
+                                                        <button type="submit"  style="background-color:rgba(52, 162, 196, 0.65); color:#BBC7CE; border:none; width:8vw; height: 5vh; font-size: 17px; border-radius: 5px;">VIEW</button>
                                                     </div>
                                                 </div>
                                             </div>

@@ -4,8 +4,8 @@ var x = setInterval(function () {
 
     var now = new Date().getTime();
 
-    //var remTime = countDownDate + 7200000 - now;
-     var remTime = {{ time }};
+    var remTime = countDownDate + 7200000 - now;
+
 
 
     var hours = Math.floor(remTime / (1000 * 60 * 60));

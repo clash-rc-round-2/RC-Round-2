@@ -72,6 +72,7 @@
 </head>
     <body>
         <form>
+            <input type="hidden" value="{{time}}" id="timer">
         <div class="container-fluid">
             <div class="row" style="background-color: #000">
                 <div class="col-lg-5" style="height: 7vh;display: flex; justify-content: center;align-items: center;">
@@ -290,6 +291,7 @@
     </form>
     <script src="{% static 'javascript/jquery.js' %}"></script>
     <script src="{% static 'javascript/bootstrap.js' %}"></script>
-     <script src="{% static 'javascript/timer.js' %}"></script>
+    <script src="{% static 'javascript/timer.js' %}"></script>
+
     </body>
 </html>
