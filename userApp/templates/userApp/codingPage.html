@@ -269,9 +269,11 @@
                     <h5>CODING PAGE</h5>
                 </div>
             </div>
-            <div class="col-lg-2 navcol"
-                style=" height: 7vh; display: flex; justify-content: center;align-items: center;color: white">
-                {{time}}
+             <div class="col-lg-2" style=" height: 7vh; display: flex; justify-content: center;align-items: center;color:#ffffff;">
+                  <!--Timer added -->
+                           <div class="col-lg-4" id="hour" style="font-size: 4vh; border-right: 1px solid white"></div>
+                            <div class="col-lg-4" id="min" style="font-size: 4vh; border-right: 1px solid white"></div>
+                           <div class="col-lg-4" id="sec" style="font-size: 4vh; "></div>
             </div>
             <div class="col-lg-5 navcol" style=" height: 7vh;">
                 <div class="row">
@@ -446,6 +448,7 @@
     </script>
 <script src="{% static 'javascript/jquery.js' %}"></script>
 <script src="{% static 'javascript/bootstrap.js' %}"></script>
+  <script src="{% static 'javascript/timer.js' %}"></script>
 </body>
 
 </html>

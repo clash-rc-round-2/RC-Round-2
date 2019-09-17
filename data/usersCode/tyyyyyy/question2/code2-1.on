@@ -1,0 +1,59 @@
+def codeSave(request, username, qn):
+    if request.user.is_authenticated:  # Check Authentication
+        if request.method == 'POST':
+            que = Question.objects.get(pk=qn)
+            user = User.objects.get(username=username)
+
+            content = request.POST['content']
+            extension = request.POST['ext']
+
+            user_profile = UserProfile.objects.get(user=user)
+            user_profile.choice = extension
+
+            temp_user = UserProfile.objects.get(user=user)
+            temp_user.qid = qn
+            temp_user.save()
+
+            try:
+                mul_que = MultipleQues.objects.get(user=user, que=que)
+            except MultipleQues.DoesNotExist:
+                mul_que = MultipleQues(user=user, que=que)
+            att = mul_que.attempts
+
+            try:
+                os.system('mkdir {}/{}/question{}'.format(path_usercode, username, qn))
+            except FileExistsError:
+                pass
+
+            codefile = open("{}/{}/question{}/code{}-{}.{}".format(path_usercode, username, qn, qn, att, extension),
+                            "w+")
+            codefile.write(content)
+            codefile.close()
+
+            ans = subprocess.Popen(['python2', "{}/data/Judge/main.py".format(path), path, username, str(qn), str(att),
+                                    extension,
+                                    "{}/{}/question{}/code{}-{}.{}".format(path_usercode, username, qn, qn, att,
+                                                                           extension)], stdout=subprocess.PIPE)
+            (out, err) = ans.communicate()
+            submission = Submission(code=content, user=user, que=que, attempt=att, out=out)
+            submission.save()
+
+            mul_que.attempts += 1
+            mul_que.save()
+
+            return redirect("runCode", username=username, qn=qn, att=att)
+
+        elif request.method == 'GET':
+            que = Question.objects.get(pk=qn)
+            user_profile = UserProfile.objects.get(user=request.user)
+            user = User.objects.get(username=username)
+
+            var = calculate()
+            if var != 0:
+                return render(request, 'userApp/codingPage.html', context={'question': que, 'user': user, 'time': var,
+                                                                           'total_score': user_profile.totalScore,
+                                                                           'question_id': user_profile.qid})
+            else:
+                return render(request, 'userApp/result.html')
+    else:
+        return HttpResponseRedirect(reverse("signup"))
