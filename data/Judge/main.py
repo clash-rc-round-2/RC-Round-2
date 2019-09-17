@@ -92,38 +92,28 @@ def config_sandbox(que, in_file_fd, user_out_fd):
 
 
 def compare(user_out, e_out):
-    user = open(user_out)
-    expected = open(e_out)
+    user = open(user_out, "r")
+    expected = open(e_out, "r")
 
-    lines_user = user.readline()
-    l1 = [i.strip() for i in lines_user]
-    lines_expected = expected.readline()
-    l2 = [i.strip() for i in lines_expected]
-    if len(l1) == len(l2):
-        for i in range(len(l1)):  # check if files of equal length
-            if l1[i] == l2[i]:
-                flag = 1
-            else:
-                flag = 0
-                break
-        if flag == 1:
-            flag = 10
-            return flag
-        else:
-            # print "not same"
-            flag = 20
-            return flag
+    lines_user = user.read()
+    lines_expected = expected.read()
+    user.close()
+    expected.close()
 
-    return 20
+    if lines_user == lines_expected:
+        return 10
+    else:
+        return 20
+
 
 
 def main():
     filename = file.split(".")[0]  # FileName
     extension = file.split(".")[1]  # C or CPP or python
 
-    error_file = "{}/{}/question{}/error.txt".format(path_userCode,user,que)
+    error_file = "{}/{}/question{}/error.txt".format(path_userCode, user, que)
     if not os.path.isfile(error_file):
-        error_fd=os.open(error_file, os.O_WRONLY|os.O_CREAT)
+        error_fd=os.open(error_file, os.O_WRONLY | os.O_CREAT)
         os.close(error_fd)
     else:
         os.remove(error_file)
@@ -138,7 +128,7 @@ def main():
         for i in range(0, 6):
             run_code = run_test_cases(i + 1, filename, user, que, att)  # calling runTestCases()
             result.append(run_code)
-    else :
+    else:
         result = [40, 40, 40, 40, 40, 40]
 
     return result

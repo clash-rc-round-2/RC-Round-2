@@ -3,12 +3,12 @@
 # Update 02
 
 -Timer integration
--Editor formatting
--Logout button on Questions page
+-Editor formatting                   DONE
+-Logout button on Questions page           DONE
 -Code submission - score updation
--Testcases - css file
+-Testcases - css file             DONE
 -Leaderboard - updation
--Testcases status printing ( images ) ...
+-Testcases status printing ( images ) ...      DONE
 -Testcases - timer
 -Never cache
 
