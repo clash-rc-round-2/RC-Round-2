@@ -82,6 +82,24 @@
     }
 
 </style>
+
+<script>
+   var CTE="FAIL"
+   var RTE="FAIL"
+   var WA="FAIL"
+   var PASS="PASS"
+   var TLE="TLE"
+        function change_image(img1, img2, img3, img4, img5, img6){
+            console.log("{% static 'img/' %}"+ img1 + ".png");
+            document.getElementById("id1").src = "{% static 'img/' %}"+ img1 + ".png";
+            document.getElementById("id2").src = "{% static 'img/' %}"+ img2 + ".png";
+            document.getElementById("id3").src = "{% static 'img/' %}"+ img3 + ".png";
+            document.getElementById("id4").src = "{% static 'img/' %}"+ img4 + ".png";
+            document.getElementById("id5").src = "{% static 'img/' %}"+ img5 + ".png";
+            document.getElementById("id6").src = "{% static 'img/' %}"+ img6 + ".png";
+        }
+   </script>
+
 </head>
 
 <body style="overflow: hidden;" onload="change_image({{ test_case_1 }}, {{ test_case_2 }}, {{ test_case_3 }}, {{ test_case_4 }}, {{ test_case_5 }}
@@ -205,8 +223,7 @@
                 <div class="col cons" style="height: 28vh;margin-left: 4vw;margin-top: -6vh; "></div>
             </div>
             <div class="col-l" style="margin-left: 10vw;margin-top: 3vh;">
-                <button class="btn btn-block" type="submit"
-                        style="background-color: rgba(52, 162, 196, 0.35);color:#BBC7CE; border:none; width:120px; height: 5.5vh; font-size: 17px; border-radius: 5px;">
+                <button class="btn btn-block" onclick="history.back()" style="background-color: rgba(52, 162, 196, 0.35);color:#BBC7CE; border:none; width:120px; height: 5.5vh; font-size: 17px; border-radius: 5px;">
                     RETRY
                 </button>
             </div>
