@@ -11,6 +11,10 @@ import re
 global starttime, start
 global end_time
 global duration
+global flag
+start = datetime.datetime(2020,1,1,0,0)
+flag = 'False'
+
 
 path = os.getcwd()
 path_usercode = path + '/data/usersCode'
@@ -19,18 +23,23 @@ NO_OF_QUESTIONS = 6
 NO_OF_TEST_CASES = 6
 
 
+
 def waiting(request):
     if request.user.is_authenticated:
         return redirect(reverse("questionHub"))
     else:
-        now = datetime.datetime.now()
-        global start
-        if now == start:
-            return redirect(reverse("signup"))
-        elif now > start:
-            return redirect(reverse("signup"))
-        else:
+        global flag
+        if flag == False:
             return render(request, 'userApp/waiting.html')
+        else:
+            now = datetime.datetime.now()
+            global start
+            if now == start:
+                return redirect(reverse("signup"))
+            elif now > start:
+                return redirect(reverse("signup"))
+            else:
+                return render(request, 'userApp/waiting.html')
 
 
 def timer(request):
@@ -41,7 +50,8 @@ def timer(request):
         global starttime, start
         global end_time
         global duration
-
+        global flag
+        flag = True
         duration = 7200  # request.POST.get('duration')
         start = datetime.datetime.now()
         start = start + datetime.timedelta(0, 15)
