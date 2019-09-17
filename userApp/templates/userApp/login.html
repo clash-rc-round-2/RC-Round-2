@@ -7,27 +7,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-    <link href="https://fonts.googleapis.com/css?family=Gothic+A1&display=swap" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Gothic+A1&display=swap" rel="stylesheet"> -->
     <link rel="stylesheet" href="{% static 'css/Login.css' %}">
 </head>
- <style>
-        body{
-            background-image: url("{% static 'img/alt1.jpg' %}");
-            background-repeat: no-repeat;
-            background-size: 100%;
-            font-family: 'Biryani', sans-serif;
-            color: #d7e9f8;
-            overflow: hidden;
-        }
-    </style>
-<form method="post">
-    {% csrf_token %}
+<form>
     <body>
-        <div class="container-fluid">
+        <div class="container-fluid" id="body">
             <div class="row" style="background-color: #000">
                 <div class="col-lg-5" style="height: 7vh;display: flex; justify-content: center;align-items: center;">
                     <div class="col-lg-3" style=" height: 7vh;">
-                        <img src="{% static 'img/RC.jpg' %}" style="width: 6vw; height:7vh; display:flex;align-items: center;justify-content: center;color:#ffffff;">
+                        <img src="{% static 'img/RC.jpg' %}"  style="width: 6vw; height:7vh; display:flex;align-items: center;justify-content: center;color:#ffffff;">
                     </div>
                     <div class="col-lg-9" style="padding-top: 1vh;height: 6vh; display: flex; align-items: center; justify-content: center;color:#ffffff;"><h5>LOGIN PAGE</h5></div>
                 </div>
@@ -64,22 +53,22 @@
 
                 <div class="block" style="justify-content:center">
 
-                        <div class="inputBox"style="justify-content:center;text-align:center;margin-left:4vw;margin-right:4vw;height:95px">
-                                <input type="text" name="name1" required autocomplete="off" >
-                                <label class="active">Enter Name</label>
+                        <div class="inputBox">
+                                <input type="text" name="name1" required autocomplete="off" id="nameee1"  onclick="upt1()"  oninvalid="this.setCustomValidity('Enter Valid Player Name')" ; oninput="this.setCustomValidity('')">
+                                <label class="active" id="nllll1">Enter Name</label>
                             </div>
 
 
 
-                <div class="inputBox"style="justify-content:center;text-align:center;margin-left:4vw;margin-right:4vw;height:95px">
-                        <input type="tel" name="phone1"  pattern="[7-9]{1}[0-9]{9}"maxlength="10" required autocomplete="off" >
-                        <label class="active">Contact No.</label>
+                <div class="inputBox">
+                        <input type="tel" name="phone1"  pattern="[7-9]{1}[0-9]{9}"maxlength="10" required autocomplete="off"  id="con1"  onclick="upc1()" oninvalid="this.setCustomValidity('Enter Valid Contact No.!')"; oninput="this.setCustomValidity('')">
+                        <label class="active" id="labelcontact1">Contact No.</label>
                     </div>
 
 
-                    <div class="inputBox"style="justify-content:center;text-align:center;margin-left:4vw;margin-right:4vw;height:95px">
-                            <input type="email" name="email1" required autocomplete="off" >
-                            <label class="active">Email ID.</label>
+                    <div class="inputBox">
+                            <input type="text" name="email1" required autocomplete="off" id="emailid1"  onclick="upe1()" onblur="validateEmail1(this)" >
+                            <label class="active" id="labelemail1">Email ID.</label>
                         </div>
             </div>
             </div>
@@ -91,28 +80,40 @@
                 <br>
                 <div class="block"style="justify-content:center;">
 
-                        <div class="inputBox"style="justify-content:center;text-align:center;margin-left:4vw;margin-right:4vw;height:95px">
-                                <input type="text" name="username" required autocomplete="off" >
-                                <label>Team Name</label>
+                        <div class="inputBox">
+                                <input type="text" name="username" required autocomplete="off" id="tm" onclick="tmc()">
+                                <label id="tml">Team Name</label>
                             </div>
-                            <div class="inputBox"style="justify-content:center;text-align:center;margin-left:4vw;margin-right:4vw;height:95px">
-                                    <input type="password" name="password" required autocomplete="off" >
-                                    <label>Password</label>
+                            <div class="inputBox">
+                                    <input type="password" name="password" required autocomplete="off" id="psw" onclick="ps()" >
+                                    <label id="pswl">Password</label>
                                 </div>
                     <div class="row" style="justify-content:center;text-align:center;height:40px;">
                         <div class="radio">
                             <input type="radio" name="optradio" checked>
                         </div>
                         <div class="Rad"style="margin-right:1vw">
-                            <label>Junior</label>
+                            <label>FE</label>
                         </div>
 
                         <div class="radio">
                             <input type="radio" name="optradio">
                         </div>
-                        <div class="Rad">
-                            <label>Senior</label>
+                        <div class="Rad" style="margin-right:1vw">
+                            <label>SE</label>
                         </div>
+                        <div class="radio">
+                                <input type="radio" name="optradio">
+                            </div>
+                            <div class="Rad" style="margin-right:1vw">
+                                <label>TE</label>
+                            </div>
+                            <div class="radio">
+                                    <input type="radio" name="optradio">
+                                </div>
+                                <div class="Rad " style="margin-right:1vw">
+                                    <label>BE</label>
+                                </div>
 
                     </div>
                     <div style="text-align: center; padding-top: 2vh;margin-top:20px ">
@@ -134,22 +135,22 @@
 
                             <div class="block"style="justify-content:center">
 
-                                    <div class="inputBox"style="justify-content:center;text-align:center;margin-left:4vw;margin-right:4vw;height:95px">
-                                            <input type="text" name="name2" required autocomplete="off" >
-                                            <label>Enter Name</label>
-                                        </div>
-
-
-
-                                    <div class="inputBox"style="justify-content:center;text-align:center;margin-left:4vw;margin-right:4vw;height:95px">
-                                    <input type="tel" name="phone2"  pattern="[7-9]{1}[0-9]{9}"maxlength="10" required autocomplete="off" >
-                                    <label>Contact No.</label>
+                                    <div class="inputBox"  >
+                                        <input type="text" name="name2"  autocomplete="off"  onclick="upt2()" id="nameee2" oninvalid="this.setCustomValidity('Enter Valid Player Name')" ; oninput="this.setCustomValidity('')">
+                                        <label id="nllll2">Enter Name</label>
                                     </div>
 
 
-                                <div class="inputBox"style="justify-content:center;text-align:center;margin-left:4vw;margin-right:4vw;height:95px">
-                                        <input type="email" name="email2" required autocomplete="off" >
-                                        <label>Email ID.</label>
+
+                                    <div class="inputBox" >
+                                        <input type="tel" name="phone2"  pattern="[7-9]{1}[0-9]{9}"maxlength="10" onclick="upc2()" autocomplete="off" id="con2" oninvalid="setCustomValidity('Enter Valid Contact No.!')" ; oninput="this.setCustomValidity('')">
+                                        <label id="labelcontact2">Contact No.</label>
+                                    </div>
+
+
+                                    <div class="inputBox" >
+                                        <input type="email" name="email2" id="emailid2" onclick="upe2()"  autocomplete="off"  onblur="validateEmail2(this)"  >
+                                        <label id="labelemail2">Email ID.</label>
                                     </div>
                         </div>
                         </div>
@@ -165,6 +166,9 @@
         </div>
     </div>
 
+
+
 </body>
+<script src="{% static 'javascript/login.js' %}"></script>
 </form>
 </html>
