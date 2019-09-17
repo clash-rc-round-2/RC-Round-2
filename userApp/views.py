@@ -16,7 +16,7 @@ path = os.getcwd()
 path_usercode = path + '/data/usersCode'
 
 NO_OF_QUESTIONS = 6
-NO_OF_TEST_CASES = 5
+NO_OF_TEST_CASES = 6
 
 
 def waiting(request):
@@ -169,18 +169,7 @@ def codeSave(request, username, qn):
                                     "{}/{}/question{}/code{}-{}.{}".format(path_usercode, username, qn, qn, att,
                                                                            extension)], stdout=subprocess.PIPE)
             (out, err) = ans.communicate()
-
-            now_time = datetime.datetime.now()
-            now_time_sec = now_time.second + now_time.minute * 60 + now_time.hour * 60 * 60
-            global starttime
-            submit_Time = now_time_sec - starttime
-            hour = submit_Time // (60 * 60)
-            val = submit_Time % (60 * 60)
-            min = val // 60
-            sec = val % 60
-            subTime = '{}:{}:{}'.format(hour, min, sec)
-
-            submission = Submission(code=content, user=user, que=que, attempt=att, out=out, subTime=subTime)
+            submission = Submission(code=content, user=user, que=que, attempt=att, out=out)
             submission.save()
 
             mul_que.attempts += 1
@@ -256,148 +245,143 @@ def submission(request, username, qn):
 
 
 def runCode(request, username, qn, att):
-    if request.user.is_authenticated:  # authentication
-        user = User.objects.get(username=username)
-        que = Question.objects.get(pk=qn)
-        user_profile = UserProfile.objects.get(user=request.user)
+    user = User.objects.get(username=username)
+    que = Question.objects.get(pk=qn)
+    user_profile = UserProfile.objects.get(user=request.user)
 
-        try:
-            mul_que = MultipleQues.objects.get(user=user, que=que)
-        except MultipleQues.DoesNotExist:
-            mul_que = MultipleQues(user=user, que=que)
+    try:
+        mul_que = MultipleQues.objects.get(user=user, que=que)
+    except MultipleQues.DoesNotExist:
+        mul_que = MultipleQues(user=user, que=que)
 
-        submission = Submission.objects.get(user=user, que=que, attempt=att)
+    submission = Submission.objects.get(user=user, que=que, attempt=att)
 
-        '''
-            code will have text in form '1020301020'
-            output_list will contain (10, 20, 30, 10, 20)  for 5 test cases
-    
-            Sandbox will return(save) these values in total_output.txt
-            10 = right answer (PASS)
-            20 = wrong answer (WA)
-            30 = Time Limit Exceed (TLE)
-            40 = compile time error (CTE)
-            50 = core Dumped (RTE)
-            60 = Abnormal Termination (RTE)
-        '''
+    '''
+        code will have text in form '1020301020'
+        output_list will contain (10, 20, 30, 10, 20)  for 6 test cases
 
-        code = int(submission.out)
-        output_list = list()
-        correct_list = list()
+        Sandbox will return(save) these values in total_output.txt
+        10 = right answer (PASS)
+        20 = wrong answer (WA)
+        30 = Time Limit Exceed (TLE)
+        40 = compile time error (CTE)
+        50 = core Dumped (RTE)
+        60 = Abnormal Termination (RTE)
+    '''
 
-        for i in range(0, NO_OF_TEST_CASES):
-            correct_list.append('PASS')  # list of all PASS test Cases
+    code = int(submission.out)
+    output_list = list()
+    correct_list = list()
 
-        check50 = False  # for checking return value is 50 or 60
+    for i in range(0, NO_OF_TEST_CASES):
+        correct_list.append('PASS')               # list of all PASS test Cases
 
-        for i in range(0, NO_OF_TEST_CASES):
-            var = code % 100
-            if var == 10:
-                output_list.append('PASS')
-            elif var == 20:
-                output_list.append('WA')
-            elif var == 30:
-                output_list.append('TLE')
-            elif var == 40:
-                output_list.append('CTE')
-            elif var == 50 or var == 60:
-                output_list.append('RTE')
-                check50 = True if var == 50 else False
-            code = int(code / 100)
-            print(code)
+    check50 = False                               # for checking return value is 50 or 60
 
-        flag = True  # for checking condition of multiple submission
-        output_list.reverse()
-        print(output_list)
-        print(correct_list)
+    for i in range(0, NO_OF_TEST_CASES):
+        var = code % 100
+        if var == 10:
+            output_list.append('PASS')
+        elif var == 20:
+            output_list.append('WA')
+        elif var == 30:
+            output_list.append('TLE')
+        elif var == 40:
+            output_list.append('CTE')
+        elif var == 50 or var == 60:
+            output_list.append('RTE')
+            check50 = True if var == 50 else False
+        code = int(code / 100)
+        print(code)
 
-        if output_list == correct_list:  # if all are correct then Score = 100
-            if mul_que.scoreQuestion == 0:
-                que.totalSuccessfulSub += 1
-                mul_que.scoreQuestion = 100
-                submission.subStatus = 'PASS'
-                user_profile.totalScore += mul_que.scoreQuestion
-                que.save()
-                mul_que.save()
-            else:
-                submission.subStatus = 'PASS'
-                flag = False
+    flag = True                                      # for checking condition of multiple submission
+    output_list.reverse()
+    print(output_list)
+    print(correct_list)
 
-        if flag:
-            user_profile.save()
+    if output_list == correct_list:                  # if all are correct then Score = 100
+        if mul_que.scoreQuestion == 0:
+            que.totalSuccessfulSub += 1
+            mul_que.scoreQuestion = 100
+            submission.subStatus = 'PASS'
+            user_profile.totalScore += mul_que.scoreQuestion
+            que.save()
+            mul_que.save()
+        else:
+            submission.subStatus = 'PASS'
+            flag = False
 
-        com_time_error = False
-        tle_error = False
-        wrg_ans = False
-        run_time_error = False
+    if flag:
+        user_profile.save()
 
-        for i in output_list:
-            if i == 'CTE':
-                com_time_error = True
-                submission.subStatus = 'CTE'
-            elif i == 'TLE':
-                tle_error = True
-                submission.subStatus = 'TLE'
-            elif i == 'WA':
-                wrg_ans = True
-                submission.subStatus = 'WA'
-            elif i == 'RTE':
-                run_time_error = True
-                submission.subStatus = 'RTE'
-            mul_que.scoreQuestion = 100 if submission.subStatus == 'PASS' else 0
+    com_time_error = False
+    tle_error = False
+    wrg_ans = False
+    run_time_error = False
 
-        error_text = 'Wrong Answer!'
+    for i in output_list:
+        if i == 'CTE':
+            com_time_error = True
+            submission.subStatus = 'CTE'
+        elif i == 'TLE':
+            tle_error = True
+            submission.subStatus = 'TLE'
+        elif i == 'WA':
+            wrg_ans = True
+            submission.subStatus = 'WA'
+        elif i == 'RTE':
+            run_time_error = True
+            submission.subStatus = 'RTE'
+        mul_que.scoreQuestion = 100 if submission.subStatus == 'PASS' else 0
 
-        if not (wrg_ans or tle_error or com_time_error or run_time_error):
-            error_text = 'No Error Found, Compiled Successfully! Your Answer is Correct!'
+    error_text = 'Wrong Answer!'
 
-        if run_time_error and check50:
-            error_text = 'Run Time Error! Core Dumped!'
-        elif run_time_error and (check50 is False):
-            error_text = 'Run Time Error! Abnormal Termination!'
+    if not (wrg_ans or tle_error or com_time_error or run_time_error):
+        error_text = 'No Error Found, Compiled Successfully! Your Answer is Correct!'
 
-        if com_time_error:
-            for i in output_list:  # assigning each element with 40 (CTE will be for every test case)
-                i = 40
-            error_path = path_usercode + '/{}/question{}'.format(username, qn)
-            error_file = open('{}/error.txt'.format(error_path), 'r')
-            error_text = error_file.readline()
+    if run_time_error and check50:
+        error_text = 'Run Time Error! Core Dumped!'
+    elif run_time_error and (check50 is False):
+        error_text = 'Run Time Error! Abnormal Termination!'
 
-        error_text = re.sub('/.*?:', '', error_text)  # regular expression
+    if com_time_error:
+        for i in output_list:                  # assigning each element with 40 (CTE will be for every test case)
+            i = 40
+        error_path = path_usercode + '/{}/question{}'.format(username, qn)
+        error_file = open('{}/error.txt'.format(error_path), 'r')
+        error_text = error_file.readline()
 
-        no_of_pass = 0
-        for i in output_list:
-            if i == 'PASS':
-                no_of_pass += 1
+    error_text = re.sub('/.*?:', '', error_text)            # regular expression
 
-        print(error_text)
+    no_of_pass = 0
+    for i in output_list:
+        if i == 'PASS':
+            no_of_pass += 1
 
-        submission.correctTestCases = no_of_pass
-        submission.TestCasesPercentage = (no_of_pass / NO_OF_TEST_CASES) * 100
-        submission.save()
+    print(error_text)
 
-        status = 'PASS' if no_of_pass == NO_OF_TEST_CASES else 'FAIL'
+    submission.correctTestCases = no_of_pass
+    submission.TestCasesPercentage = (no_of_pass / NO_OF_TEST_CASES) * 100
+    submission.save()
 
-        # for i in output_list:
-        #     if i == 'WA' or i == 'RTE' or i == 'CTE':
-        #         i = 'FAIL'
+    status = 'PASS' if no_of_pass == NO_OF_TEST_CASES else 'FAIL'
 
-        test_case_1 = output_list[0]
-        test_case_2 = output_list[1]
-        test_case_3 = output_list[2]
-        test_case_4 = output_list[3]
-        test_case_5 = output_list[4]
-        test_case_6 = output_list[5]
+    # for i in output_list:
+    #     if i == 'WA' or i == 'RTE' or i == 'CTE':
+    #         i = 'FAIL'
 
-        dict = {'com_status': status, 'test_case_1': test_case_1, 'test_case_2': test_case_2,
-                'test_case_3': test_case_3,
-                'test_case_4': test_case_4, 'test_case_5': test_case_5, 'test_case_6': test_case_6,
-                'output_list': output_list, 'score': mul_que.scoreQuestion, 'error': error_text}
+    test_case_1 = output_list[0]
+    test_case_2 = output_list[1]
+    test_case_3 = output_list[2]
+    test_case_4 = output_list[3]
+    test_case_5 = output_list[4]
+    test_case_6 = output_list[5]
 
-        return render(request, 'userApp/testcases.html', dict)
+    dict = {'com_status': status, 'test_case_1': test_case_1, 'test_case_2': test_case_2, 'test_case_3': test_case_3,
+            'test_case_4': test_case_4, 'test_case_5': test_case_5, 'test_case_6': test_case_6,
+            'output_list': output_list, 'score': mul_que.scoreQuestion, 'error': error_text}
 
-    else:
-        return HttpResponseRedirect(reverse("signup"))
+    return render(request, 'userApp/testcases.html', dict)
 
 
 def user_logout(request):
