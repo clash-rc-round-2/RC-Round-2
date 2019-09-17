@@ -10,8 +10,9 @@
     <!-- <link href="https://fonts.googleapis.com/css?family=Gothic+A1&display=swap" rel="stylesheet"> -->
     <link rel="stylesheet" href="{% static 'css/Login.css' %}">
 </head>
-<form>
+<form method="post">
     <body>
+        {% csrf_token %}
         <div class="container-fluid" id="body">
             <div class="row" style="background-color: #000">
                 <div class="col-lg-5" style="height: 7vh;display: flex; justify-content: center;align-items: center;">
