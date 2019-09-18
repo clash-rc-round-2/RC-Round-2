@@ -1,0 +1,3 @@
+/home/rutuja/myenv/RC/data/usersCode/fddf/question1/code1-0.c:1:1: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ at end of input
+ jhh
+ ^~~

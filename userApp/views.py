@@ -8,12 +8,13 @@ import datetime
 import os, subprocess
 import re
 
-global starttime, start
-global end_time
-global duration
-global flag
+starttime =0
+
+end_time=10
+duration=0
+
 start = datetime.datetime(2020, 1, 1, 0, 0)
-flag = 'False'
+flag = False
 
 path = os.getcwd()
 path_usercode = path + '/data/usersCode'
@@ -184,6 +185,8 @@ def codeSave(request, username, qn):
             now_time_sec = now_time.second + now_time.minute * 60 + now_time.hour * 60 * 60
             global starttime
             submit_Time = now_time_sec - starttime
+            print("start time" + str(starttime))
+            print("now time" + str(now_time_sec))
             hour = submit_Time // (60 * 60)
             val = submit_Time % (60 * 60)
             min = val // 60
@@ -192,6 +195,9 @@ def codeSave(request, username, qn):
             print(min)
             print(sec)
             subTime = '{}:{}:{}'.format(hour, min, sec)
+
+            print(subTime)
+            print("submit time" + str(submit_Time))
 
             submission = Submission(code=content, user=user, que=que, attempt=att, out=out, subTime=subTime)
             submission.save()

@@ -1,7 +1,12 @@
 # RC-Round-2
 
-# Update 02
+load buffer
+browse
+i/p and o/p
+endtime
 
+# Update 02
+done
 -Timer integration
 -Editor formatting                   DONE
 -Logout button on Questions page           DONE
