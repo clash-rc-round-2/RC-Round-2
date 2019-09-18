@@ -185,15 +185,12 @@ def codeSave(request, username, qn):
             now_time_sec = now_time.second + now_time.minute * 60 + now_time.hour * 60 * 60
             global starttime
             submit_Time = now_time_sec - starttime
-            print("start time" + str(starttime))
-            print("now time" + str(now_time_sec))
+
             hour = submit_Time // (60 * 60)
             val = submit_Time % (60 * 60)
             min = val // 60
             sec = val % 60
-            print(hour)
-            print(min)
-            print(sec)
+
             subTime = '{}:{}:{}'.format(hour, min, sec)
 
             print(subTime)
@@ -449,15 +446,16 @@ def user_logout(request):
 
 
 def loadBuffer(request):
-    username = request.user.username
+    username = request.POST.get('username')
     user = UserProfile.objects.get(user=request.user)
-    que = Question.objects.get(pk=user.qid)
+    qn = request.POST.get('question_no')
+    que = Question.objects.get(pk=qn)
     mul_que = MultipleQues.objects.get(user=user.user, que=que)
     attempts = mul_que.attempts
-    qn = user.qid
+    ext = request.POST.get('ext')
     response_data = {}
 
-    codeFile = '{}/{}/question{}/code{}-{}.{}'.format(path_usercode, username, qn, qn, attempts - 2, user.choice)
+    codeFile = '{}/{}/question{}/code{}.{}'.format(path_usercode, username, qn, attempts - 1, user.lang)
 
     f = open(codeFile, "r")
     txt = f.read()

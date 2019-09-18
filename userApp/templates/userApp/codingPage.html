@@ -482,9 +482,11 @@
                     document.getElementById("min").innerHTML = "0" + "0";
                     document.getElementById("sec").innerHTML = "0" + "0";
                     document.getElementById("hour").innerHTML = "0" + "0";
+
                     document.getElementById("min").style.color = "#F32013";
                     document.getElementById("sec").style.color = "#F32013";
                     document.getElementById("hour").style.color = "#F32013";
+                    location.href='{% url 'logout' %}';
                 }
             }, 1000);
     </script>
