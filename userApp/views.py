@@ -14,6 +14,8 @@ starttime = 0
 end_time = 0
 duration = 0
 flag = False
+flag_log = False
+
 start = datetime.datetime(2020, 1, 1, 0, 0)
 
 path_usercode = 'data/usersCode/'
@@ -28,16 +30,19 @@ def waiting(request):
         return redirect(reverse("questionHub"))
     else:
         global flag
-        if not flag:
+        if flag == False:
             return render(request, 'userApp/waiting.html')
         else:
             now = datetime.datetime.now()
-            global start
+            global start, flag_log
             if now == start:
+                flag_log = True
                 return redirect(reverse("signup"))
             elif now > start:
+                flag_log = True
                 return redirect(reverse("signup"))
             else:
+                flag_log = False
                 return render(request, 'userApp/waiting.html')
 
 
@@ -89,13 +94,18 @@ def signup(request):
             phone2 = request.POST.get('phone2')
             email1 = request.POST.get('email1')
             email2 = request.POST.get('email2')
+            junior_field = request.POST.get('optradio')
+            if junior_field != "fe":
+                junior = False
+            else:
+                junior = True
 
             if username == "" or password == "":
                 return render(request, 'userApp/login.html')
 
             user = User.objects.create_user(username=username, password=password)
             userprofile = UserProfile(user=user, name1=name1, name2=name2, phone1=phone1, phone2=phone2, email1=email1,
-                                      email2=email2)
+                                      email2=email2,junior=junior)
             userprofile.save()
             os.system('mkdir {}/{}'.format(path_usercode, username))
             login(request, user)
@@ -108,7 +118,14 @@ def signup(request):
             return render(request, 'userApp/login.html')
 
     elif request.method == 'GET':
-        return render(request, "userApp/login.html")
+        global flag_log
+        if not flag_log:
+            return render(request, "userApp/waiting.html")
+        else:
+            return render(request, "userApp/login.html")
+
+
+    return HttpResponseRedirect(reverse("questionHub"))
 
 
 def questionHub(request):
@@ -192,7 +209,21 @@ def codeSave(request, username, qn):
             except MultipleQues.DoesNotExist:
                 mul_que = MultipleQues(user=user, que=que)
             att = mul_que.attempts
+            mul_que.attempts += 1
+            now_time = datetime.datetime.now()
+            now_time_sec = now_time.second + now_time.minute * 60 + now_time.hour * 60 * 60
+            global starttime
+            submit_Time = now_time_sec - starttime
 
+            hour = submit_Time // (60 * 60)
+            val = submit_Time % (60 * 60)
+            min = val // 60
+            sec = val % 60
+
+            subTime = '{}:{}:{}'.format(hour, min, sec)
+
+            print(subTime)
+            print("submit time" + str(submit_Time))
             user_question_path = '{}/{}/question{}/'.format(path_usercode, username, qn)
 
             if not os.path.exists(user_question_path):
@@ -224,11 +255,12 @@ def codeSave(request, username, qn):
             if flag_ac:
                 score = 100
                 status = 'PASS'
+            submission = Submission(code=content, user=user, que=que, attempt=att, subTime=subTime)
+            submission.save()
 
-            sub = Submission(code=content, user=user, que=que, attempt=att)
-            sub.save()
+            #      sub = Submission(code=content, user=user, que=que, attempt=att,)
+            #     sub.save()
 
-            mul_que.attempts += 1
             mul_que.save()
 
             error_text = ""
@@ -259,7 +291,7 @@ def codeSave(request, username, qn):
             if var != 0:
                 return render(request, 'userApp/codingPage.html', context={'question': que, 'user': user, 'time': var,
                                                                            'total_score': user_profile.totalScore,
-                                                                           'question_id': user_profile.qid})
+                                                                           'question_id': qn, 'junior': user_profile.junior})
             else:
                 return render(request, 'userApp/result.html')
     else:
@@ -302,7 +334,9 @@ def leader(request):
 
 def submission(request, username, qn):
     user = User.objects.get(username=username)
+    print(qn)
     que = Question.objects.get(pk=qn)
+
     all_submission = Submission.objects.all()
     userQueSub = list()
 
@@ -342,7 +376,7 @@ def user_logout(request):
 
         logout(request)
         return render(request, 'userApp/result.html', context={'dict': dict, 'rank': i, 'name': user.user,
-                                                           'score': user.totalScore})
+                                                               'score': user.totalScore})
     else:
         return HttpResponseRedirect(reverse("signup"))
 
@@ -357,7 +391,7 @@ def loadBuffer(request):
     ext = request.POST.get('ext')
     response_data = {}
 
-    codeFile = '{}/{}/question{}/code{}.{}'.format(path_usercode, username, qn, attempts - 1, user.lang)
+    codeFile = '{}/{}/question{}/code{}.{}'.format(path_usercode, username, qn, attempts - 1, mul_que.lang)
 
     f = open(codeFile, "r")
     txt = f.read()
