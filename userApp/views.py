@@ -465,6 +465,21 @@ def loadBuffer(request):
 
     return JsonResponse(response_data)
 
+def getOutput(request):
+    if request.user.is_authenticated:
+        response_data = {}
+        username = request.POST.get('username')
+        user = UserProfile.objects.get(user=request.user)
+        que_no = request.POST.get('question_no')
+        i = request.POST.get('ip')
+        i = str(i)
+
+        ans = subprocess.Popen("{}/data/standard/executable/question{}/./a.out".format(path,que_no),stdin=subprocess.PIPE,stdout=subprocess.PIPE)
+        (out,err) = ans.communicate(input=i.encode())
+        response_data["out"] = out.decode()
+
+        return JsonResponse(response_data)
+
 
 def check_username(request):
     username = request.GET.get('username', None)

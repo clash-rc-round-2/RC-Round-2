@@ -15,4 +15,5 @@ urlpatterns = [
     path('user/<username>/<int:qn>', views.codeSave, name='codeSave'),
     path('user/<username>/<int:qn>/submission', views.submission, name='submission'),
     path('user/<username>/<int:qn>/<int:att>/testCases', views.runCode, name='runCode'),
+    path('getOutput', views.getOutput, name='getOutput')
 ]
