@@ -147,12 +147,16 @@
             margin: 1px;
         }
 
-        div.gop {
+        textarea.gop {
             border: 1px solid black;
             height: 5.5vh;
             border-radius: 5px;
             background-color: rgb(5, 5, 5, 0.8);
             color: white;
+            font-size: 15px;
+            padding-top: 7px;
+            text-align: center;
+            font-size: 17px;
         }
 
         textarea.gip {
@@ -414,7 +418,7 @@
                                     <button type="button" class="btmbtn"
                                         style="padding:0 ; margin:0;background-color:rgba(52, 162, 196, 0.95); color:white; border:none; width:8.5vw; height: 5.5vh; font-size: 17px; border-radius: 5px;">Get
                                         Output</button>
-                                    <div class="col-lg-4 gop"></div>
+                                    <textarea class="col-lg-4 gop" id="out" style="resize:none"readonly></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-7">
@@ -456,26 +460,55 @@
         });
         editor.setSize("80vw", "60vh")
 
-         $('document').ready(function(){
-            $('#buffer').click(function(){
+        $('document').ready(function(){
+            $('#getOut').click(function(){
                 $.ajax({
-                    url : '{% url 'loadBuffer' %}',
+                    url : '{% url 'getOutput' %}',
                     method: "POST",
                     dataType : "json",
                     data : { 'csrfmiddlewaretoken' : $('input[name="csrfmiddlewaretoken"]').val(),
                              'username' : $('#user').val(),
                              'question_no' : $('#queNo').val(),
-                             'ext' : $("input[name='ext']:checked"). val(),
-                            },
+                             'ip' : $('#in').val(),
+                           },
                     success : function (data) {
-                       var txt = data["txt"];
-                       codeEditor.setValue(txt);
-                    }
+                       var op = data["out"];
+                       $('#out').val(op);
+                       }
                 });
             });
         });
+
+        function loadFile(){
+            var file = document.getElementById("file").files[0];
+            var fileReader = new FileReader();
+            fileReader.onload = function(fileLoadedEvent){
+                var text = fileLoadedEvent.target.result;
+                editor.setValue(text);
+            };
+            fileReader.readAsText(file, "UTF-8");
+        }
+
+        $('document').ready(function(){
+           $('#buffer').click(function(){
+               $.ajax({
+                   url : '{% url 'loadBuffer' %}',
+                   method: "POST",
+                   dataType : "json",
+                   data : { 'csrfmiddlewaretoken' : $('input[name="csrfmiddlewaretoken"]').val(),
+                            'username' : $('#user').val(),
+                            'question_no' : $('#queNo').val(),
+                             'ext' : $("input[name='ext']:checked"). val(),
+                            },
+                   success : function (data) {
+                       var txt = data["txt"];
+                       codeEditor.setValue(txt);
+                   }
+               });
+           });
+        });
     </script>
-<script src="{% static 'javascript/jquery.js' %}"></script>
+
 <script src="{% static 'javascript/bootstrap.js' %}"></script>
   <script>
 

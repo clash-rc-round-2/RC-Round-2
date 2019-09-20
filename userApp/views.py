@@ -5,7 +5,7 @@ from django.db import IntegrityError
 from .models import Question, Submission, UserProfile, MultipleQues
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, HttpResponseForbidden
 import datetime
-import os
+import os, subprocess
 import re
 
 from judgeApp.views import exec_main
@@ -14,8 +14,6 @@ starttime = 0
 end_time = 0
 duration = 0
 flag = False
-flag_log = False
-
 start = datetime.datetime(2020, 1, 1, 0, 0)
 
 path_usercode = 'data/usersCode/'
@@ -30,19 +28,16 @@ def waiting(request):
         return redirect(reverse("questionHub"))
     else:
         global flag
-        if flag == False:
+        if not flag:
             return render(request, 'userApp/waiting.html')
         else:
             now = datetime.datetime.now()
-            global start, flag_log
+            global start
             if now == start:
-                flag_log = True
                 return redirect(reverse("signup"))
             elif now > start:
-                flag_log = True
                 return redirect(reverse("signup"))
             else:
-                flag_log = False
                 return render(request, 'userApp/waiting.html')
 
 
@@ -58,7 +53,7 @@ def timer(request):
         flag = True
         duration = 7200  # request.POST.get('duration')
         start = datetime.datetime.now()
-        start = start + datetime.timedelta(0, 5)
+        start = start + datetime.timedelta(0, 15)
         time = start.second + start.minute * 60 + start.hour * 60 * 60
         starttime = time
         end_time = time + int(duration)
@@ -83,47 +78,38 @@ def signup(request):
             user = UserProfile.objects.get(user=request.user)
         except UserProfile.DoesNotExist:
             user = UserProfile()
+    else:
+        if request.method == 'POST':
+            try:
+                username = request.POST.get('username')
+                password = request.POST.get('password')
+                name1 = request.POST.get('name1')
+                name2 = request.POST.get('name2')
+                phone1 = request.POST.get('phone1')
+                phone2 = request.POST.get('phone2')
+                email1 = request.POST.get('email1')
+                email2 = request.POST.get('email2')
 
-    if request.method == 'POST':
-        try:
-            username = request.POST.get('username')
-            password = request.POST.get('password')
-            name1 = request.POST.get('name1')
-            name2 = request.POST.get('name2')
-            phone1 = request.POST.get('phone1')
-            phone2 = request.POST.get('phone2')
-            email1 = request.POST.get('email1')
-            email2 = request.POST.get('email2')
-            junior_field = request.POST.get('optradio')
-            if junior_field != "fe":
-                junior = False
-            else:
-                junior = True
+                if username == "" or password == "":
+                    return render(request, 'userApp/login.html')
 
-            if username == "" or password == "":
+                user = User.objects.create_user(username=username, password=password)
+                userprofile = UserProfile(user=user, name1=name1, name2=name2, phone1=phone1, phone2=phone2, email1=email1,
+                                          email2=email2)
+                userprofile.save()
+                print(username)
+                os.system('mkdir {}/{}'.format(path_usercode, username))
+                login(request, user)
+                return redirect(reverse("instructions"))
+
+            except IntegrityError:
                 return render(request, 'userApp/login.html')
 
-            user = User.objects.create_user(username=username, password=password)
-            userprofile = UserProfile(user=user, name1=name1, name2=name2, phone1=phone1, phone2=phone2, email1=email1,
-                                      email2=email2,junior=junior)
-            userprofile.save()
-            os.system('mkdir {}/{}'.format(path_usercode, username))
-            login(request, user)
-            return redirect(reverse("instructions"))
+            except HttpResponseForbidden:
+                return render(request, 'userApp/login.html')
 
-        except IntegrityError:
-            return render(request, 'userApp/login.html')
-
-        except HttpResponseForbidden:
-            return render(request, 'userApp/login.html')
-
-    elif request.method == 'GET':
-        global flag_log
-        if not flag_log:
-            return render(request, "userApp/waiting.html")
-        else:
+        elif request.method == 'GET':
             return render(request, "userApp/login.html")
-
 
     return HttpResponseRedirect(reverse("questionHub"))
 
@@ -131,7 +117,7 @@ def signup(request):
 def questionHub(request):
     if request.user.is_authenticated:
         try:
-            user = UserProfile.objects.get(user=request.user)
+            user_profile = UserProfile.objects.get(user=request.user)
         except UserProfile.DoesNotExist:
             return signup(request)
 
@@ -145,9 +131,8 @@ def questionHub(request):
                 except MultipleQues.DoesNotExist:
                     mul_que = MultipleQues(user=user, que=que)
                 que.totalSub += mul_que.attempts
-
             try:
-                que.accuracy = round((que.totalSuccessfulSub * 100 / que.totalSub), 1)
+                que.accuracy = round((que.totalSuccessfulSub * 100/que.totalSub), 1)
             except ZeroDivisionError:
                 que.accuracy = 0
 
@@ -155,9 +140,9 @@ def questionHub(request):
         if var != 0:
             return render(request, 'userApp/qhub.html', context={'all_questions': all_questions, 'time': var})
         else:
-            return render(request, 'userApp/result.html')
+            return render(request, "userApp/result.html")
     else:
-        return redirect("signup")
+        return HttpResponseRedirect(reverse("signup"))
 
 
 def change_file_content(content, extension, code_file):
@@ -202,28 +187,16 @@ def codeSave(request, username, qn):
 
             temp_user = UserProfile.objects.get(user=user)
             temp_user.qid = qn
+            temp_user.lang = extension
             temp_user.save()
 
             try:
                 mul_que = MultipleQues.objects.get(user=user, que=que)
             except MultipleQues.DoesNotExist:
                 mul_que = MultipleQues(user=user, que=que)
+                mul_que.save()
             att = mul_que.attempts
-            mul_que.attempts += 1
-            now_time = datetime.datetime.now()
-            now_time_sec = now_time.second + now_time.minute * 60 + now_time.hour * 60 * 60
-            global starttime
-            submit_Time = now_time_sec - starttime
 
-            hour = submit_Time // (60 * 60)
-            val = submit_Time % (60 * 60)
-            min = val // 60
-            sec = val % 60
-
-            subTime = '{}:{}:{}'.format(hour, min, sec)
-
-            print(subTime)
-            print("submit time" + str(submit_Time))
             user_question_path = '{}/{}/question{}/'.format(path_usercode, username, qn)
 
             if not os.path.exists(user_question_path):
@@ -243,24 +216,25 @@ def codeSave(request, username, qn):
             )
             print(type(testcase_values))
 
-            flag_ac = True
+            now_time = datetime.datetime.now()
+            now_time_sec = now_time.second + now_time.minute * 60 + now_time.hour * 60 * 60
+            global starttime
+            submit_Time = now_time_sec - starttime
 
-            for i in testcase_values:
-                if i != 'AC':
-                    score = 0
-                    flag_ac = False
-                    status = 'FAIL'
-                    break
+            hour = submit_Time // (60 * 60)
+            val = submit_Time % (60 * 60)
+            min = val // 60
+            sec = val % 60
 
-            if flag_ac:
-                score = 100
-                status = 'PASS'
-            submission = Submission(code=content, user=user, que=que, attempt=att, subTime=subTime)
-            submission.save()
+            subTime = '{}:{}:{}'.format(hour, min, sec)
 
-            #      sub = Submission(code=content, user=user, que=que, attempt=att,)
-            #     sub.save()
+            print(subTime)
+            print("submit time" + str(submit_Time))
 
+            sub = Submission(code=content, user=user, que=que, attempt=att, subTime=subTime)
+            sub.save()
+
+            mul_que.attempts += 1
             mul_que.save()
 
             error_text = ""
@@ -273,14 +247,33 @@ def codeSave(request, username, qn):
                 error_text = re.sub('/.*?:', '', error_text)  # regular expression
                 ef.close()
 
+            no_of_pass = 0
+            for i in testcase_values:
+                if i == 'AC':
+                    no_of_pass += 1
+
+            print(error_text)
+
+            sub.correctTestCases = no_of_pass
+            sub.TestCasesPercentage = (no_of_pass / NO_OF_TEST_CASES) * 100
+            sub.save()
+
+            status = 'AC' if no_of_pass == NO_OF_TEST_CASES else 'WA'  # overall Status
+
+            var = calculate()
+
+            var = calculate()
             data = {
                 'testcase': testcase_values,
                 'error': error_text,
-                'score': score,
                 'status': status,
+                'score': mul_que.scoreQuestion,
+                'time': var
             }
-
-            return render(request, 'userApp/testcases.html', context=data)
+            if var != 0:
+                return render(request, 'userApp/testcases.html', context=data)
+            else:
+                render(request, "userApp/result.html")
 
         elif request.method == 'GET':
             que = Question.objects.get(pk=qn)
@@ -291,7 +284,7 @@ def codeSave(request, username, qn):
             if var != 0:
                 return render(request, 'userApp/codingPage.html', context={'question': que, 'user': user, 'time': var,
                                                                            'total_score': user_profile.totalScore,
-                                                                           'question_id': qn, 'junior': user_profile.junior})
+                                                                           'question_id': qn})
             else:
                 return render(request, 'userApp/result.html')
     else:
@@ -300,32 +293,39 @@ def codeSave(request, username, qn):
 
 def instructions(request):
     if request.user.is_authenticated:
+        try:
+            user = UserProfile.objects.get(user=request.user)
+        except UserProfile.DoesNotExist:
+            user = UserProfile()
+        if user.flag:
+            return HttpResponseRedirect(reverse('questionHub'))
+        if request.method == "POST":
+            return HttpResponseRedirect(reverse('questionHub'))
         return render(request, 'userApp/instructions.html')
     else:
-        return redirect("signup")
+        return HttpResponseRedirect(reverse("signup"))
 
 
 def leader(request):
     if request.user.is_authenticated:
-        dict = {}
+        data = {}
         for user in UserProfile.objects.order_by("-totalScore"):
-            list = []
-            for n in range(1, NO_OF_QUESTIONS + 1):
+            l = []
+            for n in range(1, 7):
                 que = Question.objects.get(pk=n)
                 try:
                     mulQue = MultipleQues.objects.get(user=user.user, que=que)
-                    list.append(mulQue.scoreQuestion)
+                    l.append(mulQue.scoreQuestion)
                 except MultipleQues.DoesNotExist:
-                    list.append(0)
-            list.append(user.totalScore)
-            dict[user.user] = list
+                    l.append(0)
+            l.append(user.totalScore)
+            data[user.user] = l
 
-        sorted(dict.items(), key=lambda items: (items[1][6], user.latestSubTime))
+        sorted(data.items(), key=lambda items: (items[1][6], user.latestSubTime))
         var = calculate()
         if var != 0:
-            return render(request, 'userApp/leaderboard.html',
-                          context={'dict': dict, 'range': range(1, NO_OF_QUESTIONS + 1, 1),
-                                   'time': var})
+            return render(request, 'userApp/leaderboard.html', context={'dict': data, 'range': range(1, 7, 1),
+                                                                        'time': var})
         else:
             return render(request, 'userApp/result.html')
     else:
@@ -336,18 +336,19 @@ def submission(request, username, qn):
     user = User.objects.get(username=username)
     print(qn)
     que = Question.objects.get(pk=qn)
-
+    # all_submissions = Submission.objects.filter()
     all_submission = Submission.objects.all()
     userQueSub = list()
 
     for submissions in all_submission:
-        if submissions.user == user and submissions.que == que:
+        if submissions.que == que and submissions.user == user:
             userQueSub.append(submissions)
     var = calculate()
     print(userQueSub)
     print("working")
     if var != 0:
-        return render(request, 'userApp/submissions.html', context={'allSubmission': userQueSub, 'time': var})
+        return render(request, 'userApp/submissions.html', context={'allSubmission': userQueSub, 'time': var, 'qn': qn,
+                                                                    'username': user.username})
     else:
         return render(request, 'userApp/result.html')
 
@@ -391,7 +392,7 @@ def loadBuffer(request):
     ext = request.POST.get('ext')
     response_data = {}
 
-    codeFile = '{}/{}/question{}/code{}.{}'.format(path_usercode, username, qn, attempts - 1, mul_que.lang)
+    codeFile = '{}/{}/question{}/code{}.{}'.format(path_usercode, username, qn, attempts - 1, user.lang)
 
     f = open(codeFile, "r")
     txt = f.read()
@@ -400,6 +401,10 @@ def loadBuffer(request):
     response_data["txt"] = txt
 
     return JsonResponse(response_data)
+
+
+def garbage(request, garbage):
+    return HttpResponseRedirect(reverse('questionHub'))
 
 
 def check_username(request):
@@ -411,3 +416,60 @@ def check_username(request):
         data['error_message'] = 'username already exits.'
 
     return JsonResponse(data)
+
+
+def view_sub(request, username, qn, att=1):
+    user_profile = UserProfile.objects.get(user=request.user)
+    que = Question.objects.get(pk=qn)
+    sub = Submission.objects.filter(user=request.user, que=que)
+    codes = []
+    question_nos = []
+
+    for i in sub:
+        codes.append(i.code)
+        question_nos.append(i.attempt)
+    all_que = Question.objects.all()
+
+    question_no = question_nos[int(att)]
+    per_question = all_que[int(question_no)]
+
+    var = calculate()
+    if var != 0:
+        return render(request, 'userApp/codingPage.html', context={'question': per_question, 'user': user_profile,
+                                                                   'time': var, 'question_id': qn,
+                                                                   'code': codes[int(att) - 1]})
+    else:
+        return render(request, 'userApp/result.html')
+
+
+def emergency_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        AdminPass = request.POST.get('admin_password')
+        user = authenticate(username=username, password=password)
+        if user is (not None) and (AdminPass == '1234'):
+            if user.is_active:
+                login(request, user)
+                return redirect(reverse('questionHub'))
+        else:
+            return HttpResponse('invalid details')
+    else:
+        return render(request, 'userApp/emerlogin.html')
+
+
+def getOutput(request):
+    if request.user.is_authenticated:
+        response_data = {}
+        username = request.POST.get('username')
+        user = UserProfile.objects.get(user=request.user)
+        que_no = request.POST.get('question_no')
+        i = request.POST.get('ip')
+        i = str(i)
+
+        ans = subprocess.Popen("{}/data/standard/executable/question{}/./a.out".format(path, que_no),
+                               stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+        (out, err) = ans.communicate(input=i.encode())
+        response_data["out"] = out.decode()
+
+        return JsonResponse(response_data)
