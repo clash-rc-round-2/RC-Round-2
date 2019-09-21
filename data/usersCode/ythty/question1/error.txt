@@ -1,4 +1,0 @@
-/home/rutuja/myenv/RC/data/usersCode/ythty/question1/code1-1.c:1:9: fatal error: iostream: No such file or directory
- #include<iostream>
-         ^~~~~~~~~~
-compilation terminated.

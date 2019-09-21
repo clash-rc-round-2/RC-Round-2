@@ -329,10 +329,10 @@
                 </div>
             </div>
 
-            <div>
-               <input type="text" id="user" hidden value={{user.username}}>
-               <input type="text" id="queNo" hidden value={{question.IDNumber}}>
-            </div>
+                <div>
+                    <input type="text" id="user" hidden value={{user.username}}>
+                    <input type="text" id="queNo" hidden value={{question.IDNumber}}>
+                </div>
 
             <div class="col-lg-12" style="height: 86vh;">
                 <form>
@@ -451,6 +451,9 @@
         </div>
     </div>
 
+    <script src="{% static 'javascript/jquery.js' %}"></script>
+    <script src="{% static 'javascript/jquery-3.4.1.min.js'' %}"></script>
+
     <script>
 
         var editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
@@ -484,35 +487,15 @@
                 });
             });
         });
-
-        function loadFile(){
-            var file = document.getElementById("file").files[0];
-            var fileReader = new FileReader();
-            fileReader.onload = function(fileLoadedEvent){
-                var text = fileLoadedEvent.target.result;
-                editor.setValue(text);
-            };
-            fileReader.readAsText(file, "UTF-8");
-        }
-
-        $('document').ready(function(){
-           $('#buffer').click(function(){
-               $.ajax({
-                   url : '{% url 'loadBuffer' %}',
-                   method: "POST",
-                   dataType : "json",
-                   data : { 'csrfmiddlewaretoken' : $('input[name="csrfmiddlewaretoken"]').val(),
-                            'username' : $('#user').val(),
-                            'question_no' : $('#queNo').val(),
-                             'ext' : $("input[name='ext']:checked"). val(),
-                            },
-                   success : function (data) {
-                       var txt = data["txt"];
-                       codeEditor.setValue(txt);
-                   }
-               });
-           });
-        });
+    function loadFile(){
+        var file = document.getElementById("file").files[0];
+        var fileReader = new FileReader();
+        fileReader.onload = function(fileLoadedEvent){
+            var text = fileLoadedEvent.target.result;
+            editor.setValue(text);
+        };
+        fileReader.readAsText(file, "UTF-8");
+    }
     </script>
 
 <script src="{% static 'javascript/bootstrap.js' %}"></script>
@@ -558,7 +541,4 @@
             }, 1000);
     </script>
     </body>
-</html>
-</body>
-
 </html>

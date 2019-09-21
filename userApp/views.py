@@ -130,7 +130,7 @@ def questionHub(request):
                     mul_que = MultipleQues.objects.get(user=user, que=que)
                 except MultipleQues.DoesNotExist:
                     mul_que = MultipleQues(user=user, que=que)
-                que.totalSub += 1
+                que.totalSub += 1 if mul_que.attempts > 0 else 0
             try:
                 que.accuracy = round((que.totalSuccessfulSub * 100/que.totalSub), 1)
             except ZeroDivisionError:
@@ -408,6 +408,21 @@ def loadBuffer(request):
     response_data["txt"] = txt
 
     return JsonResponse(response_data)
+
+def getOutput(request):
+    if request.user.is_authenticated:
+        response_data = {}
+        username = request.POST.get('username')
+        user = UserProfile.objects.get(user=request.user)
+        que_no = request.POST.get('question_no')
+        i = request.POST.get('ip')
+        i = str(i)
+
+        ans = subprocess.Popen("{}/data/standard/executable/question{}/./a.out".format(path,que_no),stdin=subprocess.PIPE,stdout=subprocess.PIPE)
+        (out,err) = ans.communicate(input=i.encode())
+        response_data["out"] = out.decode()
+
+        return JsonResponse(response_data)
 
 
 def garbage(request, garbage):
