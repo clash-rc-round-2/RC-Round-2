@@ -390,19 +390,21 @@ def user_logout(request):
 
 
 def loadBuffer(request):
-    username = request.POST.get('username')
     user = UserProfile.objects.get(user=request.user)
+    username = request.user.username
     qn = request.POST.get('question_no')
     que = Question.objects.get(pk=qn)
     mul_que = MultipleQues.objects.get(user=user.user, que=que)
     attempts = mul_que.attempts
     ext = request.POST.get('ext')
+
     response_data = {}
 
-    codeFile = '{}/{}/question{}/code{}.{}'.format(path_usercode, username, qn, attempts - 1, user.lang)
+    codeFile = '{}/{}/question{}/code{}.{}'.format(path_usercode, username, qn, int(attempts) - 1, ext)
 
     f = open(codeFile, "r")
     txt = f.read()
+    f.close()
     if not txt:
         data = ""
     response_data["txt"] = txt
