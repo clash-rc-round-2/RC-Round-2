@@ -163,7 +163,7 @@
                                 <div class="sub">{{ question.totalSuccessfulSub }}</div>
                             </td>
                             <td class="align-middle">
-                                <a href="{{user.username}}/{{ question.IDNumber }}" class="btn navbt" role="button">ATTEMPT</a>
+                                <a href="{% url 'codeSave' qn=question.id  %}" class="btn navbt" role="button">ATTEMPT</a>
                             </td>
                         </tr>
                         {% endfor %}
