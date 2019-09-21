@@ -487,15 +487,35 @@
                 });
             });
         });
-    function loadFile(){
-        var file = document.getElementById("file").files[0];
-        var fileReader = new FileReader();
-        fileReader.onload = function(fileLoadedEvent){
-            var text = fileLoadedEvent.target.result;
-            editor.setValue(text);
-        };
-        fileReader.readAsText(file, "UTF-8");
-    }
+
+
+        $('document').ready(function(){
+           $('#buffer').click(function(){
+               $.ajax({
+                   url : '{% url 'loadBuffer' %}',
+                   method: "POST",
+                   dataType : "json",
+                   data : { 'csrfmiddlewaretoken' : $('input[name="csrfmiddlewaretoken"]').val(),
+                            'username' : $('#user').val(),
+                            'question_no' : $('#queNo').val(),
+                             'ext' : $("input[name='ext']:checked"). val(),
+                            },
+                   success : function (data) {
+                       var txt = data["txt"];
+                       codeEditor.setValue(txt);
+                   }
+               });
+           });
+        });
+        function loadFile(){
+            var file = document.getElementById("file").files[0];
+            var fileReader = new FileReader();
+            fileReader.onload = function(fileLoadedEvent){
+                var text = fileLoadedEvent.target.result;
+                editor.setValue(text);
+            };
+            fileReader.readAsText(file, "UTF-8");
+        }
     </script>
 
 <script src="{% static 'javascript/bootstrap.js' %}"></script>
