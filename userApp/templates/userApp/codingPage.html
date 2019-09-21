@@ -292,7 +292,7 @@
                     </div>
                     <div class="col-lg-3 mt-1"
                         style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
-                        <button class="btn btn-block " type="button" onclick="location.href='{% url 'submission' username=user.username qn=question_id %}'"
+                        <button class="btn btn-block " type="button" onclick="location.href='{% url 'submission' qn=question_id %}'"
                             style="background-color: rgba(52, 162, 196, 0.65); color: white; font-size: 15px; padding-left: 1; padding-right: 1;">Submissions</button>
                     </div>
                     <!-- The Modal -->
@@ -330,12 +330,11 @@
             </div>
 
                 <div>
-                    <input type="text" id="user" hidden value={{user.username}}>
                     <input type="text" id="queNo" hidden value={{question.IDNumber}}>
                 </div>
 
             <div class="col-lg-12" style="height: 86vh;">
-                <form>
+                <form action="{% url 'codeSave' qn=question.id %}" method="post">
                     {% csrf_token %}
                     <div class="col-lg-12">
                         <div class="row mt-4" style="display: flex;justify-content:space-around;">
@@ -436,7 +435,7 @@
                                             Buffer</button>
                                     </div>
                                     <div class="col-lg-8">
-                                        <button type="submit" class="btmbtn" formmethod="post" onclick="location.href='/user/{{user.username}}/{{question.IDNumber}}';"
+                                        <button type="submit" class="btmbtn"
                                             style="padding:0;margin:0;margin-left:270px;background-color:rgba(52, 162, 196, 0.95); color:white; border:none; width:9vw; height: 5.5vh; font-size: 17px; border-radius: 5px;">Submit</button>
                                     </div>
                                 </div>
@@ -455,8 +454,10 @@
     <script src="{% static 'javascript/jquery-3.4.1.min.js'' %}"></script>
 
     <script>
-
         var editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
+            lineNumbers: true,
+            mode: "text/x-c++src",
+            mode: "text/x-csrc",
             theme: "base16-dark",
             lineNumbers: true,
             mode: "text/x-c++src",
@@ -465,28 +466,14 @@
             styleActiveLine: true,
             autoCloseBrackets: true,
             matchBrackets: true,
-
         });
         editor.setSize("80vw", "60vh")
 
-        $('document').ready(function(){
-            $('#getOut').click(function(){
-                $.ajax({
-                    url : '{% url 'getOutput' %}',
-                    method: "POST",
-                    dataType : "json",
-                    data : { 'csrfmiddlewaretoken' : $('input[name="csrfmiddlewaretoken"]').val(),
-                             'username' : $('#user').val(),
-                             'question_no' : $('#queNo').val(),
-                             'ip' : $('#in').val(),
-                           },
-                    success : function (data) {
-                       var op = data["out"];
-                       $('#out').val(op);
-                       }
-                });
-            });
-        });
+        var code = `{{ code }}`
+        console.log(code)
+        editor.setValue(code)
+
+
     function loadFile(){
         var file = document.getElementById("file").files[0];
         var fileReader = new FileReader();

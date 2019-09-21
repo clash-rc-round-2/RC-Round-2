@@ -173,11 +173,12 @@ def change_file_content(content, extension, code_file):
             f.close()
 
 
-def codeSave(request, username, qn):
+def codeSave(request,qn):
     if request.user.is_authenticated:  # Check Authentication
         if request.method == 'POST':
             que = Question.objects.get(pk=qn)
-            user = User.objects.get(username=username)
+            user = request.user
+            username= user.username
 
             content = request.POST['content']
             extension = request.POST['ext']
@@ -285,13 +286,13 @@ def codeSave(request, username, qn):
         elif request.method == 'GET':
             que = Question.objects.get(pk=qn)
             user_profile = UserProfile.objects.get(user=request.user)
-            user = User.objects.get(username=username)
+            user = request.user
 
             var = calculate()
             if var != 0:
                 return render(request, 'userApp/codingPage.html', context={'question': que, 'user': user, 'time': var,
                                                                            'total_score': user_profile.totalScore,
-                                                                           'question_id': qn})
+                                                                           'question_id': qn, 'code': 'Hello'})
             else:
                 return render(request, 'userApp/result.html')
     else:
@@ -339,8 +340,7 @@ def leader(request):
         return HttpResponseRedirect(reverse("signup"))
 
 
-def submission(request, username, qn):
-    user = User.objects.get(username=username)
+def submission(request, qn):
     print(qn)
     que = Question.objects.get(pk=qn)
     # all_submissions = Submission.objects.filter()
@@ -348,14 +348,14 @@ def submission(request, username, qn):
     userQueSub = list()
 
     for submissions in all_submission:
-        if submissions.que == que and submissions.user == user:
+        if submissions.que == que and submissions.user == request.user:
             userQueSub.append(submissions)
     var = calculate()
     print(userQueSub)
     print("working")
     if var != 0:
         return render(request, 'userApp/submissions.html', context={'allSubmission': userQueSub, 'time': var, 'qn': qn,
-                                                                    'username': user.username})
+                                                                    })
     else:
         return render(request, 'userApp/result.html')
 
@@ -412,8 +412,8 @@ def loadBuffer(request):
 def getOutput(request):
     if request.user.is_authenticated:
         response_data = {}
-        username = request.POST.get('username')
         user = UserProfile.objects.get(user=request.user)
+        username = user.username
         que_no = request.POST.get('question_no')
         i = request.POST.get('ip')
         i = str(i)
@@ -440,28 +440,24 @@ def check_username(request):
     return JsonResponse(data)
 
 
-def view_sub(request, username, qn, att=1):
-    user_profile = UserProfile.objects.get(user=request.user)
-    que = Question.objects.get(pk=qn)
-    sub = Submission.objects.filter(user=request.user, que=que)
-    codes = []
-    question_nos = []
+def view_sub(request, qno, _id):
+    if request.method == 'GET':
+        user_profile = UserProfile.objects.get(user=request.user)
+        sub = Submission.objects.get(id=_id)
+        code = sub.code
 
-    for i in sub:
-        codes.append(i.code)
-        question_nos.append(i.attempt)
-    all_que = Question.objects.all()
+        print(code)
 
-    question_no = question_nos[int(att)]
-    per_question = all_que[int(question_no)]
+        que = Question.objects.get(pk=int(qno))
+        user = request.user
 
-    var = calculate()
-    if var != 0:
-        return render(request, 'userApp/codingPage.html', context={'question': per_question, 'user': user_profile,
-                                                                   'time': var, 'question_id': qn,
-                                                                   'code': codes[int(att) - 1]})
+        var = calculate()
+
+        return render(request, 'userApp/codingPage.html', context={'question': que, 'user': user, 'time': var,
+                                                                   'total_score': user_profile.totalScore,
+                                                                   'question_id': qno, 'code': code})
     else:
-        return render(request, 'userApp/result.html')
+        return HttpResponse("fdshfhsdlkfnlksdjfnlsdnflkdsnflds")
 
 
 def emergency_login(request):
