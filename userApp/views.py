@@ -130,7 +130,7 @@ def questionHub(request):
                     mul_que = MultipleQues.objects.get(user=user, que=que)
                 except MultipleQues.DoesNotExist:
                     mul_que = MultipleQues(user=user, que=que)
-                que.totalSub += 1
+                que.totalSub += 1 if mul_que.attempts > 0 else 0
             try:
                 que.accuracy = round((que.totalSuccessfulSub * 100/que.totalSub), 1)
             except ZeroDivisionError:

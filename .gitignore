@@ -2,6 +2,8 @@ venv
 db.sqlite3
 README.md
 userApp/migrations/
+userApp/__pycache__/
+clash/__pycache__/
 data/usersCode/
 __pycache__/
 .idea
