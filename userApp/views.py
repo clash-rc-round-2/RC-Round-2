@@ -89,13 +89,16 @@ def signup(request):
                 phone2 = request.POST.get('phone2')
                 email1 = request.POST.get('email1')
                 email2 = request.POST.get('email2')
+                junior = request.POST.get('optradio')
+
+                junior = True if (junior == 'fe' or junior == 'se') else False
 
                 if username == "" or password == "":
                     return render(request, 'userApp/login.html')
-
+                print(junior)
                 user = User.objects.create_user(username=username, password=password)
                 userprofile = UserProfile(user=user, name1=name1, name2=name2, phone1=phone1, phone2=phone2, email1=email1,
-                                          email2=email2)
+                                          email2=email2, junior=junior)
                 userprofile.save()
                 print(username)
                 os.system('mkdir {}/{}'.format(path_usercode, username))
@@ -173,7 +176,7 @@ def change_file_content(content, extension, code_file):
             f.close()
 
 
-def codeSave(request,qn):
+def codeSave(request, qn):
     if request.user.is_authenticated:  # Check Authentication
         if request.method == 'POST':
             que = Question.objects.get(pk=qn)
@@ -296,7 +299,8 @@ def codeSave(request,qn):
             if var != 0:
                 return render(request, 'userApp/codingPage.html', context={'question': que, 'user': user, 'time': var,
                                                                            'total_score': user_profile.totalScore,
-                                                                           'question_id': qn, 'code': ''})
+                                                                           'question_id': qn, 'code': '',
+                                                                           'junior':user_profile.junior})
             else:
                 return render(request, 'userApp/result.html')
     else:

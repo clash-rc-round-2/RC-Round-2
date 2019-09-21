@@ -18,9 +18,11 @@ class UserProfile(models.Model):
     timer = models.TimeField(default='00:00')
     choice = models.CharField(max_length=5, default='cpp')       # for the extension the code C or CPP
     qid = models.IntegerField(default=0)                         # will store the current question
-    flag = models.BooleanField(default=False)
+    flag = models.BooleanField(default=False)                    # will store the current question lang
+    flag1 = models.BooleanField(default=False)
 
-    def __str__(self):
+
+def __str__(self):
             return self.user.username
 
 
