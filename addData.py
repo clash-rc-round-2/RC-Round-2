@@ -6,12 +6,13 @@ django.setup()
 
 from userApp.models import Question
 
-QUESTIONS = 6
+QUESTIONS = 8
 
-path = os.environ['HOME'] + '/Projects/Credenz/ClashRound2/queDescrip/'
+path = os.environ['HOME'] + '/Description/'
 
 os.system("python3 manage.py makemigrations userApp")
 os.system("python3 manage.py migrate")
+
 
 for filename in os.listdir(path):
     file = open(path + filename, 'r')

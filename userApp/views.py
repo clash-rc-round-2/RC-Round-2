@@ -19,7 +19,7 @@ start = datetime.datetime(2020, 1, 1, 0, 0)
 path_usercode = 'data/usersCode/'
 standard = 'data/standard/'
 
-NO_OF_QUESTIONS = 6
+NO_OF_QUESTIONS = 10
 NO_OF_TEST_CASES = 6
 
 
@@ -404,7 +404,7 @@ def loadBuffer(request):
 
     response_data = {}
 
-    codeFile = '{}/{}/question{}/code{}.{}'.format(path_usercode, username, qn, int(attempts) - 1, ext)
+    codeFile =  path_usercode + '{}/question{}/code{}.{}'.format(username, qn, int(attempts) - 1, ext)
 
     f = open(codeFile, "r")
     txt = f.read()
