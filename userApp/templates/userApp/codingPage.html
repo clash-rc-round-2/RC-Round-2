@@ -366,11 +366,13 @@
                                                     <span class="checkmark"></span>
                                                     <span style="padding-left:15px;text-shadow: 1px 1px black">C++</span>
                                                 </label>
-                                                <label class="container ml-2" style="border-left:1px solid rgba(1, 2, 7, 0.65);">
-                                                    <input type="radio" name="ext" value="py">
-                                                    <span class="checkmark"></span>
-                                                    <span style="padding-left:20px;text-shadow: 1px 1px black">Python</span>
-                                                </label>
+                                                {% if junior %}
+                                                    <label class="container ml-2" style="border-left:1px solid rgba(1, 2, 7, 0.65);">
+                                                        <input type="radio" name="ext" value="py">
+                                                        <span class="checkmark"></span>
+                                                        <span style="padding-left:20px;text-shadow: 1px 1px black">Python</span>
+                                                    </label>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>
@@ -504,6 +506,7 @@
                 });
             });
         });
+
 
         {% autoescape off %}
         var code = "{{ code|escapejs }}"

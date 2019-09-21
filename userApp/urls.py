@@ -19,5 +19,4 @@ urlpatterns = [
     path('user/<int:qn>/submission', never_cache(views.submission), name='submission'),
     url(r'^(?P<garbage>.*)/$', views.garbage, name='redirect'),
     path('getOutput', views.getOutput, name='getOutput'),
-
 ]
