@@ -508,7 +508,11 @@
                 });
             });
         });
-        var code = `{{ code }}`
+
+        {% autoescape off %}
+        var code = "{{ code|escapejs }}"
+
+        {% endautoescape %}
         editor.setValue(code)
 
         $('document').ready(function(){
