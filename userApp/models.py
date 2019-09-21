@@ -26,7 +26,7 @@ class UserProfile(models.Model):
 
 class Question(models.Model):
     titleQue = models.CharField(max_length=50)
-    question = models.CharField(max_length=5000)
+    question = models.TextField(max_length=5000)
     totalSub = models.IntegerField(default=0)
     totalSuccessfulSub = models.IntegerField(default=0)
     accuracy = models.IntegerField(default=0)           # accuracy = total Successful submission / total Submission

@@ -217,6 +217,10 @@ def codeSave(request,qn):
             )
             print(type(testcase_values))
 
+            code_f = open(code_file, 'w+')
+            code_f.write(content)
+            code_f.close()
+
             now_time = datetime.datetime.now()
             now_time_sec = now_time.second + now_time.minute * 60 + now_time.hour * 60 * 60
             global starttime
@@ -292,7 +296,7 @@ def codeSave(request,qn):
             if var != 0:
                 return render(request, 'userApp/codingPage.html', context={'question': que, 'user': user, 'time': var,
                                                                            'total_score': user_profile.totalScore,
-                                                                           'question_id': qn, 'code': 'Hello'})
+                                                                           'question_id': qn, 'code': ''})
             else:
                 return render(request, 'userApp/result.html')
     else:
@@ -341,7 +345,7 @@ def leader(request):
 
 
 def submission(request, qn):
-    print(qn)
+    # print(qn)
     que = Question.objects.get(pk=qn)
     # all_submissions = Submission.objects.filter()
     all_submission = Submission.objects.all()
@@ -351,8 +355,8 @@ def submission(request, qn):
         if submissions.que == que and submissions.user == request.user:
             userQueSub.append(submissions)
     var = calculate()
-    print(userQueSub)
-    print("working")
+    # print(userQueSub)
+    # print("working")
     if var != 0:
         return render(request, 'userApp/submissions.html', context={'allSubmission': userQueSub, 'time': var, 'qn': qn,
                                                                     })
@@ -411,17 +415,18 @@ def loadBuffer(request):
 
     return JsonResponse(response_data)
 
+
 def getOutput(request):
     if request.user.is_authenticated:
         response_data = {}
         user = UserProfile.objects.get(user=request.user)
-        username = user.username
         que_no = request.POST.get('question_no')
         i = request.POST.get('ip')
         i = str(i)
 
-        ans = subprocess.Popen("{}/data/standard/executable/question{}/./a.out".format(path,que_no),stdin=subprocess.PIPE,stdout=subprocess.PIPE)
-        (out,err) = ans.communicate(input=i.encode())
+        ans = subprocess.Popen("data/standard/executable/question{}/./a.out".format(que_no),
+                               stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+        (out, err) = ans.communicate(input=i.encode())
         response_data["out"] = out.decode()
 
         return JsonResponse(response_data)
@@ -448,7 +453,7 @@ def view_sub(request, qno, _id):
         sub = Submission.objects.get(id=_id)
         code = sub.code
 
-        print(code)
+        # print(code)
 
         que = Question.objects.get(pk=int(qno))
         user = request.user

@@ -10,3 +10,6 @@ sudo make install
 
 cd ..
 sudo rm -r libseccomp
+
+echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib/" >> ~/.bash_profile
+source ~/.bash_profile
