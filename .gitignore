@@ -1,0 +1,7 @@
+venv
+db.sqlite3
+README.md
+userApp/migrations/
+data/usersCode/
+__pycache__/
+.idea

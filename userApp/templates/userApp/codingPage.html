@@ -251,9 +251,9 @@
             border-bottom-left-radius: 4px;
             border-bottom-right-radius: 4px;
         }
-        div.scroller{ 
+        div.scroller{
      scrollbar-color: rgba(6, 44, 54, 0.9) rgb(13, 20, 20);
-       scrollbar-width: thin;  
+       scrollbar-width: thin;
      }
 
     </style>
@@ -280,7 +280,8 @@
                            <div class="col-lg-4" id="hour" style="font-size: 4vh; border-right: 1px solid white"></div>
                             <div class="col-lg-4" id="min" style="font-size: 4vh; border-right: 1px solid white"></div>
                            <div class="col-lg-4" id="sec" style="font-size: 4vh; "></div>
-            </div>
+                </div>
+
             <div class="col-lg-5 navcol" style=" height: 7vh;">
                 <div class="row">
                     <div class="col-lg-3 mt-1"
@@ -291,7 +292,7 @@
                     </div>
                     <div class="col-lg-3 mt-1"
                         style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
-                        <button class="btn btn-block " onclick="location.href='{% url 'submission' username=user.username qn=question_id %}'"
+                        <button class="btn btn-block " type="button" onclick="location.href='{% url 'submission' username=user.username qn=question_id %}'"
                             style="background-color: rgba(52, 162, 196, 0.65); color: white; font-size: 15px; padding-left: 1; padding-right: 1;">Submissions</button>
                     </div>
                     <!-- The Modal -->
@@ -366,6 +367,13 @@
                                                     <span class="checkmark"></span><span
                                                          style="padding-left:15px;text-shadow: 1px 1px black">C++</span>
                                                 </label>
+                                                {% if junior %}
+                                                    <label class="container">
+                                                    <input type="radio" name="ext" value="py" checked="checked" name="radio">
+                                                    <span class="checkmark"></span>
+                                                    <span style="padding-left:20px;text-shadow: 1px 1px black">Python</span>
+                                                    </label>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>
@@ -447,6 +455,7 @@
     <script src="{% static 'javascript/jquery-3.4.1.min.js'' %}"></script>
 
     <script>
+
         var editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
             theme: "base16-dark",
             lineNumbers: true,
@@ -491,6 +500,7 @@
 
 <script src="{% static 'javascript/bootstrap.js' %}"></script>
   <script>
+
         var countDownDate = new Date().getTime();
             var x = setInterval(function () {
                 var now = new Date().getTime();
@@ -531,7 +541,4 @@
             }, 1000);
     </script>
     </body>
-</html>
-</body>
-
 </html>

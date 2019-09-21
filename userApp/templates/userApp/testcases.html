@@ -84,26 +84,30 @@
 </style>
 
 <script>
-   var CTE="FAIL"
-   var RTE="FAIL"
-   var WA="FAIL"
-   var PASS="PASS"
-   var TLE="TLE"
-        function change_image(img1, img2, img3, img4, img5, img6){
-            console.log("{% static 'img/' %}"+ img1 + ".png");
-            document.getElementById("id1").src = "{% static 'img/' %}"+ img1 + ".png";
-            document.getElementById("id2").src = "{% static 'img/' %}"+ img2 + ".png";
-            document.getElementById("id3").src = "{% static 'img/' %}"+ img3 + ".png";
-            document.getElementById("id4").src = "{% static 'img/' %}"+ img4 + ".png";
-            document.getElementById("id5").src = "{% static 'img/' %}"+ img5 + ".png";
-            document.getElementById("id6").src = "{% static 'img/' %}"+ img6 + ".png";
+        function returnImage(status){
+            if(status == "CTE" || status == "RTE" || status == "WA" || status == "AT")
+            {return "FAIL";}
+
+           else if(status == "TLE") {return "TLE";}
+
+           else if(status == "AC") {return "PASS";}
+
+           else {return "FAIL";}
         }
-   </script>
+        function loadIcon(testlist){
+        console.log(testlist);
+
+            var i;
+            for(i = 1; i <= 6; i++){
+
+                document.getElementById("id" + i.toString()).src = "{% static 'img/' %}" + returnImage(testlist[i - 1]) + ".png";
+            }
+        }
+    </script>
 
 </head>
 
-<body style="overflow: hidden;" onload="change_image({{ test_case_1 }}, {{ test_case_2 }}, {{ test_case_3 }}, {{ test_case_4 }}, {{ test_case_5 }}
-                , {{ test_case_6 }})">
+<body style="overflow: hidden;" onload="loadIcon({{ testcase }})">
 <form>
     <div class="container-fluid b" style="overflow-x: hidden; overflow-y: hidden;">
         <div class="row" style="background-color: #000">
@@ -175,38 +179,38 @@
         <div class="row" style="height:86vh;width: 100vw">
             <div class="row" style="height: 20vh;">
                 <div class="col test" style="margin-left: 4vw;margin-top: 5vh;">
-                    <h4><strong>{{ test_case_1 }}</strong></h4><br><br>
+                    <h4><strong>{{ testcase.0 }}</strong></h4><br><br>
                     <span><img id="id1" height="45vh" width="45vw"></span>
                 </div>
 
                 <div class="col test" style="margin-left: 2vw;margin-top: 5vh;">
-                   <h4><strong>{{ test_case_2 }}</strong></h4><br><br>
+                   <h4><strong>{{ testcase.1 }}</strong></h4><br><br>
                     <span><img id="id2" height="45vh" width="45vw"></span>
                 </div>
                 <div class="col test" style="margin-left: 2vw;margin-top: 5vh;">
-                    <h4><strong>{{ test_case_3 }}</strong></h4><br><br>
+                    <h4><strong>{{ testcase.2 }}</strong></h4><br><br>
                     <span><img id="id3" height="45vh" width="45vw"></span>
                 </div>
                 <div class="col-l">
                     <div class="row">
                         <div class="col circle"
                              style="margin-left: 9vw;margin-top: 13vh;margin-right: 2vw;">
-                            <h4>{{com_status}}</h4>
+                            <h4>{{status}}</h4>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col test" style="margin-left: 4vw;margin-top: 5vh;">
-                    <h4><strong>{{ test_case_4 }}</strong></h4><br><br>
+                    <h4><strong>{{ testcase.3 }}</strong></h4><br><br>
                     <span><img id="id4" height="45vh" width="45vw"></span>
                 </div>
                 <div class="col test" style="margin-left: 2vw;margin-top: 5vh;">
-                    <h4><strong>{{ test_case_5 }}</strong></h4><br><br>
+                    <h4><strong>{{ testcase.4 }}</strong></h4><br><br>
                     <span><img id="id5" height="45vh" width="45vw"></span>
                 </div>
                 <div class="col test" style="margin-left: 2vw;margin-top: 5vh;">
-                    <h4><strong>{{ test_case_6 }}</strong></h4><br><br>
+                    <h4><strong>{{ testcase.5 }}</strong></h4><br><br>
                     <span><img id="id6" height="45vh" width="45vw"></span>
                 </div>
                 <div class="col-l">
