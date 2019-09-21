@@ -280,7 +280,8 @@
                            <div class="col-lg-4" id="hour" style="font-size: 4vh; border-right: 1px solid white"></div>
                             <div class="col-lg-4" id="min" style="font-size: 4vh; border-right: 1px solid white"></div>
                            <div class="col-lg-4" id="sec" style="font-size: 4vh; "></div>
-            </div>
+                </div>
+
             <div class="col-lg-5 navcol" style=" height: 7vh;">
                 <div class="row">
                     <div class="col-lg-3 mt-1"
@@ -328,6 +329,11 @@
                 </div>
             </div>
 
+            <div>
+               <input type="text" id="user" hidden value={{user.username}}>
+               <input type="text" id="queNo" hidden value={{question.IDNumber}}>
+            </div>
+
             <div class="col-lg-12" style="height: 86vh;">
                 <form>
                     {% csrf_token %}
@@ -373,7 +379,7 @@
                                     </div>
 
                                     <div class="col-lg-8 browse">
-                                        <input type="file" id="file" />
+                                        <input type="file" id="file" onchange="loadFile()"/>
                                         <label for="file">
                                             <span>
                                                 <img src="{% static 'img/choosefile.png' %}" class="ml-3" width="30px" height="25px">
@@ -414,8 +420,8 @@
                             <div class="col-lg-4">
                                 <div class="row"
                                     style="display: flex;justify-content: space-around;align-items:center;">
-                                    <textarea class="col-lg-4 gip" maxlength="10" placeholder="INPUT"></textarea>
-                                    <button type="button" class="btmbtn"
+                                    <textarea class="col-lg-4 gip" id="in" maxlength="10" placeholder="INPUT"></textarea>
+                                    <button type="button" id="getOut" class="btmbtn"
                                         style="padding:0 ; margin:0;background-color:rgba(52, 162, 196, 0.95); color:white; border:none; width:8.5vw; height: 5.5vh; font-size: 17px; border-radius: 5px;">Get
                                         Output</button>
                                     <textarea class="col-lg-4 gop" id="out" style="resize:none"readonly></textarea>

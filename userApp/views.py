@@ -130,7 +130,7 @@ def questionHub(request):
                     mul_que = MultipleQues.objects.get(user=user, que=que)
                 except MultipleQues.DoesNotExist:
                     mul_que = MultipleQues(user=user, que=que)
-                que.totalSub += mul_que.attempts
+                que.totalSub += 1
             try:
                 que.accuracy = round((que.totalSuccessfulSub * 100/que.totalSub), 1)
             except ZeroDivisionError:
@@ -264,6 +264,7 @@ def codeSave(request, username, qn):
                 if mul_que.scoreQuestion == 0:
                     user_profile.totalScore += 100
                     que.totalSuccessfulSub += 1
+                    que.save()
                 mul_que.scoreQuestion = 100
                 user_profile.save()
                 mul_que.save()
@@ -454,7 +455,7 @@ def emergency_login(request):
         password = request.POST.get('password')
         AdminPass = request.POST.get('admin_password')
         user = authenticate(username=username, password=password)
-        if user is (not None) and (AdminPass == '1234'):
+        if AdminPass == '1234':
             if user.is_active:
                 login(request, user)
                 return redirect(reverse('questionHub'))
@@ -473,7 +474,7 @@ def getOutput(request):
         i = request.POST.get('ip')
         i = str(i)
 
-        ans = subprocess.Popen("{}/data/standard/executable/question{}/./a.out".format(path, que_no),
+        ans = subprocess.Popen("data/standard/executable/question{}/./a.out".format(que_no),
                                stdin=subprocess.PIPE, stdout=subprocess.PIPE)
         (out, err) = ans.communicate(input=i.encode())
         response_data["out"] = out.decode()
