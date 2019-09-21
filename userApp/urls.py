@@ -18,5 +18,6 @@ urlpatterns = [
     path('emerlogin/', views.emergency_login),
     path('user/<int:qn>/submission', never_cache(views.submission), name='submission'),
     url(r'^(?P<garbage>.*)/$', views.garbage, name='redirect'),
-    path('getOutput', views.getOutput, name='getOutput')
+    path('getOutput', views.getOutput, name='getOutput'),
+
 ]
