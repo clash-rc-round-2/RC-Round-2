@@ -1,3 +1,0 @@
-/home/rutuja/myenv/RC/data/usersCode/fddf/question2/code2-5.cpp:1:1: error: ‘tyryer’ does not name a type
- tyryer
- ^~~~~~

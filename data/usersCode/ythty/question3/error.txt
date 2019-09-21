@@ -1,3 +1,0 @@
-/home/rutuja/myenv/RC/data/usersCode/ythty/question3/code3-1.c:1:1: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ at end of input
- ererw
- ^~~~~
