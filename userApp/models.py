@@ -48,7 +48,7 @@ class MultipleQues(models.Model):
 class Submission(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     que = models.ForeignKey(Question, on_delete=models.CASCADE)
-    code = models.CharField(max_length=1000)
+    code = models.TextField(max_length=1000000)
     attempt = models.IntegerField(default=0)                       # Current Attempt
     out = models.IntegerField(default=0)
     subStatus = models.CharField(default='NA', max_length=5)     # four type of submission status(WA, PASS, TLE, CTE)
