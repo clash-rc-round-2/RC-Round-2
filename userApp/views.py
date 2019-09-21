@@ -100,7 +100,7 @@ def signup(request):
                 userprofile = UserProfile(user=user, name1=name1, name2=name2, phone1=phone1, phone2=phone2, email1=email1,
                                           email2=email2, junior=junior)
                 userprofile.save()
-                print(username)
+                # print(username)
                 os.system('mkdir {}/{}'.format(path_usercode, username))
                 login(request, user)
                 return redirect(reverse("instructions"))
@@ -221,6 +221,7 @@ def codeSave(request, qn):
             print(type(testcase_values))
 
             code_f = open(code_file, 'w+')
+            code_f.seek(0)
             code_f.write(content)
             code_f.close()
 
@@ -236,8 +237,8 @@ def codeSave(request, qn):
 
             subTime = '{}:{}:{}'.format(hour, min, sec)
 
-            print(subTime)
-            print("submit time" + str(submit_Time))
+            # print(subTime)
+            # print("submit time" + str(submit_Time))
 
             sub = Submission(code=content, user=user, que=que, attempt=att, subTime=subTime)
             sub.save()
@@ -260,7 +261,7 @@ def codeSave(request, qn):
                 if i == 'AC':
                     no_of_pass += 1
 
-            print(error_text)
+            # print(error_text)
 
             sub.correctTestCases = no_of_pass
             sub.TestCasesPercentage = (no_of_pass / NO_OF_TEST_CASES) * 100
@@ -288,7 +289,7 @@ def codeSave(request, qn):
             if var != 0:
                 return render(request, 'userApp/testcases.html', context=data)
             else:
-                render(request, "userApp/result.html")
+                return render(request, "userApp/result.html")
 
         elif request.method == 'GET':
             que = Question.objects.get(pk=qn)
@@ -408,13 +409,17 @@ def loadBuffer(request):
 
     response_data = {}
 
-    codeFile =  path_usercode + '{}/question{}/code{}.{}'.format(username, qn, int(attempts) - 1, ext)
+    codeFile = path_usercode + '{}/question{}/code{}.{}'.format(username, qn, int(attempts) - 1, ext)
 
-    f = open(codeFile, "r")
-    txt = f.read()
-    f.close()
-    if not txt:
-        data = ""
+    txt = ""
+
+    try:
+        f = open(codeFile, "r")
+        txt = f.read()
+        f.close()
+    except FileNotFoundError:
+        pass
+
     response_data["txt"] = txt
 
     return JsonResponse(response_data)
@@ -423,7 +428,6 @@ def loadBuffer(request):
 def getOutput(request):
     if request.user.is_authenticated:
         response_data = {}
-        user = UserProfile.objects.get(user=request.user)
         que_no = request.POST.get('question_no')
         i = request.POST.get('ip')
         i = str(i)
@@ -485,21 +489,3 @@ def emergency_login(request):
             return HttpResponse('invalid details')
     else:
         return render(request, 'userApp/emerlogin.html')
-
-
-def getOutput(request):
-    if request.user.is_authenticated:
-        response_data = {}
-        username = request.POST.get('username')
-        user = UserProfile.objects.get(user=request.user)
-        que_no = request.POST.get('question_no')
-        i = request.POST.get('ip')
-        i = str(i)
-        print(i)
-
-        ans = subprocess.Popen("data/standard/executable/question{}/./a.out".format(que_no),
-                               stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-        (out, err) = ans.communicate(input=i.encode())
-        response_data["out"] = out.decode()
-
-        return JsonResponse(response_data)
