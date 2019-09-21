@@ -486,6 +486,7 @@ def getOutput(request):
         que_no = request.POST.get('question_no')
         i = request.POST.get('ip')
         i = str(i)
+        print(i)
 
         ans = subprocess.Popen("data/standard/executable/question{}/./a.out".format(que_no),
                                stdin=subprocess.PIPE, stdout=subprocess.PIPE)
