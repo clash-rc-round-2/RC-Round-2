@@ -228,7 +228,7 @@ def codeSave(request, qn):
             now_time = datetime.datetime.now()
             now_time_sec = now_time.second + now_time.minute * 60 + now_time.hour * 60 * 60
             global starttime
-            submit_Time = now_time_sec - starttime
+            submit_Time = 7200 - (now_time_sec - starttime)
 
             hour = submit_Time // (60 * 60)
             val = submit_Time % (60 * 60)
@@ -284,7 +284,8 @@ def codeSave(request, qn):
                 'error': error_text,
                 'status': status,
                 'score': mul_que.scoreQuestion,
-                'time': var
+                'time': var,
+
             }
             if var != 0:
                 return render(request, 'userApp/testcases.html', context=data)

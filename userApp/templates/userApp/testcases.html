@@ -24,7 +24,7 @@
 
     .test {
         background-color: black;
-        opacity: 0.6;
+        opacity: 0.8;
         box-shadow: 4px 5px 4px black;
         border-radius: 15px;
         border: rgb(162, 173, 184) solid 3px;
@@ -63,13 +63,9 @@
 
     .cons {
         background-color: black;
-        opacity: 0.6;
+        opacity: 0.8;
         border: rgb(162, 173, 184) solid 2px;
         width: 70vw;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-feature-settings: abvs;
 
     }
 
@@ -110,86 +106,89 @@
 <body style="overflow: hidden;" onload="loadIcon({{ testcase }})">
 <form>
     <div class="container-fluid b" style="overflow-x: hidden; overflow-y: hidden;">
+<!--        Starts here-->
         <div class="row" style="background-color: #000">
-            <div class="col-lg-5" style="height: 7vh;display: flex; justify-content: center;align-items: center;">
-                <div class="col-lg-3" style=" height: 7vh;"><img src="{% static 'img/RC.jpg' %}"
-                                                                 style="width: 6vw; height:7vh; display:flex;align-items: center;justify-content: center;color:#ffffff;">
-                </div>
-                <div class="col-lg-9"
-                     style="padding-top: 1vh;height: 6vh; display: flex; align-items: center; justify-content: center; color:#ffffff;">
-                    <h5>TESTCASES</h5>
-                </div>
-            </div>
-
-            <div class="col-lg-5" style=" height: 7vh;">
+            <div class="col-lg-12" style="height: 7vh;border:0px solid red;">
                 <div class="row">
-                    <div class="col-lg-3 mt-1"
-                         style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
-                        <button class="btn btn-block" type="button" onclick="location.href = '{% url 'questionHub' %}';"
-                                style="background-color: rgba(52, 162, 196, 0.65); color: white; font-size: 13px; padding-left: 0; padding-right: 0;">
-                            Question Hub
-                        </button>
-                    </div>
-                    <div class="col-lg-3 mt-1"
-                         style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
-                        <button class="btn btn-block " type="button" onclick="location.href='{% url 'leader' %}'"
-                                style="background-color: rgba(52, 162, 196, 0.65); color: white; font-size: 13px; padding-left: 0; padding-right: 0;">
-                            Leaderboard
-                        </button>
-                    </div>
-                    <!-- The Modal -->
-                    <div class="modal fade" id="logout">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-
-                                <!-- Modal Header -->
-                                <div class="modal-header">
-                                    <h4 class="modal-title" style="color: black;">Are you sure you want to logout?</h4>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-
-                                <!-- Modal body -->
-                                <div class="modal-body">
-                                    <p style="color: black;">Logging out will cause termination of your game and your
-                                        score till this moment will be counted as your Final Score.
-                                </div>
-
-                                <!-- Modal footer -->
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger"
-                                            onclick="location.href='{% url 'logout' %}'" data-dismiss="modal">Log Out
-                                    </button>
-                                </div>
-
+                    <div class="col-lg-3" style="height:7vh;border:0px solid yellow">
+                        <div class="row">
+                            <div>
+                                <img src="{% static 'img/RC.jpg' %}"  class="ml-3" style="width:6vw; height:6.8vh;color:#ffffff;">
                             </div>
+                                <div class="col-lg-7" style="padding-left:3.5vw;border:0px solid red;font-size:3vh;display:flex;align-items:center">
+                                        TESTCASES
+                                </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 mt-1" style="display: flex; justify-content: center; align-items: center;">
-                        <button class="btn btn-danger btn-block" type="button" data-toggle="modal" data-target="#logout"
-                                style="font-size: 14px; padding-left: 0; padding-right: 0;">Log Out
+                    <div class="col-lg-9" style="border:0px solid red;">
+                        <div class="row">
+                            <div class="col-lg-5" style="left:2.7vw;height: 7vh; display: flex; justify-content: right;align-items: center;color:#ffffff;background-color:black;border:0px solid green">
+                                <div class="col-lg-2" id="hour" style="font-size: 4vh; border-right: 1px solid white"></div>
+                                <div class="col-lg-2" id="min" style="font-size: 4vh; border-right: 1px solid white"></div>
+                                <div class="col-lg-2" id="sec" style="font-size: 4vh; "></div>
+                            </div>
+                            <div class="col-lg-0" style="border:2px solid red;height:7vh;display:flex;justify-content:right;align-items:center">
+                                <button class="btn btn-block" type="button" onclick="location.href = '{% url 'questionHub' %}';"
+                                        style="position:fixed;left:61vw;font-size:2vh;background-color: rgba(52, 162, 196, 0.65); color: white; border:0px solid red;font-size: 15px; padding-left: 0; padding-right: 0;height:4.5vh;width:8vw">
+                            Question Hub
                         </button>
-                    </div>
-                    <div class="col-lg-3 mt-1"
-                         style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
-                        <img src="{% static 'img/IEEE_logo.png' %}" style="height: 5vh;">
+                            </div>
+                            <div class="col-lg-2" style="postion:fixed;left:11vw;border:0px solid red;height:7vh;display:flex;justify-content:right;align-items:center">
+                                <button class="btn btn-block " type="button" onclick="location.href='{% url 'leader' %}'" style="background-color: rgba(52, 162, 196, 0.65); color: white; padding-left: 0; padding-right: 0;font-size:14px;width:6.6vw;height:4.5vh;width:8vw;font-size:2vh">
+                            Leaderboard
+                        </button>
+                            </div>
+                             <div class="modal fade" id="logout">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                            <h4 class="modal-title" style="color: black;">Are you sure you want to logout?</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+
+                                            <!-- Modal body -->
+                                            <div class="modal-body">
+                                            <p style="color: black;">Logging out will cause termination of your game and your score till this moment will be counted as your Final Score.
+                                            </div>
+
+                                            <!-- Modal footer -->
+                                            <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" onclick="location.href='{% url 'logout' %}'" data-dismiss="modal">Log Out</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            <div class="col-lg-2" style="left:8.5vw;border:0px solid red;height:7vh;display:flex;justify-content:right;align-items:center;font-size:15px">
+                                <button class="btn btn-danger btn-block" type="button" data-toggle="modal" data-target="#logout" style="font-size:14px;width:6.6vw;height:4.5vh;width:8vw">
+                                    Log Out
+                                </button>
+                            </div>
+                            <div class="col-lg-2" style="border:0px solid red;height:7vh;display:flex;align-items:center;">
+                                <img src="{% static 'img/IEEE_logo.png' %}"  style="padding-left:8vw;height: 4.77vh;">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+<!--        ends here-->
         <div class="row" style="height:86vh;width: 100vw">
             <div class="row" style="height: 20vh;">
                 <div class="col test" style="margin-left: 4vw;margin-top: 5vh;">
                     <h4><strong>{{ testcase.0 }}</strong></h4><br><br>
-                    <span><img id="id1" height="45vh" width="45vw"></span>
+                    <span style="margin-left: 3vw"><img id="id1" height="45vh" width="45vw"></span>
                 </div>
 
                 <div class="col test" style="margin-left: 2vw;margin-top: 5vh;">
                    <h4><strong>{{ testcase.1 }}</strong></h4><br><br>
-                    <span><img id="id2" height="45vh" width="45vw"></span>
+                    <span style="margin-left: 3vw"><img id="id2" height="45vh" width="45vw"></span>
                 </div>
                 <div class="col test" style="margin-left: 2vw;margin-top: 5vh;">
                     <h4><strong>{{ testcase.2 }}</strong></h4><br><br>
-                    <span><img id="id3" height="45vh" width="45vw"></span>
+                    <span style="margin-left: 3vw"><img id="id3" height="45vh" width="45vw"></span>
                 </div>
                 <div class="col-l">
                     <div class="row">
@@ -203,15 +202,15 @@
             <div class="row">
                 <div class="col test" style="margin-left: 4vw;margin-top: 5vh;">
                     <h4><strong>{{ testcase.3 }}</strong></h4><br><br>
-                    <span><img id="id4" height="45vh" width="45vw"></span>
+                    <span style="margin-left: 3vw"><img id="id4" height="45vh" width="45vw"></span>
                 </div>
                 <div class="col test" style="margin-left: 2vw;margin-top: 5vh;">
                     <h4><strong>{{ testcase.4 }}</strong></h4><br><br>
-                    <span><img id="id5" height="45vh" width="45vw"></span>
+                    <span style="margin-left: 3vw"><img id="id5" height="45vh" width="45vw"></span>
                 </div>
                 <div class="col test" style="margin-left: 2vw;margin-top: 5vh;">
                     <h4><strong>{{ testcase.5 }}</strong></h4><br><br>
-                    <span><img id="id6" height="45vh" width="45vw"></span>
+                    <span style="margin-left: 3vw"><img id="id6" height="45vh" width="45vw"></span>
                 </div>
                 <div class="col-l">
                     <div class="row">
@@ -223,16 +222,18 @@
                 </div>
             </div>
             <div class="row">
-                <div class="cons" style=" height: 5vh;margin-left: 4vw;margin-top:-8vh;">
+                <div class="cons" style=" height: 5vh;margin-left: 4vw;margin-top:-3.5vh;justify-content: center;">
                     <h4 style="text-align: center;"><strong>CONSOLE</strong></h4>
-
                 </div>
             </div>
             <div class="row">
-                <div class="col cons" style="height: 28vh;margin-left: 4vw;margin-top: -6vh; ">{{ error }}</div>
+                <div class="cons" style="height: 28vh;margin-left: 4vw;padding:2vh;overflow:scroll;overflow-x:hidden">
+
+                   {{ error }}
+                </div>
             </div>
             <div class="col-l" style="margin-left: 10vw;margin-top: 3vh;">
-                <button class="btn btn-block" type="button" onclick="history.back()" style="background-color: rgba(52, 162, 196, 0.35);color:#BBC7CE; border:none; width:120px; height: 5.5vh; font-size: 17px; border-radius: 5px;">
+                <button class="btn btn-block" type="button" onclick="history.back()" style="background-color: rgba(52, 162, 196, 0.35);color:#BBC7CE; border:none; width:120px; height: 5.5vh; font-size: 17px; border-radius: 5px;box-shadow:2px 2px black;">
                     RETRY
                 </button>
             </div>
@@ -257,6 +258,47 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+ <script>
+
+        var countDownDate = new Date().getTime();
+            var x = setInterval(function () {
+                var now = new Date().getTime();
+                var remTime = countDownDate + {{ time }}*1000 - now;
+                var hours = Math.floor((remTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var seconds = Math.floor((remTime / 1000) % 60);
+                var minutes = Math.floor((remTime / 1000 / 60) % 60);
+                if ((minutes > 0) || (seconds > 0) || (hours > 0)) {
+                    if (minutes < 10) {
+                        document.getElementById("min").innerHTML = "0" + minutes;
+                    }
+                    else {
+                        document.getElementById("min").innerHTML = minutes;
+                    }
+                    if (seconds < 10) {
+                        document.getElementById("sec").innerHTML = "0" + seconds;
+                    }
+                    else {
+                        document.getElementById("sec").innerHTML = seconds;
+                    }
+                    if (hours < 10) {
+                        document.getElementById("hour").innerHTML = "0" + hours;
+                    }
+                    else {
+                        document.getElementById("hour").innerHTML = hours;
+                    }
+                }
+                else if (minutes == 0 && seconds == 0 && hours==0) {
+                    document.getElementById("min").innerHTML = "0" + "0";
+                    document.getElementById("sec").innerHTML = "0" + "0";
+                    document.getElementById("hour").innerHTML = "0" + "0";
+
+                    document.getElementById("min").style.color = "#F32013";
+                    document.getElementById("sec").style.color = "#F32013";
+                    document.getElementById("hour").style.color = "#F32013";
+                    location.href='{% url 'logout' %}';
+                }
+            }, 1000);
+    </script>
 </body>
 
 </html>
