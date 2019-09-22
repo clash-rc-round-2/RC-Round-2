@@ -34,20 +34,18 @@
                     </div>
                     <div class="col-lg-9" style="padding-top: 1vh;height: 6vh; display: flex; align-items: center; justify-content: center; color: white"><h5>LEADERBOARD</h5></div>
                 </div>
-             <div class="col-lg-2" style=" height: 7vh; display: flex; justify-content: center;align-items: center;color:#ffffff;">
+             <div class="col-lg-2 " style="height: 7vh; display: flex; justify-content: center;align-items: center;color:#ffffff;">
                   <!--Timer added -->
                            <div class="col-lg-4" id="hour" style="font-size: 4vh; border-right: 1px solid white"></div>
                             <div class="col-lg-4" id="min" style="font-size: 4vh; border-right: 1px solid white"></div>
                            <div class="col-lg-4" id="sec" style="font-size: 4vh; "></div>
             </div>
-                <div class="col-lg-5" style=" height: 7vh;">
+                <div class="col-lg-5" style="left:10vw;height: 7vh;">
                     <div class="row">
                         <div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
                             <button class="btn btn-block" type="button" onclick="location.href = '{% url 'questionHub' %}';" style="background-color: rgba(52, 162, 196, 0.65); color: white; font-size: 13px; padding-left: 0; padding-right: 0;">Question Hub</button>
                         </div>
-                        <!--<div class="col-lg-3 mt-1" style=" height: 6vh; display: flex; justify-content: center;align-items: center;">
-                            <button class="btn btn-block" type="button" onclick="window.location.href = 'user/{{ user.username }}/submission';" style="background-color: rgba(52, 162, 196, 0.65); color: white; font-size: 13px; padding-left: 1; padding-right: 1;">Submissions</button>
-                        </div>-->
+
                    <!-- The Modal -->
                             <div class="modal fade" id="logout">
                                     <div class="modal-dialog">
@@ -106,11 +104,14 @@
 
                     {% for key,value in dict.items %}
 
-                        <tr >
+                        <tr>
                             <td class="c2-rank ">{{forloop.counter}}</td>
                             <td class="c2-name">{{key}} </td>
                             {% for var in value %}
-                            <td class="c2 ">{{var}}</td>
+                            <td class="c2 ">
+                                {{var}}
+                                <p id ="timetext">00:00:00</p>
+                            </td>
                             {% endfor %}
                         </tr>
 
