@@ -18,15 +18,17 @@ class UserProfile(models.Model):
     timer = models.TimeField(default='00:00')
     choice = models.CharField(max_length=5, default='cpp')       # for the extension the code C or CPP
     qid = models.IntegerField(default=0)                         # will store the current question
-    flag = models.BooleanField(default=False)
+    flag = models.BooleanField(default=False)                    # will store the current question lang
+    flag1 = models.BooleanField(default=False)
 
-    def __str__(self):
+
+def __str__(self):
             return self.user.username
 
 
 class Question(models.Model):
     titleQue = models.CharField(max_length=50)
-    question = models.CharField(max_length=5000)
+    question = models.TextField(max_length=5000)
     totalSub = models.IntegerField(default=0)
     totalSuccessfulSub = models.IntegerField(default=0)
     accuracy = models.IntegerField(default=0)           # accuracy = total Successful submission / total Submission

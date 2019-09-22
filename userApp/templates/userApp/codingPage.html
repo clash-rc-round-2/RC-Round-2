@@ -1,7 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>
         coding page
@@ -354,31 +353,31 @@
                             <input type="text" hidden id="queNo" value="{{question_id}}">
                             <div class="col-lg-7">
                                 <div class="row">
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-5">
                                         <div class="row ccpp">
                                             <div class="col-lg-12" style="height:5.5vh;display:flex">
                                                 <label class="container">
-                                                    <input type="radio" name="ext" value="c" checked="checked" name="radio">
+                                                    <input type="radio" name="ext" value="c" checked="checked">
                                                     <span class="checkmark"></span>
                                                     <span style="padding-left:20px;text-shadow: 1px 1px black">C</span>
                                                 </label>
-                                                <label class="container ml-2"
-                                                    style="border-left:1px solid rgba(1, 2, 7, 0.65);">
-                                                    <input type="radio" name="ext" value="cpp" name="radio">
-                                                    <span class="checkmark"></span><span
-                                                         style="padding-left:15px;text-shadow: 1px 1px black">C++</span>
-                                                </label>
-                                                    <label class="container ml-2"><!---->
-                                                    <input type="radio" name="ext" value="py" checked="checked" name="radio">
+                                                <label class="container ml-2" style="border-left:1px solid rgba(1, 2, 7, 0.65);">
+                                                    <input type="radio" name="ext" value="cpp">
                                                     <span class="checkmark"></span>
-                                                    <span style="padding-left:20px;text-shadow: 1px 1px black">Python</span>
+                                                    <span style="padding-left:15px;text-shadow: 1px 1px black">C++</span>
+                                                </label>
+                                                {% if junior %}
+                                                    <label class="container ml-2" style="border-left:1px solid rgba(1, 2, 7, 0.65);">
+                                                        <input type="radio" name="ext" value="py">
+                                                        <span class="checkmark"></span>
+                                                        <span style="padding-left:20px;text-shadow: 1px 1px black">Python</span>
                                                     </label>
-
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-8 browse">
+                                    <div class="col-lg-7 browse">
                                         <input type="file" id="file" onchange="loadFile()"/>
                                         <label for="file">
                                             <span>
@@ -507,7 +506,12 @@
                 });
             });
         });
-        var code = `{{ code }}`
+
+
+        {% autoescape off %}
+        var code = "{{ code|escapejs }}"
+
+        {% endautoescape %}
         editor.setValue(code)
 
         $('document').ready(function(){
@@ -537,6 +541,7 @@
         };
         fileReader.readAsText(file, "UTF-8");
     }
+
     </script>
 
 <script src="{% static 'javascript/bootstrap.js' %}"></script>

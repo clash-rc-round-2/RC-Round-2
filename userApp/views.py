@@ -19,7 +19,7 @@ start = datetime.datetime(2020, 1, 1, 0, 0)
 path_usercode = 'data/usersCode/'
 standard = 'data/standard/'
 
-NO_OF_QUESTIONS = 6
+NO_OF_QUESTIONS = 10
 NO_OF_TEST_CASES = 6
 
 
@@ -89,15 +89,18 @@ def signup(request):
                 phone2 = request.POST.get('phone2')
                 email1 = request.POST.get('email1')
                 email2 = request.POST.get('email2')
+                junior = request.POST.get('optradio')
+
+                junior = True if (junior == 'fe' or junior == 'se') else False
 
                 if username == "" or password == "":
                     return render(request, 'userApp/login.html')
-
+                print(junior)
                 user = User.objects.create_user(username=username, password=password)
                 userprofile = UserProfile(user=user, name1=name1, name2=name2, phone1=phone1, phone2=phone2, email1=email1,
-                                          email2=email2)
+                                          email2=email2, junior=junior)
                 userprofile.save()
-                print(username)
+                # print(username)
                 os.system('mkdir {}/{}'.format(path_usercode, username))
                 login(request, user)
                 return redirect(reverse("instructions"))
@@ -173,7 +176,7 @@ def change_file_content(content, extension, code_file):
             f.close()
 
 
-def codeSave(request,qn):
+def codeSave(request, qn):
     if request.user.is_authenticated:  # Check Authentication
         if request.method == 'POST':
             que = Question.objects.get(pk=qn)
@@ -217,10 +220,15 @@ def codeSave(request,qn):
             )
             print(type(testcase_values))
 
+            code_f = open(code_file, 'w+')
+            code_f.seek(0)
+            code_f.write(content)
+            code_f.close()
+
             now_time = datetime.datetime.now()
             now_time_sec = now_time.second + now_time.minute * 60 + now_time.hour * 60 * 60
             global starttime
-            submit_Time = now_time_sec - starttime
+            submit_Time = 7200 - (now_time_sec - starttime)
 
             hour = submit_Time // (60 * 60)
             val = submit_Time % (60 * 60)
@@ -229,8 +237,8 @@ def codeSave(request,qn):
 
             subTime = '{}:{}:{}'.format(hour, min, sec)
 
-            print(subTime)
-            print("submit time" + str(submit_Time))
+            # print(subTime)
+            # print("submit time" + str(submit_Time))
 
             sub = Submission(code=content, user=user, que=que, attempt=att, subTime=subTime)
             sub.save()
@@ -253,7 +261,7 @@ def codeSave(request,qn):
                 if i == 'AC':
                     no_of_pass += 1
 
-            print(error_text)
+            # print(error_text)
 
             sub.correctTestCases = no_of_pass
             sub.TestCasesPercentage = (no_of_pass / NO_OF_TEST_CASES) * 100
@@ -282,7 +290,7 @@ def codeSave(request,qn):
             if var != 0:
                 return render(request, 'userApp/testcases.html', context=data)
             else:
-                render(request, "userApp/result.html")
+                return render(request, "userApp/result.html")
 
         elif request.method == 'GET':
             que = Question.objects.get(pk=qn)
@@ -293,7 +301,8 @@ def codeSave(request,qn):
             if var != 0:
                 return render(request, 'userApp/codingPage.html', context={'question': que, 'user': user, 'time': var,
                                                                            'total_score': user_profile.totalScore,
-                                                                           'question_id': qn, 'code': 'Hello'})
+                                                                           'question_id': qn, 'code': '',
+                                                                           'junior':user_profile.junior})
             else:
                 return render(request, 'userApp/result.html')
     else:
@@ -342,7 +351,7 @@ def leader(request):
 
 
 def submission(request, qn):
-    print(qn)
+    # print(qn)
     que = Question.objects.get(pk=qn)
     # all_submissions = Submission.objects.filter()
     all_submission = Submission.objects.all()
@@ -352,8 +361,8 @@ def submission(request, qn):
         if submissions.que == que and submissions.user == request.user:
             userQueSub.append(submissions)
     var = calculate()
-    print(userQueSub)
-    print("working")
+    # print(userQueSub)
+    # print("working")
     if var != 0:
         return render(request, 'userApp/submissions.html', context={'allSubmission': userQueSub, 'time': var, 'qn': qn,
                                                                     })
@@ -401,28 +410,32 @@ def loadBuffer(request):
 
     response_data = {}
 
-    codeFile = '{}/{}/question{}/code{}.{}'.format(path_usercode, username, qn, int(attempts) - 1, ext)
+    codeFile = path_usercode + '{}/question{}/code{}.{}'.format(username, qn, int(attempts) - 1, ext)
 
-    f = open(codeFile, "r")
-    txt = f.read()
-    f.close()
-    if not txt:
-        data = ""
+    txt = ""
+
+    try:
+        f = open(codeFile, "r")
+        txt = f.read()
+        f.close()
+    except FileNotFoundError:
+        pass
+
     response_data["txt"] = txt
 
     return JsonResponse(response_data)
 
+
 def getOutput(request):
     if request.user.is_authenticated:
         response_data = {}
-        user = UserProfile.objects.get(user=request.user)
-        username = user.username
         que_no = request.POST.get('question_no')
         i = request.POST.get('ip')
         i = str(i)
 
-        ans = subprocess.Popen("{}/data/standard/executable/question{}/./a.out".format(path,que_no),stdin=subprocess.PIPE,stdout=subprocess.PIPE)
-        (out,err) = ans.communicate(input=i.encode())
+        ans = subprocess.Popen("data/standard/executable/question{}/./a.out".format(que_no),
+                               stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+        (out, err) = ans.communicate(input=i.encode())
         response_data["out"] = out.decode()
 
         return JsonResponse(response_data)
@@ -449,7 +462,7 @@ def view_sub(request, qno, _id):
         sub = Submission.objects.get(id=_id)
         code = sub.code
 
-        print(code)
+        # print(code)
 
         que = Question.objects.get(pk=int(qno))
         user = request.user
@@ -477,20 +490,3 @@ def emergency_login(request):
             return HttpResponse('invalid details')
     else:
         return render(request, 'userApp/emerlogin.html')
-
-
-def getOutput(request):
-    if request.user.is_authenticated:
-        response_data = {}
-        username = request.POST.get('username')
-        user = UserProfile.objects.get(user=request.user)
-        que_no = request.POST.get('question_no')
-        i = request.POST.get('ip')
-        i = str(i)
-
-        ans = subprocess.Popen("data/standard/executable/question{}/./a.out".format(que_no),
-                               stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-        (out, err) = ans.communicate(input=i.encode())
-        response_data["out"] = out.decode()
-
-        return JsonResponse(response_data)
