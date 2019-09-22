@@ -1,0 +1,10 @@
+Input:
+-First line contains a single integer T denoting no. of testcases
+-Second line contains a single integer N.
+
+Ouput:
+Print a single line containing an integer 
+
+Constraints:
+  1<=T<=100000
+  1<=N<=10^18

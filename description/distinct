@@ -1,0 +1,15 @@
+Input Format:
+	
+Firt line contains number of test cases T.
+Next T lines contains an String S.
+
+
+Output Format:
+
+Print an integer.
+
+
+Constraints:
+
+1 <= T <= 100 .
+1 <= S.length() <= 10000.

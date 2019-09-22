@@ -201,7 +201,7 @@ def codeSave(request, qn):
                 mul_que.save()
             att = mul_que.attempts
 
-            user_question_path = '{}/{}/question{}/'.format(path_usercode, username, qn)
+            user_question_path = path_usercode + '{}/question{}/'.format(username, qn)
 
             if not os.path.exists(user_question_path):
                 os.system('mkdir ' + user_question_path)

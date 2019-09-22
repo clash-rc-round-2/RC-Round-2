@@ -1,0 +1,15 @@
+Input Format:
+	
+Firt line contains number of test cases T.
+Next T lines contains an Integer N.
+
+
+Output Format:
+
+Print an integer.
+
+
+Constraints:
+
+1 <= T <= 100000 .
+1 <= N <= 1000000000000000 .

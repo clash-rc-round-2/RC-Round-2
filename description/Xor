@@ -1,0 +1,11 @@
+Input:
+First line contains no of testcases t
+Next line contains two space seperated integers n and k
+
+Output:
+Output a single integer
+
+Constraints:
+t=10000
+1<=k<=n<=10^18
+
