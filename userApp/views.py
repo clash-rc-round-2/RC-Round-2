@@ -19,7 +19,7 @@ start = datetime.datetime(2020, 1, 1, 0, 0)
 path_usercode = 'data/usersCode/'
 standard = 'data/standard/'
 
-NO_OF_QUESTIONS = 10
+NO_OF_QUESTIONS = 8
 NO_OF_TEST_CASES = 6
 
 
@@ -274,6 +274,9 @@ def codeSave(request, qn):
                     user_profile.totalScore += 100
                     que.totalSuccessfulSub += 1
                     que.save()
+                    user_profile.latestSubTime = 7200 - (now_time_sec - starttime)
+                    user_profile.correct_sub_qid = qn
+                    user_profile.save()
                 mul_que.scoreQuestion = 100
                 user_profile.save()
                 mul_que.save()
@@ -285,7 +288,6 @@ def codeSave(request, qn):
                 'status': status,
                 'score': mul_que.scoreQuestion,
                 'time': var,
-
             }
             if var != 0:
                 return render(request, 'userApp/testcases.html', context=data)
@@ -302,7 +304,7 @@ def codeSave(request, qn):
                 return render(request, 'userApp/codingPage.html', context={'question': que, 'user': user, 'time': var,
                                                                            'total_score': user_profile.totalScore,
                                                                            'question_id': qn, 'code': '',
-                                                                           'junior':user_profile.junior})
+                                                                           'junior': user_profile.junior})
             else:
                 return render(request, 'userApp/result.html')
     else:
@@ -325,11 +327,15 @@ def instructions(request):
 
 
 def leader(request):
+    try:
+        user_profile = UserProfile.objects.get(user=request.user)
+    except:
+        user_profile = UserProfile()
     if request.user.is_authenticated:
         data = {}
         for user in UserProfile.objects.order_by("-totalScore"):
             l = []
-            for n in range(1, 7):
+            for n in range(1, NO_OF_QUESTIONS+1):
                 que = Question.objects.get(pk=n)
                 try:
                     mulQue = MultipleQues.objects.get(user=user.user, que=que)
@@ -343,7 +349,7 @@ def leader(request):
         var = calculate()
         if var != 0:
             return render(request, 'userApp/leaderboard.html', context={'dict': data, 'range': range(1, 7, 1),
-                                                                        'time': var})
+                                                                    'time': var, 'cqid': user_profile.correct_sub_qid})
         else:
             return render(request, 'userApp/result.html')
     else:

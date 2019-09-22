@@ -20,6 +20,7 @@ class UserProfile(models.Model):
     qid = models.IntegerField(default=0)                         # will store the current question
     flag = models.BooleanField(default=False)                    # will store the current question lang
     flag1 = models.BooleanField(default=False)
+    correct_sub_qid = models.IntegerField(default=0)
 
 
 def __str__(self):

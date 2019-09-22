@@ -92,6 +92,8 @@
                             <th class="w"><p class="h">Q4</p></th>
                             <th class="w"><p class="h">Q5</p></th>
                             <th class="w"><p class="h">Q6</p></th>
+                            <th class="w"><p class="h">Q7</p></th>
+                            <th class="w"><p class="h">Q8</p></th>
                             <th class="w-t"><p class="h-total">TOTAL</p></th>
                         </tr>
                     </thead>
@@ -102,20 +104,36 @@
                 <table class="table table-hover" rules=none>
                     <tbody >
 
-                    {% for key,value in dict.items %}
+<!--                    {% for key,value in dict.items %}-->
 
-                        <tr>
-                            <td class="c2-rank ">{{forloop.counter}}</td>
-                            <td class="c2-name">{{key}} </td>
+<!--                        <tr>-->
+<!--                            <td class="c2-rank ">{{forloop.counter}}</td>-->
+<!--                            <td class="c2-name">{{key}} </td>-->
+<!--                            {% if cqid == forloop.counter %}-->
+<!--                            <td class="c2 ">-->
+<!--                                {{value}}-->
+<!--                                <p id ="timetext">{{ time }}</p>-->
+<!--                            </td>-->
+<!--                            {% endif %}-->
+<!--                        </tr>-->
+
+<!--                    {% endfor %}-->
+
+                    {% for key,value in dict.items %}
+                        <tr >
+                            <td class="c2-rank ">{{ forloop.counter }}</td>
+                            <td class="c2-name">{{key}}</td>
                             {% for var in value %}
                             <td class="c2 ">
-                                {{var}}
-                                <p id ="timetext">00:00:00</p>
+                                {{ var }}
+                                {% if cqid == forloop.counter %}
+                                    <p id ="timetext">{{ time }}</p>
+                                {% endif %}
                             </td>
                             {% endfor %}
                         </tr>
-
                     {% endfor %}
+
                         <!--<tr >
                             <td class="c2-rank">1.</td>
                             <td class="c2-name">XYZ</td>
